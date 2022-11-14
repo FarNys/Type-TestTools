@@ -6,7 +6,6 @@ test("Check Incrementing Btn", () => {
   render(<ComponentPage />);
 
   const incrementBtn = screen.getByTestId("increment");
-  const decrementBtn = screen.getByTestId("decrement");
   const countValue = screen.getByTestId("countValue");
   fireEvent.click(incrementBtn);
   expect(countValue).toHaveTextContent("1");

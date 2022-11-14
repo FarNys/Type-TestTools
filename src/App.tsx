@@ -5,6 +5,7 @@ function App() {
     <div className="App" data-testid="app">
       <h1>h1 ALL</h1>
       <Link to="/component/button">Component</Link>
+      <Link to="/posts">Get Posts</Link>
     </div>
   );
 }
