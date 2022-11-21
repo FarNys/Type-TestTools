@@ -19,10 +19,9 @@ function Posts() {
 
     // return () => (cleanUp = false);
   }, []);
-  console.log(posts);
   if (!posts) return <p>error</p>;
   return (
-    <div>
+    <div data-testid="postParent" className="post-parent">
       {posts.map((el, index) => (
         <div key={`post-${index}`}>
           <span>{index} </span>
