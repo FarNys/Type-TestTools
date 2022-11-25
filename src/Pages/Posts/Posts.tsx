@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { baseeUrl } from "../../Api/api";
 import { PostsType } from "./PostsType";
 
 function Posts() {
@@ -8,9 +9,7 @@ function Posts() {
     // let cleanUp = true;
 
     const fetchPosts = async () => {
-      const res = await fetch(
-        `http://192.168.1.99:1337/api/articles?populate=*`
-      );
+      const res = await fetch(`${baseeUrl}/api/articles?populate=*`);
       const data = await res.json();
       //   console.log(data);
       setposts(data.data);
