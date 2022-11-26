@@ -3,6 +3,8 @@ import Button from "../../Components/Button";
 import { FormType } from "./AuthPageType";
 
 const AuthPage = () => {
+  const [btnTitle, setbtnTitle] = useState("Send");
+  const [myData, setmyData] = useState("");
   const [formData, setformData] = useState<FormType>({
     username: "",
     password: "",
@@ -10,6 +12,11 @@ const AuthPage = () => {
   const sendHandler = (e: React.FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     console.log(formData);
+    setbtnTitle("Loading");
+    setTimeout(() => {
+      setbtnTitle("Send");
+      setmyData("Farid");
+    }, 300);
   };
   const changeFormHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setformData({ ...formData, [e.target.name]: e.target.value });
@@ -34,7 +41,13 @@ const AuthPage = () => {
           placeholder="password"
           onChange={changeFormHandler}
         />
-        <Button title="Send" onClick={sendHandler} role="button" />
+        <Button
+          title={btnTitle}
+          onClick={sendHandler}
+          role="button"
+          disabled={!formData.username || !formData.password}
+        />
+        <div data-testid="myData">{myData}</div>
       </form>
     </div>
   );
