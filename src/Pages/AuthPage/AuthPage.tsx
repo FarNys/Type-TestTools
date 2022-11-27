@@ -31,6 +31,7 @@ const AuthPage = () => {
           type="text"
           name="username"
           placeholder="username"
+          data-cy="username"
           onChange={changeFormHandler}
         />
         <label htmlFor="password">Password</label>
@@ -39,6 +40,7 @@ const AuthPage = () => {
           type="password"
           name="password"
           placeholder="password"
+          data-cy="password"
           onChange={changeFormHandler}
         />
         <Button
@@ -47,7 +49,9 @@ const AuthPage = () => {
           role="button"
           disabled={!formData.username || !formData.password}
         />
-        <div data-testid="myData">{myData}</div>
+        <div data-testid="myData" data-cy="result">
+          {myData}
+        </div>
       </form>
     </div>
   );
