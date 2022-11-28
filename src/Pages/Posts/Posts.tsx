@@ -22,7 +22,7 @@ function Posts() {
   return (
     <div data-testid="postParent" className="post-parent">
       {posts.map((el, index) => (
-        <div key={`post-${index}`}>
+        <div key={`post-${index}`} data-cy="single-post">
           <span>{index} </span>
           <p data-testid="post">{el.attributes.title}</p>
         </div>

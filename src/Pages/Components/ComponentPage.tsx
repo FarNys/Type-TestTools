@@ -11,11 +11,13 @@ const ComponentPage = () => {
       <Button
         title="Add +1"
         data-testid="increment"
+        role="button"
         // onClick={():void => setcount((prev) => prev + 1)}
         onClick={(): void => setcount((prev) => prev + 1)}
       />
       <Button
         title="Add -1"
+        role="button"
         data-testid="decrement"
         onClick={(): void => setcount((prev) => prev - 1)}
       />
