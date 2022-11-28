@@ -7,6 +7,7 @@ function App() {
       <Link to="/component/button">Component</Link>
       <Link to="/posts">Get Posts</Link>
       <Link to="/auth">Auth Page</Link>
+      <Link to="/todo">Todo Page</Link>
     </div>
   );
 }
