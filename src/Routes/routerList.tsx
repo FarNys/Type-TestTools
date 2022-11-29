@@ -12,41 +12,46 @@ const routerList = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Navbar>
+      <>
+        <Navbar />
         <App />
-      </Navbar>
+      </>
     ),
   },
   {
     path: "/component/button",
     element: (
-      <Navbar>
+      <>
+        <Navbar />
         <ComponentPage />
-      </Navbar>
+      </>
     ),
   },
   {
     path: "/posts",
     element: (
-      <Navbar>
+      <>
+        <Navbar />
         <Posts />
-      </Navbar>
+      </>
     ),
   },
   {
     path: "/auth",
     element: (
-      <Navbar>
+      <>
+        <Navbar />
         <AuthPage />
-      </Navbar>
+      </>
     ),
   },
   {
     path: "/todo",
     element: (
-      <Navbar>
+      <>
+        <Navbar />
         <TodoPage />
-      </Navbar>
+      </>
     ),
   },
 ]);

@@ -15,7 +15,7 @@ const AuthPage = () => {
     setbtnTitle("Loading");
     setTimeout(() => {
       setbtnTitle("Send");
-      setmyData("Farid");
+      setmyData(formData.username);
     }, 300);
   };
   const changeFormHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -24,6 +24,7 @@ const AuthPage = () => {
 
   return (
     <div>
+      <h1>This is Auth</h1>
       <form>
         <label htmlFor="username">UserName</label>
         <input
