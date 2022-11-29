@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { baseeUrl } from "../../Api/api";
 import { PostsType } from "./PostsType";
 
@@ -18,6 +18,7 @@ function Posts() {
 
     // return () => (cleanUp = false);
   }, []);
+
   if (!posts) return <p>error</p>;
   return (
     <div data-testid="postParent" className="post-parent">

@@ -3,7 +3,7 @@ import LinkStyle from "./LinkStyle";
 
 const Navbar: React.FC<any> = ({ children }) => {
   return (
-    <div>
+    <div data-cy="navbar">
       <LinkStyle to="/component/button">Component</LinkStyle>
       <LinkStyle to="/posts">Get Posts</LinkStyle>
       <LinkStyle to="/auth">Auth Page</LinkStyle>
