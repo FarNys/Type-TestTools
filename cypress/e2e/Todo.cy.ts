@@ -1,6 +1,6 @@
 describe("Go To TodoPage And Create 1 Task", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
   });
   it("TEST /todo Page --- FILL ALL FIELD --- CREATE BUTTON --- ADD TASK --- CLEAR INPUTS", () => {
     cy.contains("Todo Page").click();

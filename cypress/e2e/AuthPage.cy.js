@@ -6,7 +6,7 @@ const Send = "Send";
 
 describe("Auth Page E2E Test", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/");
+    cy.visit("/");
   });
 
   it("SUCCESS AUTH---Should go to Auth page - fill user and password and then press Send Add text", () => {
