@@ -1,6 +1,6 @@
 import { CyGetExist } from "../../TestFunctions";
 
-const userText = "userName";
+const userText = "userNamekljdshnf bskdjfsdj sdjf sd;lkjf";
 const passText = "Password";
 const Send = "Send";
 
@@ -20,6 +20,6 @@ describe("Auth Page E2E Test", () => {
     cy.get("[role='button']").click();
     cy.get("[role='button']").should("have.text", "Loading");
     cy.get("[data-testid='myData']").should("have.text", userText);
-    cy.get("[role='button']").should("have.text", Send);
+    cy.get("[role='button']").should("have.text", "Send");
   });
 });

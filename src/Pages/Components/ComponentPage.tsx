@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../Components/Button";
+import Button from "../../Components/Actions/Button";
 
 type CountType = number;
 
@@ -22,6 +22,10 @@ const ComponentPage = () => {
         onClick={(): void => setcount((prev) => prev - 1)}
       />
       <p data-testid="countValue">{count}</p>
+      <Button
+        title="Tailwind"
+        className="mx-2 bg-blue-500 text-white hover:bg-blue-600 hover:scale-95 focus:bg-blue-700"
+      />
     </div>
   );
 };
