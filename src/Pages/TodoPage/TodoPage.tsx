@@ -1,28 +1,41 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Input from "../../Components/Actions/Input";
 import Button from "../../Components/Button";
 import SingleTodo from "./Components/SingleTodo";
 import { ErrorType, TodoType } from "./TodoTypes";
+import { RootState } from "../../store/store";
+import { addTodo, changeValueHandler } from "../../store/slices/todoSlice";
 
 const TodoPage = () => {
-  const [todo, settodo] = useState<TodoType>({
-    id: "",
-    title: "",
-    desc: "",
-  });
+  const dispatch = useDispatch();
+  const singleTodo = useSelector(
+    (state: RootState) => state.todosSlice.singleTodo
+  );
+  const todoLists = useSelector(
+    (state: RootState) => state.todosSlice.todoLists
+  );
+  console.log(todoLists);
+
   const [error, seterror] = useState<ErrorType>({
     state: false,
     msg: "",
   });
-  const [todoList, settodoList] = useState<TodoType[]>([]);
 
   const formDataHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    settodo({ ...todo, [e.target.name]: e.target.value });
+    // settodo({ ...todo, [e.target.name]: e.target.value });
+    dispatch(
+      changeValueHandler({
+        name: e.target.name,
+        value: e.target.value.toString(),
+      })
+    );
   };
 
   const addTodoHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!todo.id || !todo.title || !todo.desc) {
+    if (!singleTodo.id || !singleTodo.title || !singleTodo.desc) {
       seterror({
         state: true,
         msg: "Fill All Fields",
@@ -31,12 +44,13 @@ const TodoPage = () => {
         seterror({ state: false, msg: "" });
       }, 1500);
     } else {
-      settodoList([...todoList, todo]);
-      settodo({
-        id: "",
-        title: "",
-        desc: "",
-      });
+      dispatch(addTodo({ todo: singleTodo }));
+      // settodoList([...todoList, todo]);
+      // settodo({
+      //   id: "",
+      //   title: "",
+      //   desc: "",
+      // });
     }
   };
 
@@ -44,28 +58,31 @@ const TodoPage = () => {
     <div>
       <h1>TODO LIST</h1>
       <form>
-        <input
+        <label>Number</label>
+        <Input
           type="number"
-          value={todo.id}
+          value={singleTodo.id}
           name="id"
           onChange={formDataHandler}
         />
-        <input
+        <label>Title</label>
+        <Input
           type="text"
-          value={todo.title}
+          value={singleTodo.title}
           name="title"
           onChange={formDataHandler}
         />
-        <input
+        <label>Desc</label>
+        <Input
           type="text"
-          value={todo.desc}
+          value={singleTodo.desc}
           name="desc"
           onChange={formDataHandler}
         />
         <Button title="Create" type="submit" onClick={addTodoHandler} />
       </form>
       <div>
-        {todoList.map((el: TodoType, index) => (
+        {todoLists.map((el: TodoType, index) => (
           <SingleTodo el={el} key={`todo-${index}`} />
         ))}
       </div>

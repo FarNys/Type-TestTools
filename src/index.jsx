@@ -11,10 +11,14 @@ import {
   Link,
 } from "react-router-dom";
 import routerList from "./Routes/routerList";
+import { Provider } from "react-redux";
+import store from "./store/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={routerList} />
+    <Provider store={store}>
+      <RouterProvider router={routerList} />
+    </Provider>
   </React.StrictMode>
 );
 
