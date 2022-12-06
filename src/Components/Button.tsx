@@ -1,17 +1,24 @@
 import React from "react";
-interface ButtonProps
-  extends React.DetailedHTMLProps<
-      React.ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
-    >,
-    React.AriaAttributes {}
+
+export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+  variant?: "sm" | "md";
+}
+
 const Button: React.FC<ButtonProps> = (props) => {
-  const { title, children, ...rest } = props;
+  const { title, className, variant = "sm", children, ...rest } = props;
+
+  // console.log(returnCSS());
+  // const buttonClass = (item: string) => {
+  //   const padding = `mx-2 bg-slate-600 text-yellow-300 hover:bg-slate-700 active:bg-slate-800 p-${item}`;
+  //   return padding;
+  // };
+
+  // console.log(buttonClass(variant));
 
   return (
     <button
       data-testid="button"
-      className="mx-2 py-2 px-4 bg-slate-600 text-yellow-300 hover:bg-slate-700 active:bg-slate-800"
+      className={`bg-slate-600 text-yellow-300 ${variant}`}
       {...rest}
     >
       {title}

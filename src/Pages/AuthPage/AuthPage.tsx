@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from "../../Components/Actions/Input";
 import Button from "../../Components/Button";
 import { FormType } from "./AuthPageType";
 
@@ -27,7 +28,7 @@ const AuthPage = () => {
       <h1>This is Auth</h1>
       <form>
         <label htmlFor="username">UserName</label>
-        <input
+        <Input
           id="username"
           type="text"
           name="username"
@@ -36,7 +37,7 @@ const AuthPage = () => {
           onChange={changeFormHandler}
         />
         <label htmlFor="password">Password</label>
-        <input
+        <Input
           id="password"
           type="password"
           name="password"
@@ -49,6 +50,8 @@ const AuthPage = () => {
           onClick={sendHandler}
           role="button"
           disabled={!formData.username || !formData.password}
+          variant="sm"
+          // myClass="bg-red-600"
         />
         <div data-testid="myData" data-cy="result">
           {myData}

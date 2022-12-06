@@ -1,18 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { baseeUrl } from "../../Api/api";
-import { PostsType } from "./PostsType";
+import { getAllPosts } from "../../store/slices/postsSlice";
+import { RootState } from "../../store/store";
+
+type PostType = {
+  attributes: {
+    title: string;
+  };
+};
 
 function Posts() {
-  const [posts, setposts] = useState<PostsType>([]);
-
+  const dispatch = useDispatch();
+  // const [posts, setposts] = useState<PostsType>([]);
+  const posts = useSelector((state: RootState) => state.postsSlice.posts);
+  console.log(posts);
   useEffect(() => {
     // let cleanUp = true;
 
     const fetchPosts = async () => {
       const res = await fetch(`${baseeUrl}/api/articles?populate=*`);
       const data = await res.json();
-      //   console.log(data);
-      setposts(data.data);
+      dispatch(getAllPosts({ posts: data.data }));
     };
     fetchPosts();
 
@@ -22,7 +31,7 @@ function Posts() {
   if (!posts) return <p>error</p>;
   return (
     <div data-testid="postParent" className="post-parent">
-      {posts.map((el, index) => (
+      {posts.map((el: PostType, index) => (
         <div key={`post-${index}`} data-cy="single-post">
           <span>{index} </span>
           <p data-testid="post">{el.attributes.title}</p>

@@ -15,7 +15,6 @@ const TodoPage = () => {
   const todoLists = useSelector(
     (state: RootState) => state.todosSlice.todoLists
   );
-  console.log(todoLists);
 
   const [error, seterror] = useState<ErrorType>({
     state: false,
@@ -79,7 +78,12 @@ const TodoPage = () => {
           name="desc"
           onChange={formDataHandler}
         />
-        <Button title="Create" type="submit" onClick={addTodoHandler} />
+        <Button
+          title="Create"
+          type="submit"
+          variant="md"
+          onClick={addTodoHandler}
+        />
       </form>
       <div>
         {todoLists.map((el: TodoType, index) => (
