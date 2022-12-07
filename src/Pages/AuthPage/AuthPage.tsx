@@ -35,6 +35,7 @@ const AuthPage = () => {
           placeholder="username"
           data-cy="username"
           onChange={changeFormHandler}
+          className="sm"
         />
         <label htmlFor="password">Password</label>
         <Input
@@ -44,6 +45,7 @@ const AuthPage = () => {
           placeholder="password"
           data-cy="password"
           onChange={changeFormHandler}
+          className="md"
         />
         <Button
           title={btnTitle}

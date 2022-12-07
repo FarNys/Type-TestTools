@@ -13,7 +13,10 @@ module.exports = {
     extend: {
       spacing: {
         small: "0.62rem",
-        med: "1rem",
+        med: "2rem",
+      },
+      fontSize: {
+        ex: "1rem",
       },
     },
   },
