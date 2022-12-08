@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "../../Components/Actions/Button";
+import Modal from "../../Components/Navigate/Portal";
 
 type CountType = number;
 
 const ComponentPage = () => {
   const [count, setcount] = useState<CountType>(0);
+  const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
+  const btnRef = useRef(null);
+  const openModalHanlder = () => {
+    setmodalIsOpen((prev) => !prev);
+  };
 
   return (
     <div>
@@ -20,12 +26,19 @@ const ComponentPage = () => {
         role="button"
         data-testid="decrement"
         onClick={(): void => setcount((prev) => prev - 1)}
+        ref={btnRef}
       />
       <p data-testid="countValue">{count}</p>
       <Button
-        title="Tailwind"
+        title="OpenModal"
         className="mx-2 bg-blue-500 text-white hover:bg-blue-600 hover:scale-95 focus:bg-blue-700"
+        onClick={openModalHanlder}
       />
+      {modalIsOpen && (
+        <Modal show={true}>
+          <div className="kl">Vladiagro</div>
+        </Modal>
+      )}
     </div>
   );
 };
