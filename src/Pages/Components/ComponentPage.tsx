@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Button from "../../Components/Actions/Button";
 import Modal from "../../Components/Navigate/Portal";
+import Typography from "../../Components/Typo/Typography";
 
 type CountType = number;
 
@@ -39,6 +40,14 @@ const ComponentPage = () => {
           <div className="kl">Vladiagro</div>
         </Modal>
       )}
+
+      <Typography variant="h1">Test Typography h1</Typography>
+      <Typography variant="h2">Test Typography h2</Typography>
+      <Typography variant="h3">Test Typography h3</Typography>
+      <Typography variant="h4">Test Typography h4</Typography>
+      <Typography variant="h5">Test Typography h5</Typography>
+      <Typography variant="h6">Test Typography h6</Typography>
+      <Typography variant="p">Test Typography p</Typography>
     </div>
   );
 };
