@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseeUrl } from "../../Api/api";
+import usePost from "../../Hooks/usePost";
 import { getAllPosts } from "../../store/slices/postsSlice";
 import { RootState } from "../../store/store";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 type PostType = {
   attributes: {
@@ -14,6 +17,9 @@ function Posts() {
   const dispatch = useDispatch();
   // const [posts, setposts] = useState<PostsType>([]);
   const posts = useSelector((state: RootState) => state.postsSlice.posts);
+  // const { data } = usePost();
+  // console.log(data);
+
   console.log(posts);
   useEffect(() => {
     // let cleanUp = true;

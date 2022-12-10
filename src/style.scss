@@ -55,19 +55,3 @@
   padding: 1rem;
   animation: modal-animate 0.5s ease forwards;
 }
-@keyframes modal-animate {
-  0% {
-    transform: translate(-50%, 0);
-  }
-  100% {
-    transform: translate(-50%, 50px);
-  }
-}
-
-@media (max-width: 750px) {
-  .navbar {
-    grid-template-areas:
-      "search search search search"
-      "logo filler filler dd" !important;
-  }
-}
