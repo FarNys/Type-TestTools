@@ -4,7 +4,6 @@ import { baseeUrl } from "../../Api/api";
 import usePost from "../../Hooks/usePost";
 import { getAllPosts } from "../../store/slices/postsSlice";
 import { RootState } from "../../store/store";
-import { useQuery } from "react-query";
 import axios from "axios";
 
 type PostType = {
@@ -13,14 +12,19 @@ type PostType = {
   };
 };
 
+interface El {
+  id: number;
+  attributes: {};
+}
+
 function Posts() {
   const dispatch = useDispatch();
   // const [posts, setposts] = useState<PostsType>([]);
   const posts = useSelector((state: RootState) => state.postsSlice.posts);
-  // const { data } = usePost();
-  // console.log(data);
-
+  const { data, isLoading, error } = usePost();
+  console.log(data);
   console.log(posts);
+
   useEffect(() => {
     // let cleanUp = true;
 
@@ -42,6 +46,9 @@ function Posts() {
           <span>{index} </span>
           <p data-testid="post">{el.attributes.title}</p>
         </div>
+      ))}
+      {data?.data.map((el: El, index: number) => (
+        <p key={`generate-${index}`}>{el.id}</p>
       ))}
     </div>
   );
