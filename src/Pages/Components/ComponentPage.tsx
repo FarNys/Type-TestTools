@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import Button from "../../Components/Actions/Button";
+import Alert from "../../Components/DataDisplay/Alert";
 import Card from "../../Components/Layout/Card";
 import Container from "../../Components/Layout/Container";
+import LinkText from "../../Components/Navigate/LinkText";
 import Modal from "../../Components/Navigate/Portal";
 import Typography from "../../Components/Typo/Typography";
 
@@ -54,6 +56,49 @@ const ComponentPage = () => {
         <Typography variant="h5">Test Typography h5</Typography>
         <Typography variant="h6">Test Typography h6</Typography>
         <Typography variant="p">Test Typography p</Typography>
+      </Card>
+      <Card>
+        This is <LinkText to="/todo">Todo</LinkText> Example
+      </Card>
+      <Card>
+        <Typography variant="h5" className="mt-2 mb-1 ">
+          Success Alert
+        </Typography>
+        <Alert variant="success" title="Your purchase has been confirmed!" />
+        <Typography variant="h5" className="mt-2 mb-1">
+          Danger Alert
+        </Typography>
+        <Alert variant="danger" title="Error! Task failed successfully." />
+        <Typography variant="h5" className="mt-2 mb-1">
+          Info Alert
+        </Typography>
+        <Alert variant="info" title="New software update available." />
+        <Typography variant="h5" className="mt-2 mb-1">
+          Warning Alert
+        </Typography>
+
+        <Alert
+          variant="warning"
+          title="Warning: Invalid email address!
+"
+        />
+      </Card>
+      <Card>
+        <Typography variant="p" colorVariant="default">
+          p element with default Variant
+        </Typography>
+        <Typography variant="p" colorVariant="success">
+          p element with success Variant
+        </Typography>
+        <Typography variant="p" colorVariant="danger">
+          p element with danger Variant
+        </Typography>
+        <Typography variant="p" colorVariant="info">
+          p element with info Variant
+        </Typography>
+        <Typography variant="p" colorVariant="warning">
+          p element with warning Variant
+        </Typography>
       </Card>
     </Container>
   );
