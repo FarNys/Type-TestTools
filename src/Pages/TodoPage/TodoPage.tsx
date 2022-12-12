@@ -6,8 +6,11 @@ import SingleTodo from "./Components/SingleTodo";
 import { ErrorType, TodoType } from "./TodoTypes";
 import { RootState } from "../../store/store";
 import { addTodo, changeValueHandler } from "../../store/slices/todoSlice";
+import usePost from "../../Hooks/usePost";
 
 const TodoPage = () => {
+  const { data } = usePost();
+  console.log(data);
   const dispatch = useDispatch();
   const singleTodo = useSelector(
     (state: RootState) => state.todosSlice.singleTodo

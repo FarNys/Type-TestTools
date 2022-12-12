@@ -22,8 +22,8 @@ function Posts() {
   // const [posts, setposts] = useState<PostsType>([]);
   const posts = useSelector((state: RootState) => state.postsSlice.posts);
   const { data, isLoading, error } = usePost();
-  console.log(data);
-  console.log(posts);
+  console.log(data, isLoading);
+  // console.log(posts);
 
   useEffect(() => {
     // let cleanUp = true;
@@ -47,9 +47,9 @@ function Posts() {
           <p data-testid="post">{el.attributes.title}</p>
         </div>
       ))}
-      {data?.data.map((el: El, index: number) => (
+      {/* {data?.data.map((el: El, index: number) => (
         <p key={`generate-${index}`}>{el.id}</p>
-      ))}
+      ))} */}
     </div>
   );
 }
