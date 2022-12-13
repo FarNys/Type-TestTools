@@ -13,7 +13,7 @@ const usePost = () => {
   return useQuery({
     queryKey: ["posts"],
     // staleTime: 1000,
-    refetchInterval: 5000,
+    // refetchInterval: 5000,
     queryFn: async () => {
       const result = await fetch("https://kavinotech.com/panel/api/articles");
       const data = await result.json();
