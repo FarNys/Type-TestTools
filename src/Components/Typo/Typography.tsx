@@ -6,7 +6,7 @@ interface TypographyType {
   colorVariant?: VariantsType;
   rest?: any;
 }
-type VariantType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+type VariantType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small";
 type ChildrenType = React.ReactNode;
 type ClassnameType = string;
 
@@ -18,6 +18,7 @@ interface TagelementType {
   h5: JSX.Element;
   h6: JSX.Element;
   p: JSX.Element;
+  small: JSX.Element;
 }
 
 const Typography = ({
@@ -114,6 +115,14 @@ const relatedTypography = (
     ),
     p: (
       <p {...rest} className={`${variantPicker(colorVariant)} ${className}`}>
+        {children}
+      </p>
+    ),
+    small: (
+      <p
+        {...rest}
+        className={`text-sm ${variantPicker(colorVariant)} ${className}`}
+      >
         {children}
       </p>
     ),

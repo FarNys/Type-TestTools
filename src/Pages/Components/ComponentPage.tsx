@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../../Components/Actions/Button";
 import Alert from "../../Components/DataDisplay/Alert";
 import Badge from "../../Components/DataDisplay/Badge";
 import DataCard from "../../Components/DataDisplay/DataCard";
 import Loading from "../../Components/DataDisplay/Loading";
 import SquareLoading from "../../Components/DataDisplay/SquareLoading";
+import InputGroup from "../../Components/DataInput/InputGroup";
+import Accordion from "../../Components/Layout/Accordion";
 import Card from "../../Components/Layout/Card";
 import Container from "../../Components/Layout/Container";
 import LinkText from "../../Components/Navigate/LinkText";
@@ -138,8 +141,48 @@ const ComponentPage = () => {
           />
         </div>
       </Card>
+      <Card>
+        <Accordion data={accordionData} />
+      </Card>
+      <Card>
+        <InputGroup label="title" name="input-name" />
+        <InputGroup label="title-ko" name="input-name-2" />
+      </Card>
     </Container>
   );
 };
 
 export default ComponentPage;
+
+const accordionData = [
+  {
+    title: "Parent-1",
+    children: [
+      {
+        title: "childrensSz-1",
+      },
+      {
+        title: "child-2",
+      },
+    ],
+  },
+  {
+    title: "Parent-2",
+    children: [
+      {
+        title: "child-2-1",
+      },
+    ],
+  },
+  {
+    title: "Parent-3",
+    children: [
+      {
+        title: "child-3-1",
+      },
+      {
+        title: "child-3-2",
+      },
+    ],
+  },
+];
