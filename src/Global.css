@@ -8,3 +8,13 @@
 .md {
   @apply px-4 py-2;
 }
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+}
+.animate-delay-1000 {
+  animation-delay: 1000ms;
+}
+.animate-delay-1500 {
+  animation-delay: 1500ms;
+}

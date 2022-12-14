@@ -1,6 +1,10 @@
 import React, { useRef, useState } from "react";
 import Button from "../../Components/Actions/Button";
 import Alert from "../../Components/DataDisplay/Alert";
+import Badge from "../../Components/DataDisplay/Badge";
+import DataCard from "../../Components/DataDisplay/DataCard";
+import Loading from "../../Components/DataDisplay/Loading";
+import SquareLoading from "../../Components/DataDisplay/SquareLoading";
 import Card from "../../Components/Layout/Card";
 import Container from "../../Components/Layout/Container";
 import LinkText from "../../Components/Navigate/LinkText";
@@ -58,7 +62,7 @@ const ComponentPage = () => {
         <Typography variant="p">Test Typography p</Typography>
       </Card>
       <Card>
-        This is <LinkText to="/todo">Todo</LinkText> Example
+        This is <LinkText to="/todo">Link</LinkText> Example
       </Card>
       <Card>
         <Typography variant="h5" className="mt-2 mb-1 ">
@@ -99,6 +103,40 @@ const ComponentPage = () => {
         <Typography variant="p" colorVariant="warning">
           p element with warning Variant
         </Typography>
+      </Card>
+      <Card>
+        <Badge text="success" variant="success" />
+        <Badge text="danger" variant="danger" />
+        <Badge text="info" variant="info" />
+        <Badge text="warning" variant="warning" />
+      </Card>
+      <Card>
+        <Loading />
+        <SquareLoading />
+      </Card>
+      <Card>
+        <div className="grid lg:grid-cols-4 gap-2 md:grid-cols-2 sm:grid-cols-1 mx-auto">
+          <DataCard
+            content="You can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more."
+            title="Title"
+            imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
+          />
+          <DataCard
+            content="You can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more."
+            title="Title"
+            imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
+          />
+          <DataCard
+            content="You can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more."
+            title="Title"
+            imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
+          />
+          <DataCard
+            content="You can also use variant modifiers to target media queries like responsive breakpoints, dark mode, prefers-reduced-motion, and more."
+            title="Title"
+            imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
+          />
+        </div>
       </Card>
     </Container>
   );
