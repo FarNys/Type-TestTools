@@ -42,7 +42,7 @@ const variantPicker = (v: VariantsType): string => {
     info: "text-sky-400",
     warning: "text-orange-400",
   };
-  return variant[v];
+  return variant[v] || variant.default;
 };
 
 const relatedTypography = (
@@ -56,9 +56,9 @@ const relatedTypography = (
     h1: (
       <h1
         {...rest}
-        className={`text-5xl font-extrabold ${variantPicker(
-          colorVariant
-        )} $ ${className}`}
+        className={`text-5xl font-extrabold ${variantPicker(colorVariant)} $ ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h1>
@@ -66,9 +66,9 @@ const relatedTypography = (
     h2: (
       <h2
         {...rest}
-        className={` text-4xl font-extrabold ${variantPicker(
-          colorVariant
-        )} ${className}`}
+        className={` text-4xl font-extrabold ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h2>
@@ -76,9 +76,9 @@ const relatedTypography = (
     h3: (
       <h3
         {...rest}
-        className={` text-3xl font-bold ${variantPicker(
-          colorVariant
-        )} ${className}`}
+        className={` text-3xl font-bold ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h3>
@@ -86,9 +86,9 @@ const relatedTypography = (
     h4: (
       <h4
         {...rest}
-        className={` text-2xl font-bold ${variantPicker(
-          colorVariant
-        )} ${className}`}
+        className={` text-2xl font-bold ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h4>
@@ -96,9 +96,9 @@ const relatedTypography = (
     h5: (
       <h5
         {...rest}
-        className={` text-xl font-semibold ${variantPicker(
-          colorVariant
-        )} ${className}`}
+        className={` text-xl font-semibold ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h5>
@@ -106,22 +106,29 @@ const relatedTypography = (
     h6: (
       <h6
         {...rest}
-        className={` text-lg font-semibold ${variantPicker(
-          colorVariant
-        )} ${className}`}
+        className={` text-lg font-semibold ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </h6>
     ),
     p: (
-      <p {...rest} className={`${variantPicker(colorVariant)} ${className}`}>
+      <p
+        {...rest}
+        className={`${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
+      >
         {children}
       </p>
     ),
     small: (
       <p
         {...rest}
-        className={`text-sm ${variantPicker(colorVariant)} ${className}`}
+        className={`text-sm ${variantPicker(colorVariant)} ${
+          className ? className : ""
+        }`}
       >
         {children}
       </p>

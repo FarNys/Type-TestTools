@@ -28,10 +28,15 @@ module.exports = {
           "50%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
+        fadeOut: {
+          "0%": { opacity: "0", transform: "translate(-50%,0)" },
+          "100%": { opacity: "1", transform: "translate(-50%,40px)" },
+        },
       },
       animation: {
         getfill: "getfill 2s ease-in-out infinite",
         fadeInOut: "fadeInOut 2s ease-in-out infinite",
+        fadeOut: "fadeOut 0.5s ease-in-out normal both",
       },
     },
   },

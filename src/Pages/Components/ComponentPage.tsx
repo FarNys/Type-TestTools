@@ -13,20 +13,27 @@ import Container from "../../Components/Layout/Container";
 import LinkText from "../../Components/Navigate/LinkText";
 import Modal from "../../Components/Navigate/Portal";
 import Typography from "../../Components/Typo/Typography";
+import Modals from "../../Components/Actions/Modals";
 
 type CountType = number;
 
 const ComponentPage = () => {
   const [count, setcount] = useState<CountType>(0);
   const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
+  const [modalOpen, setmodalOpen] = useState<boolean>(false);
+
   const btnRef = useRef(null);
   const openModalHanlder = () => {
     setmodalIsOpen((prev) => !prev);
   };
+  //MODAL CONTROLLER
+  const openModalStateHandler = () => {
+    setmodalOpen(true);
+  };
 
   return (
     <Container>
-      <Card>
+      {/* <Card>
         <Button
           title="Add +1"
           data-testid="increment"
@@ -147,7 +154,28 @@ const ComponentPage = () => {
       <Card>
         <InputGroup label="title" name="input-name" />
         <InputGroup label="title-ko" name="input-name-2" />
+      </Card> */}
+      <Card>
+        <Button onClick={openModalStateHandler} size="md" variant="default">
+          Open Modal
+        </Button>
       </Card>
+
+      <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
+        <Typography variant="p">Do you want to exit?</Typography>
+        <div className="flex w-full justify-end">
+          <Button size="sm" variant="info" onClick={() => setmodalOpen(false)}>
+            Yes
+          </Button>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => setmodalOpen(false)}
+          >
+            No
+          </Button>
+        </div>
+      </Modals>
     </Container>
   );
 };
