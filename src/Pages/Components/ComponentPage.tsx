@@ -16,6 +16,8 @@ import Typography from "../../Components/Typo/Typography";
 import Modals from "../../Components/Actions/Modals";
 import Dropdown, { OptionType } from "../../Components/Actions/Dropdown";
 import DropdownMulti from "../../Components/Actions/DropdownMulti";
+import Toggle from "../../Components/DataInput/Toggle";
+import Checkbox from "../../Components/DataInput/Checkbox";
 
 type CountType = number;
 
@@ -40,6 +42,16 @@ const ComponentPage = () => {
   };
   //DROPDWON MULTI SELECT HANDLER
   const selectMultiHandler = (e: OptionType[]): void => {
+    console.log(e);
+  };
+
+  //TOGGLE HANDLER FOR CHECKBOX
+  const changeToggleHandler = (e: boolean) => {
+    console.log(e);
+  };
+
+  //CHECKBOX HANDLER TO CONTROL STATE IN PARENT
+  const changeCheckboxHandler = (e: boolean) => {
     console.log(e);
   };
 
@@ -74,7 +86,7 @@ const ComponentPage = () => {
           </Modal>
         )}
       </Card> */}
-      <Card>
+      {/* <Card>
         <Typography variant="h1">Test Typography h1</Typography>
         <Typography variant="h2">Test Typography h2</Typography>
         <Typography variant="h3">Test Typography h3</Typography>
@@ -172,14 +184,18 @@ const ComponentPage = () => {
           Open Modal
         </Button>
       </Card>
-      <Card>
-        <DropdownMulti options={optionList} onSelect={selectMultiHandler} />
-      </Card>
+     */}
       <Card>
         <Dropdown options={optionList} onSelect={selectDataHandler} />
       </Card>
       <Card>
         <DropdownMulti options={optionList} onSelect={selectMultiHandler} />
+      </Card>
+      <Card>
+        <Toggle onChange={changeToggleHandler} isChecked={true} />
+      </Card>
+      <Card>
+        <Checkbox onChange={changeCheckboxHandler} isChecked={true} />
       </Card>
 
       <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
