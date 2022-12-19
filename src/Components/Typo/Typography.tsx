@@ -1,10 +1,9 @@
-import React, { ReactElement } from "react";
+import React from "react";
 interface TypographyType {
   variant?: VariantType;
   children?: React.ReactNode;
   className?: string;
   colorVariant?: VariantsType;
-  rest?: any;
 }
 type VariantType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small";
 type ChildrenType = React.ReactNode;

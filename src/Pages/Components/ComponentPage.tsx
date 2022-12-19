@@ -14,6 +14,8 @@ import LinkText from "../../Components/Navigate/LinkText";
 import Modal from "../../Components/Navigate/Portal";
 import Typography from "../../Components/Typo/Typography";
 import Modals from "../../Components/Actions/Modals";
+import Dropdown, { OptionType } from "../../Components/Actions/Dropdown";
+import DropdownMulti from "../../Components/Actions/DropdownMulti";
 
 type CountType = number;
 
@@ -21,6 +23,7 @@ const ComponentPage = () => {
   const [count, setcount] = useState<CountType>(0);
   const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
   const [modalOpen, setmodalOpen] = useState<boolean>(false);
+  const [selectedValue, setselectedValue] = useState("");
 
   const btnRef = useRef(null);
   const openModalHanlder = () => {
@@ -29,6 +32,15 @@ const ComponentPage = () => {
   //MODAL CONTROLLER
   const openModalStateHandler = () => {
     setmodalOpen(true);
+  };
+
+  //DROPDOWN SELECT VALUE
+  const selectDataHandler = (e: OptionType): void => {
+    console.log(e);
+  };
+  //DROPDWON MULTI SELECT HANDLER
+  const selectMultiHandler = (e: OptionType[]): void => {
+    console.log(e);
   };
 
   return (
@@ -61,7 +73,7 @@ const ComponentPage = () => {
             <div className="kl">Vladiagro</div>
           </Modal>
         )}
-      </Card>
+      </Card> */}
       <Card>
         <Typography variant="h1">Test Typography h1</Typography>
         <Typography variant="h2">Test Typography h2</Typography>
@@ -154,11 +166,20 @@ const ComponentPage = () => {
       <Card>
         <InputGroup label="title" name="input-name" />
         <InputGroup label="title-ko" name="input-name-2" />
-      </Card> */}
+      </Card>
       <Card>
         <Button onClick={openModalStateHandler} size="md" variant="default">
           Open Modal
         </Button>
+      </Card>
+      <Card>
+        <DropdownMulti options={optionList} onSelect={selectMultiHandler} />
+      </Card>
+      <Card>
+        <Dropdown options={optionList} onSelect={selectDataHandler} />
+      </Card>
+      <Card>
+        <DropdownMulti options={optionList} onSelect={selectMultiHandler} />
       </Card>
 
       <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
@@ -181,6 +202,41 @@ const ComponentPage = () => {
 };
 
 export default ComponentPage;
+
+const optionList = [
+  {
+    label: "L-One",
+    value: "Label One",
+  },
+  {
+    label: "L-Two",
+    value: "Label Two",
+  },
+  {
+    label: "Mixer",
+    value: "Label 3",
+  },
+  {
+    label: "TaBLING",
+    value: "Label 4",
+  },
+  {
+    label: "Revol",
+    value: "Label 5",
+  },
+  {
+    label: "Kickso",
+    value: "Label 6",
+  },
+  {
+    label: "VeloNe",
+    value: "Label 7",
+  },
+  {
+    label: "Brand",
+    value: "Label 8",
+  },
+];
 
 const accordionData = [
   {

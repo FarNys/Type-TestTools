@@ -34,7 +34,7 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
   };
 
   const activeLink = (item: string) => {
-    if (item === urlText) return "bg-slate-300";
+    if (item === urlText) return "bg-slate-300 border-l-4 border-cyan-400 ";
     return "";
   };
 
@@ -43,7 +43,9 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
       {data.map((el: DataParentType, index: number) => (
         <li key={`list-${index}`} className="overflow-hidden">
           <p
-            className={`px-3  ${activeTab === index ? "bg-cyan-300" : ""}`}
+            className={`pl-3 pr-10 py-1 ${
+              activeTab === index ? "bg-slate-200" : ""
+            }`}
             onClick={() => activeHandler(index)}
           >
             {el.title}
@@ -57,7 +59,7 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
               >
                 <Typography
                   variant="small"
-                  className={`px-4 py-1 hover:bg-slate-400 active:bg-slate-500 ${activeLink(
+                  className={`py-1 px-2 rounded-l-md hover:bg-slate-400 active:bg-slate-500 ${activeLink(
                     child.title
                   )}`}
                 >
