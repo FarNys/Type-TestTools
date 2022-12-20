@@ -19,6 +19,8 @@ import DropdownMulti from "../../Components/Actions/DropdownMulti";
 import Toggle from "../../Components/DataInput/Toggle";
 import Checkbox from "../../Components/DataInput/Checkbox";
 import Tabs from "../../Components/Navigate/Tabs";
+import RangeSlider from "../../Components/DataInput/RangeSlider";
+import Toast from "../../Components/DataDisplay/Toast";
 
 type CountType = number;
 
@@ -27,7 +29,8 @@ const ComponentPage = () => {
   const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
   const [modalOpen, setmodalOpen] = useState<boolean>(false);
   const [selectedValue, setselectedValue] = useState("");
-
+  const [isToast, setisToast] = useState<boolean>(false);
+  const [isToastShow, setisToastShow] = useState<boolean>(false);
   const btnRef = useRef(null);
   const openModalHanlder = () => {
     setmodalIsOpen((prev) => !prev);
@@ -53,6 +56,11 @@ const ComponentPage = () => {
 
   //CHECKBOX HANDLER TO CONTROL STATE IN PARENT
   const changeCheckboxHandler = (e: boolean) => {
+    console.log(e);
+  };
+
+  //HANDLER TO GET RANGE SLIDER SELECTED VALUE
+  const selectedValueHandler = (e: number) => {
     console.log(e);
   };
 
@@ -201,7 +209,38 @@ const ComponentPage = () => {
       <Card>
         <Tabs tabsValue={tabsItem} />
       </Card>
+      <Card>
+        <RangeSlider
+          minValue={100}
+          maxValue={300}
+          selectedValue={selectedValueHandler}
+        />
+      </Card>
+      <Card>
+        <Button size="md" variant="default" onClick={() => setisToast(true)}>
+          Show Toast
+        </Button>
+        <Button
+          size="md"
+          variant="default"
+          onClick={() => setisToastShow(true)}
+        >
+          Show Toast 2
+        </Button>
+      </Card>
 
+      <Toast
+        toastText="TS2739: Type '{}' is missing the follow"
+        showToast={isToast}
+        setshowToast={setisToast}
+        variant="info"
+      />
+      <Toast
+        toastText="TS2739: Danger Toastthe follow"
+        showToast={isToastShow}
+        setshowToast={setisToastShow}
+        variant="danger"
+      />
       <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
         <Typography variant="p">Do you want to exit?</Typography>
         <div className="flex w-full justify-end">

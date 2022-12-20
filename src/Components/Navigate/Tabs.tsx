@@ -22,7 +22,7 @@ const Tabs = ({ className, tabsValue, ...rest }: TabsType) => {
         {tabsValue.map((el: SingleTab, index: number) => (
           <div
             className={`w-fit px-3 py-1 border-r-2 last-of-type:border-r-0 cursor-pointer duration-150 ${
-              el.id === activeTabId ? "bg-cyan-100 " : "bg-slate-100"
+              el.id === activeTabId ? "bg-sky-100 " : "bg-slate-100"
             }`}
             key={`tab-header-${el.id}-${index}`}
             onClick={() => changeActiveHandler(el)}

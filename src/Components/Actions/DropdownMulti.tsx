@@ -8,7 +8,7 @@ interface DropdownType {
   onSelect: (e: OptionType[]) => void;
 }
 
-interface CoodrinateType {
+export interface CoodrinateType {
   bottom: number;
   height: number;
   left: number;

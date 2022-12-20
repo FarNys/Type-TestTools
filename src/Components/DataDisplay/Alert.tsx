@@ -7,7 +7,7 @@ interface AlertType {
   icon?: React.ReactNode;
 }
 
-type VariantsType = "success" | "danger" | "info" | "warning";
+export type VariantsType = "success" | "danger" | "info" | "warning";
 
 const Alert = ({ title, variant, className, icon }: AlertType) => {
   return (

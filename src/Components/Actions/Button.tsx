@@ -55,7 +55,7 @@ const variantCalculator = (el: ButtonVariant) => {
     default: "bg-slate-100",
     danger: "bg-red-500 hover:bg-red-600  active:bg-red-700",
     success: "bg-green-500 hover:bg-green-600  active:bg-green-700",
-    info: "bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700",
+    info: "bg-sky-500 hover:bg-sky-600 active:bg-sky-700",
     warning: "bg-orange-500 hover:bg-orange-600 active:bg-warning-700",
   };
   return buttonVariants[el] || buttonVariants.default;

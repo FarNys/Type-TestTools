@@ -105,7 +105,7 @@ const relatedTypography = (
     h6: (
       <h6
         {...rest}
-        className={` text-lg font-semibold ${variantPicker(colorVariant)} ${
+        className={` font-semibold ${variantPicker(colorVariant)} ${
           className ? className : ""
         }`}
       >
