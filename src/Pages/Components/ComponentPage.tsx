@@ -18,6 +18,7 @@ import Dropdown, { OptionType } from "../../Components/Actions/Dropdown";
 import DropdownMulti from "../../Components/Actions/DropdownMulti";
 import Toggle from "../../Components/DataInput/Toggle";
 import Checkbox from "../../Components/DataInput/Checkbox";
+import Tabs from "../../Components/Navigate/Tabs";
 
 type CountType = number;
 
@@ -197,6 +198,9 @@ const ComponentPage = () => {
       <Card>
         <Checkbox onChange={changeCheckboxHandler} isChecked={true} />
       </Card>
+      <Card>
+        <Tabs tabsValue={tabsItem} />
+      </Card>
 
       <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
         <Typography variant="p">Do you want to exit?</Typography>
@@ -218,6 +222,24 @@ const ComponentPage = () => {
 };
 
 export default ComponentPage;
+
+const tabsItem = [
+  {
+    title: "TAB-1",
+    id: "1",
+    content: <div>THIS IS First Item</div>,
+  },
+  {
+    title: "TAB-2",
+    id: "2",
+    content: <div>THIS IS Second Item</div>,
+  },
+  {
+    title: "TAB-3",
+    id: "3",
+    content: <div>THIS IS Third Item</div>,
+  },
+];
 
 const optionList = [
   {
