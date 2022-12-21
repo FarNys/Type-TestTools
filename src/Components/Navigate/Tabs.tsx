@@ -1,19 +1,46 @@
 import React, { useState } from "react";
 import Typography from "../Typo/Typography";
+import { VariantsType } from "../DataDisplay/Alert";
 interface TabsType {
   tabsValue: SingleTab[];
   className?: string;
+  variant: VariantsType;
 }
+
+interface ColorTypes {
+  info: string;
+  danger: string;
+  success: string;
+  warning: string;
+  default: string;
+}
+
 interface SingleTab {
   title: string;
   id: string;
   content: React.ReactNode;
 }
 
-const Tabs = ({ className, tabsValue, ...rest }: TabsType) => {
+const Tabs = ({ className, tabsValue, variant, ...rest }: TabsType) => {
   const [activeTabId, setactiveTabId] = useState<string>(tabsValue[0].id);
   const changeActiveHandler = (item: SingleTab) => {
     setactiveTabId(item.id);
+  };
+
+  const colorsItems: any = {
+    info: "info",
+    danger: "danger",
+    success: "success",
+    warning: "warning",
+    default: "default",
+  };
+
+  const bgItems: any = {
+    info: "bg-sky-50",
+    danger: "bg-red-50",
+    success: "bg-green-50",
+    warning: "bg-orange-50",
+    default: "bg-slate-50",
   };
 
   return (
@@ -22,14 +49,18 @@ const Tabs = ({ className, tabsValue, ...rest }: TabsType) => {
         {tabsValue.map((el: SingleTab, index: number) => (
           <div
             className={`w-fit px-3 py-1 border-r-2 last-of-type:border-r-0 cursor-pointer duration-150 ${
-              el.id === activeTabId ? "bg-sky-100 " : "bg-slate-100"
-            }`}
+              el.id === activeTabId ? bgItems[variant] : "bg-slate-50"
+            } `}
             key={`tab-header-${el.id}-${index}`}
             onClick={() => changeActiveHandler(el)}
           >
             <Typography
               variant="h6"
-              colorVariant={el.id === activeTabId ? "info" : "default"}
+              colorVariant={
+                el.id === activeTabId
+                  ? colorsItems[variant as keyof ColorTypes]
+                  : "default"
+              }
             >
               {el.title}
             </Typography>

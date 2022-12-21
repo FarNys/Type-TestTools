@@ -102,7 +102,7 @@ const DropdownMulti = ({
         {localValue?.length > 0 ? (
           localValue?.map((el: OptionType, index: number) => (
             <div
-              className="m-1 flex items-center flex-nowrap flex-shrink-0 bg-slate-300 hover:text-slate-500 rounded pr-1 overflow-hidden"
+              className="my-1 mx-0.5 flex items-center flex-nowrap flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 overflow-hidden"
               key={`${el.label}-value-${index}`}
             >
               {" "}
@@ -112,7 +112,7 @@ const DropdownMulti = ({
               >
                 x
               </div>
-              <Typography variant="small" className="text-xs">
+              <Typography variant="small" className="text-xs px-1">
                 {el.label}
               </Typography>
             </div>
@@ -123,7 +123,7 @@ const DropdownMulti = ({
       </div>
       {selectCoordinate && (
         <div
-          className="absolute left-0 w-full flex flex-col shadow-md z-50"
+          className="absolute max-h-44 overflow-y-scroll left-0 w-full flex flex-col shadow-md z-50"
           style={{ top: selectCoordinate.height }}
         >
           {showItems &&

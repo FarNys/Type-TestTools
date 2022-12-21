@@ -7,7 +7,12 @@ interface AlertType {
   icon?: React.ReactNode;
 }
 
-export type VariantsType = "success" | "danger" | "info" | "warning";
+export type VariantsType =
+  | "success"
+  | "danger"
+  | "info"
+  | "warning"
+  | "default";
 
 const Alert = ({ title, variant, className, icon }: AlertType) => {
   return (
@@ -28,6 +33,7 @@ const findVariant = (v: VariantsType): string => {
     danger: "bg-red-400",
     info: "bg-sky-400",
     warning: "bg-orange-400",
+    default: "bg-white",
   };
 
   return variants[v];

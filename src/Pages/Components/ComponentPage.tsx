@@ -204,13 +204,21 @@ const ComponentPage = () => {
         <DropdownMulti options={optionList} onSelect={selectMultiHandler} />
       </Card>
       <Card>
-        <Toggle onChange={changeToggleHandler} isChecked={true} />
+        <Toggle
+          onChange={changeToggleHandler}
+          isChecked={true}
+          variant="danger"
+        />
       </Card>
       <Card>
-        <Checkbox onChange={changeCheckboxHandler} isChecked={true} />
+        <Checkbox
+          onChange={changeCheckboxHandler}
+          isChecked={true}
+          variant="warning"
+        />
       </Card>
       <Card>
-        <Tabs tabsValue={tabsItem} />
+        <Tabs tabsValue={tabsItem} variant="info" />
       </Card>
       <Card>
         <RangeSlider
