@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../Components/Actions/Input";
-import Button from "../../Components/Button";
+import Button from "../../Components/Actions/Button";
 import SingleTodo from "./Components/SingleTodo";
 import { ErrorType, TodoType } from "./TodoTypes";
 import { RootState } from "../../store/store";
@@ -84,7 +84,8 @@ const TodoPage = () => {
         <Button
           title="Create"
           type="submit"
-          variant="md"
+          size="md"
+          variant="default"
           onClick={addTodoHandler}
         />
       </form>

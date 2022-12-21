@@ -24,7 +24,7 @@ const Checkbox = ({
     <div
       role="checkbox"
       aria-checked="mixed"
-      className={`flex justify-center items-center w-8 h-8 rounded-full hover:bg-green-200 cursor-pointer duration-150 ${className}`}
+      className={`flex justify-center items-center w-8 h-8 rounded-full hover:bg-green-100 cursor-pointer duration-150 ${className}`}
       onClick={checkStateHandler}
     >
       <div

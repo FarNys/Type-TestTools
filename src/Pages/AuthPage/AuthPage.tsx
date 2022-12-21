@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Input from "../../Components/Actions/Input";
-import Button from "../../Components/Button";
+import Button from "../../Components/Actions/Button";
 import { FormType } from "./AuthPageType";
 
 const AuthPage = () => {
@@ -50,9 +50,10 @@ const AuthPage = () => {
         <Button
           title={btnTitle}
           onClick={sendHandler}
-          role="button"
-          disabled={!formData.username || !formData.password}
-          variant="sm"
+          size="sm"
+          variant="default"
+          // role="button"
+          // disabled={!formData.username || !formData.password}
           // myClass="bg-red-600"
         />
         <div data-testid="myData" data-cy="result">

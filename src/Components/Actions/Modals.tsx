@@ -39,7 +39,7 @@ const Modals = ({
           </Typography>
           <Button
             onClick={clickToCloseModalHandler}
-            className="border-red-500 text-red-500 hover:bg-red-500 hover:border-slate-100 hover:text-slate-100"
+            // className="border-red-500 text-red-500 hover:bg-red-500 hover:border-slate-100 hover:text-slate-100"
             size="sm"
             variant="default"
           >

@@ -29,8 +29,10 @@ const Toggle = ({ className, isChecked, onChange, ...rest }: ToggleType) => {
       onClick={toggleHandler}
     >
       <div
-        className={`absolute rounded-full top-1/2 -translate-y-1/2 h-4 w-4 duration-150 bg-slate-600 border ${
-          toggleState ? "bg-green-500 translate-x-5  " : "translate-x-0.5  "
+        className={`absolute rounded-full top-1/2 -translate-y-1/2 h-4 w-4 duration-150  border ${
+          toggleState
+            ? "bg-green-500 translate-x-5  "
+            : "translate-x-0.5 bg-slate-600 "
         }`}
       ></div>
     </div>
