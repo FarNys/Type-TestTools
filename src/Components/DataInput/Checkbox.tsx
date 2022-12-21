@@ -24,14 +24,14 @@ const Checkbox = ({
     <div
       role="checkbox"
       aria-checked="mixed"
-      className={`flex justify-center items-center w-7 h-7 rounded-full hover:bg-green-200 cursor-pointer duration-150 ${className}`}
+      className={`flex justify-center items-center w-8 h-8 rounded-full hover:bg-green-200 cursor-pointer duration-150 ${className}`}
       onClick={checkStateHandler}
     >
       <div
         className={`w-3 h-3 border ${
           checkState
             ? "bg-green-500 outline-1 outline outline-green-500"
-            : "bg-white"
+            : "bg-white outline-1 outline-offset-1  outline outline-slate-600 border-slate-600"
         }`}
       ></div>
     </div>

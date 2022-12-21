@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseeUrl } from "../../Api/api";
 import usePost from "../../Hooks/usePost";
 import { getAllPosts } from "../../store/slices/postsSlice";
 import { RootState } from "../../store/store";
-import axios from "axios";
+import Input from "../../Components/Actions/Input";
+import InputGroup from "../../Components/DataInput/InputGroup";
+import Button from "../../Components/Actions/Button";
 
 type PostType = {
   attributes: {
@@ -12,29 +14,29 @@ type PostType = {
   };
 };
 
-interface El {
-  id: number;
-  attributes: {};
-}
-
 function Posts() {
   const dispatch = useDispatch();
   // const [posts, setposts] = useState<PostsType>([]);
   const posts = useSelector((state: RootState) => state.postsSlice.posts);
   const { data, isLoading, error } = usePost();
-  console.log(data, isLoading);
+  const [nameValue, setnameValue] = useState<string>("");
+
+  const nameInputHandler = (e: any) => {
+    setnameValue(e.target.value);
+  };
+
+  const sendHandler = () => {
+    console.log(nameValue);
+  };
   // console.log(posts);
 
   useEffect(() => {
-    // let cleanUp = true;
-
     const fetchPosts = async () => {
       const res = await fetch(`${baseeUrl}/api/articles?populate=*`);
       const data = await res.json();
       dispatch(getAllPosts({ posts: data.data }));
     };
     fetchPosts();
-
     // return () => (cleanUp = false);
   }, []);
 
@@ -47,9 +49,19 @@ function Posts() {
           <p data-testid="post">{el.attributes.title}</p>
         </div>
       ))}
-      {/* {data?.data.map((el: El, index: number) => (
-        <p key={`generate-${index}`}>{el.id}</p>
-      ))} */}
+      {/* <div className="border border-sky-100 my-2">
+        {strapiData?.data.map((el: any, index: number) => (
+          <p key={`generate-${index}`}>{el.attributes.title}</p>
+        ))}
+      </div> */}
+      <form>
+        <InputGroup
+          label="Name"
+          name="create-test-item"
+          onChange={nameInputHandler}
+        />
+        <Button size="sm" variant="info" onClick={sendHandler} title="Send" />
+      </form>
     </div>
   );
 }

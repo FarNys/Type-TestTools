@@ -8,6 +8,7 @@ import ComponentPage from "../Pages/Components/ComponentPage";
 import DndContainer from "../Pages/DndContainer/DndContainer";
 import Posts from "../Pages/Posts/Posts";
 import TodoPage from "../Pages/TodoPage/TodoPage";
+import TodoRTKQ from "../Pages/TodoRTKQ/TodoRTKQ";
 
 const routerList = createBrowserRouter([
   {
@@ -70,6 +71,15 @@ const routerList = createBrowserRouter([
       <>
         <Navbar />
         <DndContainer />
+      </>
+    ),
+  },
+  {
+    path: "/todo-rtkq",
+    element: (
+      <>
+        <Navbar />
+        <TodoRTKQ />
       </>
     ),
   },

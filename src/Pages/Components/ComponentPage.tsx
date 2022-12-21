@@ -22,13 +22,10 @@ import Tabs from "../../Components/Navigate/Tabs";
 import RangeSlider from "../../Components/DataInput/RangeSlider";
 import Toast from "../../Components/DataDisplay/Toast";
 
-type CountType = number;
-
 const ComponentPage = () => {
-  const [count, setcount] = useState<CountType>(0);
+  const [count, setcount] = useState<number>(0);
   const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
   const [modalOpen, setmodalOpen] = useState<boolean>(false);
-  const [selectedValue, setselectedValue] = useState("");
   const [isToast, setisToast] = useState<boolean>(false);
   const [isToastShow, setisToastShow] = useState<boolean>(false);
   const btnRef = useRef(null);
@@ -66,11 +63,13 @@ const ComponentPage = () => {
 
   return (
     <Container>
-      {/* <Card>
+      <Card>
         <Button
           title="Add +1"
           data-testid="increment"
           role="button"
+          variant="default"
+          size="sm"
           // onClick={():void => setcount((prev) => prev + 1)}
           onClick={(): void => setcount((prev) => prev + 1)}
         />
@@ -78,6 +77,8 @@ const ComponentPage = () => {
           title="Add -1"
           role="button"
           data-testid="decrement"
+          variant="default"
+          size="md"
           onClick={(): void => setcount((prev) => prev - 1)}
           ref={btnRef}
         />
@@ -88,14 +89,16 @@ const ComponentPage = () => {
           title="OpenModal"
           className="mx-2 bg-blue-500 text-white hover:bg-blue-600 hover:scale-95 focus:bg-blue-700"
           onClick={openModalHanlder}
+          size="md"
+          variant="warning"
         />
         {modalIsOpen && (
           <Modal show={true}>
             <div className="kl">Vladiagro</div>
           </Modal>
         )}
-      </Card> */}
-      {/* <Card>
+      </Card>
+      <Card>
         <Typography variant="h1">Test Typography h1</Typography>
         <Typography variant="h2">Test Typography h2</Typography>
         <Typography variant="h3">Test Typography h3</Typography>
@@ -193,7 +196,7 @@ const ComponentPage = () => {
           Open Modal
         </Button>
       </Card>
-     */}
+
       <Card>
         <Dropdown options={optionList} onSelect={selectDataHandler} />
       </Card>

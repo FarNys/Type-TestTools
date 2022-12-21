@@ -10,6 +10,7 @@ const Navbar: React.FC<any> = () => {
       <LinkStyle to="/auth">Auth Page</LinkStyle>
       <LinkStyle to="/todo">Todo Page</LinkStyle>
       <LinkStyle to="/dnd">Dran n Drop</LinkStyle>
+      <LinkStyle to="/todo-rtkq">Todo RTKQ</LinkStyle>
     </div>
   );
 };
