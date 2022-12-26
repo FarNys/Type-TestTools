@@ -21,6 +21,7 @@ import Checkbox from "../../Components/DataInput/Checkbox";
 import Tabs from "../../Components/Navigate/Tabs";
 import RangeSlider from "../../Components/DataInput/RangeSlider";
 import Toast from "../../Components/DataDisplay/Toast";
+import Carousel from "../../Components/DataDisplay/Carousel";
 
 const ComponentPage = () => {
   const [count, setcount] = useState<number>(0);
@@ -63,7 +64,7 @@ const ComponentPage = () => {
 
   return (
     <Container>
-      <Card>
+      {/* <Card>
         <Button
           title="Add +1"
           data-testid="increment"
@@ -183,7 +184,7 @@ const ComponentPage = () => {
             imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
           />
         </div>
-      </Card>
+      </Card> */}
       <Card>
         <Accordion data={accordionData} />
       </Card>
@@ -222,8 +223,8 @@ const ComponentPage = () => {
       </Card>
       <Card>
         <RangeSlider
-          minValue={100}
-          maxValue={300}
+          minValue={26584}
+          maxValue={36598}
           selectedValue={selectedValueHandler}
         />
       </Card>
@@ -238,6 +239,9 @@ const ComponentPage = () => {
         >
           Show Toast 2
         </Button>
+      </Card>
+      <Card>
+        <Carousel />
       </Card>
 
       <Toast

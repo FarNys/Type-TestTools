@@ -39,7 +39,7 @@ const findVariant = ({ className, variant, text, ...rest }: BadgeType) => {
     info: (
       <div
         {...rest}
-        className={`w-fit flex text-sm bg-cyan-100 rounded text-cyan-600 px-2  ${className}`}
+        className={`w-fit flex text-sm bg-sky-100 rounded text-sky-600 px-2  ${className}`}
       >
         {text}
       </div>

@@ -86,9 +86,9 @@ const DropdownMulti = ({
   }, []);
   useEffect(() => {
     if (showItems) {
-      window.addEventListener("click", clickOutside);
+      window.addEventListener("mousedown", clickOutside);
     }
-    return () => window.removeEventListener("click", clickOutside);
+    return () => window.removeEventListener("mousedown", clickOutside);
   }, [showItems, clickOutside]);
 
   return (
@@ -123,7 +123,7 @@ const DropdownMulti = ({
       </div>
       {selectCoordinate && (
         <div
-          className="absolute max-h-44 overflow-y-scroll left-0 w-full flex flex-col shadow-md z-50"
+          className="absolute max-h-44 overflow-y-auto left-0 w-full flex flex-col shadow-md z-50"
           style={{ top: selectCoordinate.height }}
         >
           {showItems &&

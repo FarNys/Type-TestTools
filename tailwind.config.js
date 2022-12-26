@@ -17,6 +17,7 @@ module.exports = {
       },
       fontSize: {
         ex: "1rem",
+        mini: "0.6rem",
       },
       keyframes: {
         getfill: {
