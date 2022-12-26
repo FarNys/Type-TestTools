@@ -22,6 +22,7 @@ import Tabs from "../../Components/Navigate/Tabs";
 import RangeSlider from "../../Components/DataInput/RangeSlider";
 import Toast from "../../Components/DataDisplay/Toast";
 import Carousel from "../../Components/DataDisplay/Carousel";
+import { toastCreator } from "../../functions/toastCreator";
 
 const ComponentPage = () => {
   const [count, setcount] = useState<number>(0);
@@ -185,7 +186,7 @@ const ComponentPage = () => {
           />
         </div>
       </Card> */}
-      <Card>
+      {/* <Card>
         <Accordion data={accordionData} />
       </Card>
       <Card>
@@ -216,6 +217,15 @@ const ComponentPage = () => {
           onChange={changeCheckboxHandler}
           isChecked={true}
           variant="warning"
+        />
+      </Card> */}
+      <Card>
+        <Button
+          // onClick={() => setshowToastPortal(true)}
+          onClick={() => toastCreator("Toast Text")}
+          size="sm"
+          variant="default"
+          title="Portal Toast"
         />
       </Card>
       <Card>
@@ -256,6 +266,11 @@ const ComponentPage = () => {
         setshowToast={setisToastShow}
         variant="danger"
       />
+      {/* <ToastPortal
+        toastText="This is For Test"
+        showToastPortal={showToastPortal}
+        setshowToastPortal={setshowToastPortal}
+      /> */}
       <Modals setisOpren={setmodalOpen} isOpen={modalOpen} title="Modal Header">
         <Typography variant="p">Do you want to exit?</Typography>
         <div className="flex w-full justify-end">
