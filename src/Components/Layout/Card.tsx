@@ -1,6 +1,6 @@
 import React from "react";
 
-interface CardType {
+interface CardType extends React.ComponentPropsWithRef<"div"> {
   children: React.ReactNode;
   className?: string;
 }

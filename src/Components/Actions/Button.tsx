@@ -30,7 +30,7 @@ const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>) => {
   return (
     <button
       ref={ref}
-      className={`rounded-lg border mx-1 ${sizeCalculator(
+      className={`rounded border mx-1 ${sizeCalculator(
         size
       )} ${variantCalculator(variant)} ${className}`}
       {...rest}

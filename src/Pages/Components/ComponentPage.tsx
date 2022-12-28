@@ -186,7 +186,7 @@ const ComponentPage = () => {
           />
         </div>
       </Card> */}
-      {/* <Card>
+      <Card>
         <Accordion data={accordionData} />
       </Card>
       <Card>
@@ -218,7 +218,7 @@ const ComponentPage = () => {
           isChecked={true}
           variant="warning"
         />
-      </Card> */}
+      </Card>
       <Card>
         <Button
           // onClick={() => setshowToastPortal(true)}

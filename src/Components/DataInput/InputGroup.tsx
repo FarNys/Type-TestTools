@@ -1,6 +1,6 @@
 import React from "react";
 
-interface InputGroupType {
+interface InputGroupType extends React.ComponentPropsWithRef<"div"> {
   label: string;
   name: string;
   onChange?: (e: any) => void;
@@ -21,7 +21,7 @@ const InputGroup = ({
       </label>
       <input
         name={name}
-        {...rest}
+        // {...rest}
         className="border rounded px-3 py-1 outline-offset-1 focus:outline-green-700"
         onChange={onChange}
       />
