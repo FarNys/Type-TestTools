@@ -222,7 +222,9 @@ const ComponentPage = () => {
       <Card>
         <Button
           // onClick={() => setshowToastPortal(true)}
-          onClick={() => toastCreator("Toast Text")}
+          onClick={() =>
+            toastCreator("<div><h1>H1 IS HERE</h1></div>", "success")
+          }
           size="sm"
           variant="default"
           title="Portal Toast"

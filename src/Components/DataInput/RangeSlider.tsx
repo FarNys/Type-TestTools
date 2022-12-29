@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Typography from "../Typo/Typography";
 
-interface RangeSliderType {
+interface RangeSliderType extends React.ComponentPropsWithRef<"div"> {
   initialValue?: number;
   className?: string;
   minValue: number;
