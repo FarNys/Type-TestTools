@@ -1,5 +1,5 @@
 import React from "react";
-interface TypographyType {
+interface TypographyType extends React.ComponentPropsWithRef<"p"> {
   variant?: VariantType;
   children?: React.ReactNode;
   className?: string;

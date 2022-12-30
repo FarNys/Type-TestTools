@@ -26,6 +26,7 @@ const DropdownMulti = ({
   ...rest
 }: DropdownType) => {
   const selectRef = useRef<any>(null);
+  const deleteIconRef = useRef<any>(null);
   const [selectCoordinate, setselectCoordinate] = useState<CoodrinateType>();
   const [showItems, setshowItems] = useState<boolean>(false);
   const [localOptions, setlocalOptions] = useState(options);
@@ -65,6 +66,15 @@ const DropdownMulti = ({
     onSelect(newValues);
   };
 
+  //HANDLER TO OPEN/CLOSE EVERYTIME CLIENT CLICK ON SELECTION CARD
+  const openSelectionBoxHandler = (e: MouseEvent) => {
+    if (e.target !== deleteIconRef.current) {
+      setshowItems((prev) => !prev);
+    } else {
+      setshowItems(false);
+    }
+  };
+
   //DELETE AN ITEM FROM SELECTED LIST---ADD THAT ITEM TO SELECTION LIST---SEND TO onSelect FUNCTION TO GET IN ITS PARENT ELEMENT
   const deleteItemHandler = (el: OptionType) => {
     setshowItems((prev) => !prev);
@@ -91,35 +101,72 @@ const DropdownMulti = ({
     return () => window.removeEventListener("mousedown", clickOutside);
   }, [showItems, clickOutside]);
 
+  //HANDLER TO DELETE ALL SELECTED ITEMS AND ADD IT TO OPTIONS
+  const deleteAllSelectedHandler = () => {
+    setlocalValue([]);
+    setlocalOptions([...localOptions, ...localValue]);
+    onSelect([]);
+  };
+
   return (
     <div
       className="relative max-w-xs"
       {...rest}
       ref={selectRef}
-      onClick={() => setshowItems((prev) => !prev)}
+      onClick={(e: any) => openSelectionBoxHandler(e)}
     >
-      <div className="flex flex-wrap items-center cursor-pointer overflow-x-hidden  border rounded-md">
-        {localValue?.length > 0 ? (
-          localValue?.map((el: OptionType, index: number) => (
-            <div
-              className="my-1 mx-0.5 flex items-center flex-nowrap flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 overflow-hidden"
-              key={`${el.label}-value-${index}`}
-            >
-              {" "}
+      <div className="flex flex-1 flex-wrap items-center cursor-pointer border rounded-md">
+        <div className="flex flex-1 items-center overflow-x-hidden flex-wrap">
+          {localValue?.length > 0 ? (
+            localValue?.map((el: OptionType, index: number) => (
               <div
-                className="flex h-full items-center px-1  text-red-400 cursor-pointer hover:bg-red-500 hover:text-slate-300"
-                onClick={() => deleteItemHandler(el)}
+                className="my-1 mx-0.5 flex items-center  flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 "
+                key={`${el.label}-value-${index}`}
               >
-                x
+                <Typography variant="small" className="p-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="flex items-center w-4 h-4 rounded text-red-400 cursor-pointer hover:bg-red-500 hover:text-slate-300"
+                    onClick={() => deleteItemHandler(el)}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </Typography>
+                <Typography variant="small" className="text-xs px-1">
+                  {el.label}
+                </Typography>
               </div>
-              <Typography variant="small" className="text-xs px-1">
-                {el.label}
-              </Typography>
-            </div>
-          ))
-        ) : (
-          <Typography className="p-1 mx-0.5">Selected</Typography>
-        )}
+            ))
+          ) : (
+            <Typography className="py-1 px-2 mx-0.5">Selected</Typography>
+          )}
+        </div>
+        <Typography variant="small" className="p-1 ml-auto">
+          <svg
+            ref={deleteIconRef}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="flex items-center w-5 h-5 rounded text-red-400 cursor-pointer hover:bg-red-500 hover:text-slate-300"
+            onClick={deleteAllSelectedHandler}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </Typography>{" "}
       </div>
       {selectCoordinate && (
         <div

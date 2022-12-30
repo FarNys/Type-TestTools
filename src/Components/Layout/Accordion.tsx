@@ -29,48 +29,73 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
 
   const heightCalc = (index: number) => {
     if (activeTab === index)
-      return `h-auto max-h-16  transition-all duration-300`;
-    return "max-h-0 transition-all duration-300";
+      return `h-auto max-h-36 transition-all rounded duration-300`;
+    return "max-h-0 transition-all  rounded duration-300";
   };
 
   const activeLink = (item: string) => {
-    if (item === urlText) return "bg-slate-300 border-l-4 border-cyan-400 ";
+    if (item === urlText)
+      return "bg-slate-300 border-l-4 rounded border-slate-500 duration-300 font-semibold ";
     return "";
   };
 
   return (
-    <ul className="border w-fit " tabIndex={0} {...rest}>
-      {data.map((el: DataParentType, index: number) => (
-        <li key={`list-${index}`} className="overflow-hidden">
-          <p
-            className={`pl-3 pr-10 py-1 ${
-              activeTab === index ? "bg-slate-200" : ""
-            }`}
-            onClick={() => activeHandler(index)}
-          >
-            {el.title}
-          </p>
-          <div className={heightCalc(index)}>
-            {el.children.map((child, id) => (
-              <Link
-                to="/component/button"
-                onClick={() => seturlText(child.title)}
-                key={`child-${id}`}
+    <nav className="border w-52 ">
+      <ul className="w-full" tabIndex={0} {...rest}>
+        {data.map((el: DataParentType, index: number) => (
+          <li key={`list-${index}`} className="overflow-hidden cursor-pointer">
+            <div
+              className={`px-3 py-2 flex justify-between ${
+                activeTab === index ? "bg-slate-200 font-semibold" : ""
+              }`}
+              onClick={() => activeHandler(index)}
+            >
+              <Typography variant="p">{el.title}</Typography>
+              <Typography
+                variant="p"
+                className={`flex items-center duration-300 ${
+                  activeTab === index ? "rotate-90" : ""
+                }`}
               >
-                <Typography
-                  variant="small"
-                  className={`py-1 px-2 rounded-l-md hover:bg-slate-400 active:bg-slate-500 ${activeLink(
-                    child.title
-                  )}`}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                  onClick={(e) => e.preventDefault()}
                 >
-                  {child.title}
-                </Typography>
-              </Link>
-            ))}
-          </div>
-        </li>
-      ))}
-    </ul>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </Typography>
+            </div>
+            <div className={heightCalc(index)}>
+              {el.children.map((child, id) => (
+                <Link
+                  to="/component/button"
+                  onClick={() => seturlText(child.title)}
+                  key={`sidebar-child-${id}`}
+                >
+                  <Typography
+                    variant="small"
+                    className={`py-2 px-4 rounded hover:bg-slate-400 active:bg-slate-500 ${activeLink(
+                      child.title
+                    )}`}
+                  >
+                    {child.title}
+                  </Typography>
+                </Link>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
