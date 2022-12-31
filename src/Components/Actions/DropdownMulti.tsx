@@ -120,7 +120,7 @@ const DropdownMulti = ({
           {localValue?.length > 0 ? (
             localValue?.map((el: OptionType, index: number) => (
               <div
-                className="my-1 mx-0.5 flex items-center  flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 "
+                className="my-1 mx-0.5 flex items-center  flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 first-of-type:ml-1"
                 key={`${el.label}-value-${index}`}
               >
                 <Typography variant="small" className="p-1">
@@ -164,6 +164,7 @@ const DropdownMulti = ({
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M6 18L18 6M6 6l12 12"
+              className="pointer-events-none"
             />
           </svg>
         </Typography>{" "}
