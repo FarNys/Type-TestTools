@@ -2,14 +2,14 @@ import React from "react";
 import Typography from "../Typo/Typography";
 
 interface DataCardType {
-  classname?: string;
+  className?: string;
   title: string;
   content: string;
   imageUrl: string;
 }
 
 const DataCard = ({
-  classname,
+  className,
   title,
   content,
   imageUrl,
@@ -18,7 +18,9 @@ const DataCard = ({
   return (
     <div
       {...rest}
-      className={`w-full max-w-sm rounded-lg border overflow-hidden mx-auto ${classname}`}
+      className={`w-full max-w-sm rounded-lg border overflow-hidden mx-auto ${
+        className ? className : ""
+      }`}
     >
       <img src={imageUrl} alt={title} className="aspect-video object-cover" />
       <div className="mt-2 px-4 pb-4">

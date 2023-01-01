@@ -11,7 +11,6 @@ import Accordion from "../../Components/Layout/Accordion";
 import Card from "../../Components/Layout/Card";
 import Container from "../../Components/Layout/Container";
 import LinkText from "../../Components/Navigate/LinkText";
-import Modal from "../../Components/Navigate/Portal";
 import Typography from "../../Components/Typo/Typography";
 import Modals from "../../Components/Actions/Modals";
 import Dropdown, { OptionType } from "../../Components/Actions/Dropdown";
@@ -26,14 +25,11 @@ import { toastCreator } from "../../functions/toastCreator";
 
 const ComponentPage = () => {
   const [count, setcount] = useState<number>(0);
-  const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
   const [modalOpen, setmodalOpen] = useState<boolean>(false);
   const [isToast, setisToast] = useState<boolean>(false);
   const [isToastShow, setisToastShow] = useState<boolean>(false);
   const btnRef = useRef(null);
-  const openModalHanlder = () => {
-    setmodalIsOpen((prev) => !prev);
-  };
+
   //MODAL CONTROLLER
   const openModalStateHandler = () => {
     setmodalOpen(true);
@@ -65,7 +61,7 @@ const ComponentPage = () => {
 
   return (
     <Container>
-      {/* <Card>
+      <Card>
         <Button
           title="Add +1"
           data-testid="increment"
@@ -86,20 +82,7 @@ const ComponentPage = () => {
         />
         <p data-testid="countValue">{count}</p>
       </Card>
-      <Card>
-        <Button
-          title="OpenModal"
-          className="mx-2 bg-blue-500 text-white hover:bg-blue-600 hover:scale-95 focus:bg-blue-700"
-          onClick={openModalHanlder}
-          size="md"
-          variant="warning"
-        />
-        {modalIsOpen && (
-          <Modal show={true}>
-            <div className="kl">Vladiagro</div>
-          </Modal>
-        )}
-      </Card>
+
       <Card>
         <Typography variant="h1">Test Typography h1</Typography>
         <Typography variant="h2">Test Typography h2</Typography>
@@ -108,6 +91,7 @@ const ComponentPage = () => {
         <Typography variant="h5">Test Typography h5</Typography>
         <Typography variant="h6">Test Typography h6</Typography>
         <Typography variant="p">Test Typography p</Typography>
+        <Typography variant="small">Test Typography Span</Typography>
       </Card>
       <Card>
         This is <LinkText to="/todo">Link</LinkText> Example
@@ -128,12 +112,11 @@ const ComponentPage = () => {
         <Typography variant="h5" className="mt-2 mb-1">
           Warning Alert
         </Typography>
-
-        <Alert
-          variant="warning"
-          title="Warning: Invalid email address!
-"
-        />
+        <Alert variant="warning" title="Warning: Invalid email address!" />
+        <Typography variant="h5" className="mt-2 mb-1">
+          Warning Alert
+        </Typography>
+        <Alert title="Default: Noting Special" />
       </Card>
       <Card>
         <Typography variant="p" colorVariant="default">
@@ -153,6 +136,7 @@ const ComponentPage = () => {
         </Typography>
       </Card>
       <Card>
+        <Badge text="default" />
         <Badge text="success" variant="success" />
         <Badge text="danger" variant="danger" />
         <Badge text="info" variant="info" />
@@ -185,7 +169,7 @@ const ComponentPage = () => {
             imageUrl="https://www.immune-image.eu/wp-content/uploads/2020/01/publications-immune-image.jpg"
           />
         </div>
-      </Card> */}
+      </Card>
       <Card>
         <Accordion data={accordionData} />
       </Card>
@@ -207,14 +191,14 @@ const ComponentPage = () => {
       </Card>
       <Card>
         <Toggle
-          onChange={changeToggleHandler}
+          onToggle={changeToggleHandler}
           isChecked={true}
           variant="danger"
         />
       </Card>
       <Card>
         <Checkbox
-          onChange={changeCheckboxHandler}
+          onToggle={changeCheckboxHandler}
           isChecked={true}
           variant="warning"
         />

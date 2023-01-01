@@ -1,11 +1,12 @@
 import React from "react";
+import { VariantTypes } from "../sharedTypes";
 interface TypographyType extends React.ComponentPropsWithRef<"p"> {
-  variant?: VariantType;
+  variant?: TypoVariantType;
   children?: React.ReactNode;
   className?: string;
-  colorVariant?: VariantsType;
+  colorVariant?: VariantTypes;
 }
-type VariantType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small";
+type TypoVariantType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "small";
 type ChildrenType = React.ReactNode;
 type ClassnameType = string;
 
@@ -24,7 +25,7 @@ const Typography = ({
   variant = "p",
   children,
   className,
-  colorVariant,
+  colorVariant = "default",
   ...rest
 }: TypographyType) => {
   return relatedTypography(variant, children, className, colorVariant, rest);
@@ -32,30 +33,25 @@ const Typography = ({
 
 export default Typography;
 
-type VariantsType = "success" | "danger" | "info" | "warning" | "default";
-const variantPicker = (v: VariantsType): string => {
-  const variant = {
+const relatedTypography = (
+  variant: TypoVariantType,
+  children: ChildrenType,
+  className?: ClassnameType,
+  colorVariant: VariantTypes = "default",
+  rest?: any
+) => {
+  const variantStyle = {
     default: "text-slate-900",
     success: "text-green-400",
     danger: "text-red-400",
     info: "text-sky-400",
     warning: "text-orange-400",
   };
-  return variant[v] || variant.default;
-};
-
-const relatedTypography = (
-  variant: VariantType,
-  children: ChildrenType,
-  className?: ClassnameType,
-  colorVariant?: VariantsType | any,
-  rest?: any
-) => {
   const tagElement: TagelementType = {
     h1: (
       <h1
         {...rest}
-        className={`text-5xl font-extrabold ${variantPicker(colorVariant)} $ ${
+        className={`text-5xl font-extrabold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -65,7 +61,7 @@ const relatedTypography = (
     h2: (
       <h2
         {...rest}
-        className={` text-4xl font-extrabold ${variantPicker(colorVariant)} ${
+        className={` text-4xl font-extrabold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -75,7 +71,7 @@ const relatedTypography = (
     h3: (
       <h3
         {...rest}
-        className={` text-3xl font-bold ${variantPicker(colorVariant)} ${
+        className={` text-3xl font-bold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -85,7 +81,7 @@ const relatedTypography = (
     h4: (
       <h4
         {...rest}
-        className={` text-2xl font-bold ${variantPicker(colorVariant)} ${
+        className={` text-2xl font-bold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -95,7 +91,7 @@ const relatedTypography = (
     h5: (
       <h5
         {...rest}
-        className={` text-xl font-semibold ${variantPicker(colorVariant)} ${
+        className={` text-xl font-semibold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -105,7 +101,7 @@ const relatedTypography = (
     h6: (
       <h6
         {...rest}
-        className={` font-semibold ${variantPicker(colorVariant)} ${
+        className={` font-semibold ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -115,7 +111,7 @@ const relatedTypography = (
     p: (
       <p
         {...rest}
-        className={`${variantPicker(colorVariant)} ${
+        className={`${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >
@@ -125,7 +121,7 @@ const relatedTypography = (
     small: (
       <p
         {...rest}
-        className={`text-sm ${variantPicker(colorVariant)} ${
+        className={`text-sm ${variantStyle[colorVariant]} ${
           className ? className : ""
         }`}
       >

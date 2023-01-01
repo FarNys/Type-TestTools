@@ -1,13 +1,13 @@
 import React, { SetStateAction, useEffect, useState } from "react";
 import Typography from "../Typo/Typography";
 import Button from "../Actions/Button";
-import { VariantsType } from "./Alert";
+import { VariantTypes } from "../sharedTypes";
 
 interface ToastType {
   showToast: boolean;
   setshowToast: React.Dispatch<SetStateAction<boolean>>;
   toastText: string;
-  variant: VariantsType;
+  variant: VariantTypes;
 }
 
 const Toast = ({
@@ -24,8 +24,8 @@ const Toast = ({
     return () => clearTimeout(timeOut);
   }, [showToast, setshowToast]);
 
-  const allVariants: any = {
-    // default: "border-slate-700",
+  const allVariants: Record<VariantTypes, string> = {
+    default: "border-slate-700",
     danger: "border-red-500 bg-red-100",
     info: "border-sky-500 bg-sky-100",
     success: "border-green-500 bg-green-100",
@@ -35,9 +35,7 @@ const Toast = ({
   if (!showToast) return null;
   return (
     <div
-      className={`fixed rounded-md top-10 right-10 flex flex-col py-2 px-1 items-end  border-l-4 max-w-xs animate-spring ${
-        allVariants[variant as keyof VariantsType]
-      }`}
+      className={`fixed rounded-md top-10 right-10 flex flex-col py-2 px-1 items-end  border-l-4 max-w-xs animate-spring ${allVariants[variant]}`}
       {...rest}
     >
       <Button

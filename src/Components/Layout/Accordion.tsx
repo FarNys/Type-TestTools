@@ -40,8 +40,8 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
   };
 
   return (
-    <nav className="border w-52 ">
-      <ul className="w-full" tabIndex={0} {...rest}>
+    <nav className="border w-52" {...rest}>
+      <ul className="w-full" tabIndex={0}>
         {data.map((el: DataParentType, index: number) => (
           <li key={`list-${index}`} className="overflow-hidden cursor-pointer">
             <div

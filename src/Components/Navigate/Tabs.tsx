@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 import Typography from "../Typo/Typography";
-import { VariantsType } from "../DataDisplay/Alert";
-interface TabsType {
+import { VariantTypes } from "../sharedTypes";
+interface TabsType extends React.ComponentPropsWithRef<"div"> {
   tabsValue: SingleTab[];
   className?: string;
-  variant: VariantsType;
-}
-
-interface ColorTypes {
-  info: string;
-  danger: string;
-  success: string;
-  warning: string;
-  default: string;
+  variant: VariantTypes;
 }
 
 interface SingleTab {
@@ -27,15 +19,7 @@ const Tabs = ({ className, tabsValue, variant, ...rest }: TabsType) => {
     setactiveTabId(item.id);
   };
 
-  const colorsItems: any = {
-    info: "info",
-    danger: "danger",
-    success: "success",
-    warning: "warning",
-    default: "default",
-  };
-
-  const bgItems: any = {
+  const bgItems: Record<VariantTypes, string> = {
     info: "bg-sky-50",
     danger: "bg-red-50",
     success: "bg-green-50",
@@ -56,11 +40,7 @@ const Tabs = ({ className, tabsValue, variant, ...rest }: TabsType) => {
           >
             <Typography
               variant="h6"
-              colorVariant={
-                el.id === activeTabId
-                  ? colorsItems[variant as keyof ColorTypes]
-                  : "default"
-              }
+              colorVariant={el.id === activeTabId ? variant : "default"}
             >
               {el.title}
             </Typography>
