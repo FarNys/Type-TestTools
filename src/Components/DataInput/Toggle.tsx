@@ -49,6 +49,7 @@ const Toggle = ({
       }`}
       {...rest}
       onClick={toggleHandler}
+      dir="ltr"
     >
       <div
         className={`absolute rounded-full top-1/2 -translate-y-1/2 h-4 w-4 duration-150  border ${

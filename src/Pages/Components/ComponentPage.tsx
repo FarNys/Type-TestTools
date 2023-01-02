@@ -22,6 +22,7 @@ import RangeSlider from "../../Components/DataInput/RangeSlider";
 import Toast from "../../Components/DataDisplay/Toast";
 import Carousel from "../../Components/DataDisplay/Carousel";
 import { toastCreator } from "../../functions/toastCreator";
+import useDirection from "../../Hooks/useDirection";
 
 const ComponentPage = () => {
   const [count, setcount] = useState<number>(0);
@@ -29,7 +30,12 @@ const ComponentPage = () => {
   const [isToast, setisToast] = useState<boolean>(false);
   const [isToastShow, setisToastShow] = useState<boolean>(false);
   const btnRef = useRef(null);
+  const [, setDirection] = useDirection();
 
+  //CHANGE DIRECTION HANDLER
+  const directionHandler = () => {
+    setDirection();
+  };
   //MODAL CONTROLLER
   const openModalStateHandler = () => {
     setmodalOpen(true);
@@ -62,6 +68,11 @@ const ComponentPage = () => {
   return (
     <Container>
       <Card>
+        <Button size="sm" variant="default" onClick={directionHandler}>
+          Change Direction
+        </Button>
+      </Card>
+      <Card>
         <Button
           title="Add +1"
           data-testid="increment"
@@ -80,7 +91,7 @@ const ComponentPage = () => {
           onClick={(): void => setcount((prev) => prev - 1)}
           ref={btnRef}
         />
-        <p data-testid="countValue">{count}</p>
+        {/* <p data-testid="countValue">{count}</p> */}
       </Card>
 
       <Card>
@@ -114,7 +125,7 @@ const ComponentPage = () => {
         </Typography>
         <Alert variant="warning" title="Warning: Invalid email address!" />
         <Typography variant="h5" className="mt-2 mb-1">
-          Warning Alert
+          Default Alert
         </Typography>
         <Alert title="Default: Noting Special" />
       </Card>
@@ -237,7 +248,7 @@ const ComponentPage = () => {
         </Button>
       </Card>
       <Card>
-        <Carousel />
+        <Carousel carouselData={carouselData} />
       </Card>
 
       <Toast
@@ -361,5 +372,26 @@ const accordionData = [
         title: "child-3-2",
       },
     ],
+  },
+];
+
+const carouselData = [
+  {
+    component: (
+      <div>
+        <h1>Hi Bro</h1>
+        <h1>Hi Bro</h1>
+        <h1>Hi Bro</h1>
+      </div>
+    ),
+  },
+  {
+    component: <div>end-2</div>,
+  },
+  {
+    component: <div>end-3</div>,
+  },
+  {
+    component: <div>end-4</div>,
   },
 ];

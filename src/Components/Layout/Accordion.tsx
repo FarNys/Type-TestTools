@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Typography from "../Typo/Typography";
+import useDirection from "../../Hooks/useDirection";
 
 interface AccordionType {
   className?: string;
@@ -15,9 +16,10 @@ interface DataChildType {
   title: string;
 }
 
-const Accordion = ({ className, data, ...rest }: AccordionType) => {
+const Accordion = React.memo(({ className, data, ...rest }: AccordionType) => {
   const [urlText, seturlText] = useState<string>("");
-
+  const [direction] = useDirection();
+  console.log(direction + " why");
   const [activeTab, setactiveTab] = useState<number>(-1);
   const activeHandler = (index: number) => {
     if (activeTab === index) {
@@ -35,7 +37,7 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
 
   const activeLink = (item: string) => {
     if (item === urlText)
-      return "bg-slate-300 border-l-4 rounded border-slate-500 duration-300 font-semibold ";
+      return `bg-slate-300 rounded border-r-4  border-slate-500 duration-300 font-semibold `;
     return "";
   };
 
@@ -97,6 +99,6 @@ const Accordion = ({ className, data, ...rest }: AccordionType) => {
       </ul>
     </nav>
   );
-};
+});
 
 export default Accordion;

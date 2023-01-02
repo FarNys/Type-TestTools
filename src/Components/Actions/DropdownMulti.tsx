@@ -120,7 +120,7 @@ const DropdownMulti = ({
           {localValue?.length > 0 ? (
             localValue?.map((el: OptionType, index: number) => (
               <div
-                className="my-1 mx-0.5 flex items-center  flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pr-1 first-of-type:ml-1"
+                className="my-1 mx-0.5 flex items-center  flex-shrink-0 bg-slate-200 hover:text-slate-500 rounded pl-1 first-of-type:ml-1"
                 key={`${el.label}-value-${index}`}
               >
                 <Typography variant="small" className="p-1">

@@ -3,8 +3,14 @@ import Button from "../Actions/Button";
 
 const TIMER = 300;
 const RATIO = 3 / 4;
+interface CarouselItemType {
+  component: React.ReactNode;
+}
+interface CarouselType extends React.ComponentPropsWithRef<"div"> {
+  carouselData: CarouselItemType[];
+}
 
-const Carousel = () => {
+const Carousel = ({ carouselData, ...rest }: CarouselType) => {
   const [coordinate, setcoordinate] = useState<any>();
   const [currentIndex, setcurrentIndex] = useState<number>(2);
   const parentRef = useRef<any>(null);
@@ -53,19 +59,23 @@ const Carousel = () => {
     preventClick(e);
     setcurrentIndex(selectedIndex + 1);
   };
-  console.log(currentIndex);
 
   const transitionEndHandler = () => {
-    if (currentIndex === data.length + 1) {
+    if (currentIndex === carouselData.length + 1) {
       resetTimer(1);
     }
     if (currentIndex === 0) {
-      resetTimer(data.length);
+      resetTimer(carouselData.length);
     }
   };
 
   return (
-    <div className="w-full shadow relative overflow-hidden" ref={parentRef}>
+    <div
+      className="w-full shadow relative overflow-hidden"
+      ref={parentRef}
+      {...rest}
+      dir="ltr"
+    >
       {/* <div className="w-full border"> */}
       <div
         className="flex w-full"
@@ -81,15 +91,21 @@ const Carousel = () => {
           className="pr-4"
           style={{ minWidth: RATIO * coordinate?.width || 0 }}
         >
-          <div className=" border"> {data[data.length - 2].component}</div>
+          <div className=" border">
+            {" "}
+            {carouselData[carouselData.length - 2].component}
+          </div>
         </div>
         <div
           className="pr-4"
           style={{ minWidth: RATIO * coordinate?.width || 0 }}
         >
-          <div className=" border"> {data[data.length - 1].component}</div>
+          <div className=" border">
+            {" "}
+            {carouselData[carouselData.length - 1].component}
+          </div>
         </div>
-        {data.map((el, index) => (
+        {carouselData.map((el: any, index: number) => (
           <div
             className="pr-4"
             style={{ minWidth: RATIO * coordinate?.width || 0 }}
@@ -102,17 +118,17 @@ const Carousel = () => {
           className="pr-4"
           style={{ minWidth: RATIO * coordinate?.width || 0 }}
         >
-          <div className=" border">{data[0].component}</div>
+          <div className=" border">{carouselData[0].component}</div>
         </div>
         <div
           className="pr-4"
           style={{ minWidth: RATIO * coordinate?.width || 0 }}
         >
-          <div className=" border">{data[1].component}</div>
+          <div className=" border">{carouselData[1].component}</div>
         </div>
       </div>
       <div className="mx-auto w-full flex justify-center border border-red-300">
-        {data.map((_, index) => (
+        {carouselData.map((_: any, index: number) => (
           <div
             className={`w-5  mx-1 my-3 cursor-pointer hover:bg-sky-500 ${
               currentIndex === index + 2 || currentIndex === index - 2
@@ -138,18 +154,3 @@ const Carousel = () => {
 };
 
 export default Carousel;
-
-const data = [
-  {
-    component: <div>end-1</div>,
-  },
-  {
-    component: <div>end-2</div>,
-  },
-  {
-    component: <div>end-3</div>,
-  },
-  {
-    component: <div>end-4</div>,
-  },
-];

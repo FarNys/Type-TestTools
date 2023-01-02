@@ -1,4 +1,4 @@
-export type SizeVariantTypes = "sm" | "md";
+export type SizeVariantTypes = "sm" | "md" | "lg";
 export type VariantTypes =
   | "default"
   | "success"

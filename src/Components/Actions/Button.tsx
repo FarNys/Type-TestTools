@@ -1,21 +1,10 @@
-import React, { forwardRef, Ref, useMemo, useCallback } from "react";
+import React, { forwardRef, Ref } from "react";
 import { SizeVariantTypes, VariantTypes } from "../sharedTypes";
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   size: SizeVariantTypes;
   variant: VariantTypes;
 }
-// interface SizeVariantsType {
-//   sm: string;
-//   md: string;
-// }
-// interface ButtonVariantsType {
-//   default: string;
-//   success: string;
-//   danger: string;
-//   info: string;
-//   warning: string;
-// }
 
 const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>) => {
   const {
@@ -28,12 +17,13 @@ const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>) => {
   } = props;
 
   const sizeVariants: Record<SizeVariantTypes, string> = {
-    sm: "px-3 py-1",
+    sm: "px-2 py-1 text-sm",
     md: "px-4 py-2",
+    lg: "px-6 py-3",
   };
 
   const buttonVariants: Record<VariantTypes, string> = {
-    default: "bg-slate-100",
+    default: "bg-slate-100 hover:bg-slate-200 active:bg-slate-300",
     danger: "bg-red-500 hover:bg-red-600  active:bg-red-700",
     success: "bg-green-500 hover:bg-green-600  active:bg-green-700",
     info: "bg-sky-500 hover:bg-sky-600 active:bg-sky-700",
