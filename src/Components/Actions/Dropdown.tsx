@@ -18,7 +18,7 @@ interface DropdownType {
 
 const Dropdown = React.memo(
   ({ options, value, onSelect, ...rest }: DropdownType) => {
-    const SelectRef = useRef<any>(null);
+    const SelectRef = useRef<HTMLDivElement>(null);
     const [showItems, setshowItems] = useState<boolean>(false);
     const [localOptions, setlocalOptions] = useState<OptionType[]>(options);
     const [localValue, setlocalValue] = useState<string>(
@@ -35,9 +35,11 @@ const Dropdown = React.memo(
     };
 
     //CLOSE SELECTION BOX WHEN USER CLICK OUTSIDE OF SELECTION BOX AREA
-    const clickOutside = useCallback((e: MouseEvent): void => {
-      if (SelectRef?.current.contains(e.target)) {
-        return setshowItems(true);
+    const clickOutside = useCallback((e: any): void => {
+      if (SelectRef) {
+        if (SelectRef.current?.contains(e.target)) {
+          return setshowItems(true);
+        }
       } else {
         //SELECTION BOX WILL REMAIN EMPTY AFTER SEARCH AND THIS WILL FILL SELECTION BOX AFTER SELECT ITEM
         setlocalOptions(options);
