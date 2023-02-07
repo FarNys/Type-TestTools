@@ -21,17 +21,15 @@ interface TagelementType {
   small: JSX.Element;
 }
 
-const Typography = React.memo(
-  ({
-    variant = "p",
-    children,
-    className,
-    colorVariant = "default",
-    ...rest
-  }: TypographyType) => {
-    return relatedTypography(variant, children, className, colorVariant, rest);
-  }
-);
+const Typography = ({
+  variant = "p",
+  children,
+  className,
+  colorVariant = "default",
+  ...rest
+}: TypographyType) => {
+  return relatedTypography(variant, children, className, colorVariant, rest);
+};
 
 export default Typography;
 

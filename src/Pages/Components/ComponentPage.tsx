@@ -91,9 +91,37 @@ const ComponentPage = () => {
           onClick={(): void => setcount((prev) => prev - 1)}
           ref={btnRef}
         />
+        <Button variant="success" size="lg">
+          Large
+        </Button>
         {/* <p data-testid="countValue">{count}</p> */}
       </Card>
-
+      <Card className="d-flex">
+        <Button size="sm" variant="default">
+          Default
+        </Button>
+        <Button size="sm" variant="success">
+          success
+        </Button>
+        <Button size="sm" variant="danger">
+          danger
+        </Button>
+        <Button size="sm" variant="warning">
+          warning
+        </Button>
+        <Button size="sm" variant="outline_default">
+          outline_Default
+        </Button>
+        <Button size="sm" variant="outline_success">
+          outline_success
+        </Button>
+        <Button size="sm" variant="outline_danger">
+          outline_danger
+        </Button>
+        <Button size="sm" variant="outline_warning">
+          outline_warning
+        </Button>
+      </Card>
       <Card>
         <Typography variant="h1">Test Typography h1</Typography>
         <Typography variant="h2">Test Typography h2</Typography>

@@ -5,3 +5,10 @@ export type VariantTypes =
   | "danger"
   | "info"
   | "warning";
+
+export type VariantOutlineTypes =
+  | "outline_default"
+  | "outline_success"
+  | "outline_danger"
+  | "outline_info"
+  | "outline_warning";
