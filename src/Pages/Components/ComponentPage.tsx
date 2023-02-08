@@ -23,6 +23,7 @@ import Toast from "../../Components/DataDisplay/Toast";
 import Carousel from "../../Components/DataDisplay/Carousel";
 import { toastCreator } from "../../functions/toastCreator";
 import useDirection from "../../Hooks/useDirection";
+import Tooltip from "../../Components/DataDisplay/Tooltip";
 
 const ComponentPage = () => {
   const [count, setcount] = useState<number>(0);
@@ -71,6 +72,14 @@ const ComponentPage = () => {
         <Button size="sm" variant="default" onClick={directionHandler}>
           Change Direction
         </Button>
+      </Card>
+      <Card className="flex">
+        <Tooltip label="tooltip" position="bottom">
+          <p className="mx-4">Tooltip Bottom</p>
+        </Tooltip>
+        <Tooltip label="tooltip" position="top">
+          <p>Tooltip Top</p>
+        </Tooltip>
       </Card>
       <Card>
         <Button
