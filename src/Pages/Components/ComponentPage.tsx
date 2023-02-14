@@ -377,6 +377,18 @@ const optionList = [
     label: "Brand",
     value: "Label 8",
   },
+  {
+    label: "Brand-9",
+    value: "Label 9",
+  },
+  {
+    label: "Brand-10",
+    value: "Label 10",
+  },
+  {
+    label: "Brand-11",
+    value: "Label 11",
+  },
 ];
 
 const accordionData = [
