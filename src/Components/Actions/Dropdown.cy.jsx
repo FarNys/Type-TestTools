@@ -48,15 +48,31 @@ const optionList = [
 ];
 
 describe("Dropdown Test", () => {
-  it("Should Show Title AS Text", () => {
-    const onSelect = cy.stub();
-
+  beforeEach(() => {
+    const onSelect = (e) => {
+      console.log(e);
+    };
     cy.mount(<DropDown options={optionList} onSelect={onSelect} />);
+  });
+  it("Init the test", () => {
     cy.get("#select-container").should("exist");
     cy.get("#select-box").should("exist");
     cy.get("#selection-box").should("not.exist");
-    cy.get("#select-box").click("");
+  });
+  it("should be clickable and open selection box and create list based on options props", () => {
+    cy.get("#select-box").click();
     cy.get("#selection-box").should("exist");
-    cy.get("#select-item").its("length").should("be.eq", 2);
+
+    cy.get("#selection-box #select-item")
+      .its("length")
+      .should("be.eq", optionList.length);
+  });
+  it("should change value when click items of selection box", () => {
+    cy.get("#select-box").should("contain", "").click();
+    cy.get("#selection-box #select-item")
+      .eq(4)
+      .should("contain", optionList[4].label);
+    cy.get("#selection-box #select-item").eq(3).click();
+    cy.get("#select-box").should("contain", optionList[3].label);
   });
 });
