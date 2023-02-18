@@ -5,6 +5,7 @@ import { TableTd, TableTh } from "./types";
 
 const Sheet = () => {
   const [isMouseDown, setisMouseDown] = useState<Boolean>(false);
+  const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
   const [selectedList, setselectedList] = useState([]);
   const [refactorData, setrefactorData] = useState<any>([]);
@@ -44,10 +45,10 @@ const Sheet = () => {
       const findMaxCol = Math.max(...findAllCol);
       rectRef.current.style.top = `${(findMinRow + 1) * 40}px`;
       rectRef.current.style.left = `${findMinCol * 150}px`;
-      rectRef.current.style.width = `${(findMaxCol + 1) * 150}px`;
-      rectRef.current.style.height = `${40 + findMaxRow * 40}px`;
+      rectRef.current.style.width = `${(findMaxCol - findMinCol + 1) * 150}px`;
+      rectRef.current.style.height = `${40 + (findMaxRow - findMinRow) * 40}px`;
     }
-  }, [selectedList, isMouseDown]);
+  }, [selectedList.length, isMouseDown]);
 
   const mouseUpHandler = () => {
     setisMouseDown(false);
@@ -57,7 +58,7 @@ const Sheet = () => {
     <div className="w-full border mt-4">
       <div className="w-full relative">
         {refactorData && refactorheader && (
-          <table className="border">
+          <table className="border" ref={tableRef}>
             <thead>
               <tr>
                 {refactorheader.map((el: any) => (
@@ -87,7 +88,7 @@ const Sheet = () => {
         )}
         <div
           id="selection-rect "
-          className="absolute border border-sky-500  bg-sky-200 opacity-20"
+          className="absolute border border-sky-700  bg-sky-400 opacity-60"
           ref={rectRef}
           onMouseUp={mouseUpHandler}
         ></div>

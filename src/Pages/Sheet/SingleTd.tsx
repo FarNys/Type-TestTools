@@ -16,7 +16,7 @@ const SingleTd = ({
         data: el,
       },
     ]);
-    console.log("RUN MOUSE DOWN");
+    // console.log("RUN MOUSE DOWN");
   };
   const mouseOverHandler = () => {
     if (isMouseDown) {
@@ -27,19 +27,34 @@ const SingleTd = ({
           data: el,
         },
       ]);
-      console.log("MOUSE OVER Z");
+      // console.log("MOUSE OVER Z");
     }
   };
 
   const mouseUpHandler = () => {
     setisMouseDown(false);
   };
+
+  const mouseLeaveHandler = () => {
+    if (isMouseDown) {
+      console.log("Mouse Leave");
+    }
+  };
+
+  const mouseOutHandler = () => {
+    if (isMouseDown) {
+      console.log("Mouse Out");
+    }
+  };
+
   return (
     <td
       className="p-1 border select-none"
       onMouseDown={mouseDownHandler}
       onMouseOver={mouseOverHandler}
       onMouseUp={mouseUpHandler}
+      onMouseLeave={mouseLeaveHandler}
+      onMouseOut={mouseOutHandler}
       style={{
         maxWidth: item.width,
         width: item.width,
