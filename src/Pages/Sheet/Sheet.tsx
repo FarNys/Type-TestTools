@@ -50,6 +50,29 @@ const Sheet = () => {
     }
   }, [selectedList.length, isMouseDown]);
 
+  useEffect(() => {
+    if (!isMouseDown) {
+      const findAllRow = selectedList.map((el: any) => el.data.row);
+      const findAllCol = selectedList.map((el: any) => el.header.col);
+      const findMinRow = Math.min(...findAllRow);
+      const findMaxRow = Math.max(...findAllRow);
+      console.log(findMaxRow);
+      const findMinCol = Math.min(...findAllCol);
+      const findMaxCol = Math.max(...findAllCol);
+      const resHeader = refactorheader.slice(findMinCol, findMaxCol + 1);
+      const result = refactorData.slice(findMinRow, findMaxRow + 1);
+      const final = result.map((el: any, index: number) =>
+        resHeader.map((item: any) => {
+          return {
+            item: el[item.keyField],
+            rowId: findMinRow + index,
+          };
+        })
+      );
+      console.log(final);
+    }
+  }, [isMouseDown]);
+
   const mouseUpHandler = () => {
     setisMouseDown(false);
   };
@@ -57,6 +80,12 @@ const Sheet = () => {
   return (
     <div className="w-full border mt-4">
       <div className="w-full relative">
+        <div
+          id="selection-rect "
+          className="absolute border border-sky-700  bg-sky-400 opacity-60 -z-10"
+          ref={rectRef}
+          onMouseUp={mouseUpHandler}
+        ></div>
         {refactorData && refactorheader && (
           <table className="border" ref={tableRef}>
             <thead>
@@ -86,12 +115,6 @@ const Sheet = () => {
             </tbody>
           </table>
         )}
-        <div
-          id="selection-rect "
-          className="absolute border border-sky-700  bg-sky-400 opacity-60"
-          ref={rectRef}
-          onMouseUp={mouseUpHandler}
-        ></div>
       </div>
     </div>
   );
