@@ -7,9 +7,14 @@ const SingleTd = ({
   setisMouseDown,
   selectedList,
   setselectedList,
+  firstCell,
 }: any) => {
   const mouseDownHandler = () => {
     setisMouseDown(true);
+    firstCell.current = {
+      header: item,
+      data: el,
+    };
     setselectedList([
       {
         header: item,
@@ -37,16 +42,23 @@ const SingleTd = ({
 
   const mouseLeaveHandler = () => {
     if (isMouseDown) {
-      console.log("Mouse Leave");
+      if (
+        el.row === selectedList[0].data.row &&
+        item.col === selectedList[0].header.col
+      ) {
+        console.log("FIRST CELL");
+        return;
+      }
+      console.log("NOT FIRST CELL");
+      console.log(el, item);
+      // setselectedList([
+      //   ...selectedList.filter(
+      //     (list: any) =>
+      //       list.header.col === item.col && list.data.row === el.row
+      //   ),
+      // ]);
     }
   };
-
-  const mouseOutHandler = () => {
-    if (isMouseDown) {
-      console.log("Mouse Out");
-    }
-  };
-
   return (
     <td
       className="p-1 border select-none"
@@ -54,7 +66,6 @@ const SingleTd = ({
       onMouseOver={mouseOverHandler}
       onMouseUp={mouseUpHandler}
       onMouseLeave={mouseLeaveHandler}
-      onMouseOut={mouseOutHandler}
       style={{
         maxWidth: item.width,
         width: item.width,

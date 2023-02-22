@@ -5,6 +5,7 @@ import { TableTd, TableTh } from "./types";
 
 const Sheet = () => {
   const [isMouseDown, setisMouseDown] = useState<Boolean>(false);
+  const firstCell = useRef<any>(null);
   const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
   const [selectedList, setselectedList] = useState([]);
@@ -37,6 +38,7 @@ const Sheet = () => {
 
   useEffect(() => {
     if (selectedList.length > 1 && isMouseDown) {
+      console.log("RENDER");
       const findAllRow = selectedList.map((el: any) => el.data.row);
       const findAllCol = selectedList.map((el: any) => el.header.col);
       const findMinRow = Math.min(...findAllRow);
@@ -50,28 +52,28 @@ const Sheet = () => {
     }
   }, [selectedList.length, isMouseDown]);
 
-  useEffect(() => {
-    if (!isMouseDown) {
-      const findAllRow = selectedList.map((el: any) => el.data.row);
-      const findAllCol = selectedList.map((el: any) => el.header.col);
-      const findMinRow = Math.min(...findAllRow);
-      const findMaxRow = Math.max(...findAllRow);
-      console.log(findMaxRow);
-      const findMinCol = Math.min(...findAllCol);
-      const findMaxCol = Math.max(...findAllCol);
-      const resHeader = refactorheader.slice(findMinCol, findMaxCol + 1);
-      const result = refactorData.slice(findMinRow, findMaxRow + 1);
-      const final = result.map((el: any, index: number) =>
-        resHeader.map((item: any) => {
-          return {
-            item: el[item.keyField],
-            rowId: findMinRow + index,
-          };
-        })
-      );
-      console.log(final);
-    }
-  }, [isMouseDown]);
+  // useEffect(() => {
+  //   if (!isMouseDown) {
+  //     const findAllRow = selectedList.map((el: any) => el.data.row);
+  //     const findAllCol = selectedList.map((el: any) => el.header.col);
+  //     const findMinRow = Math.min(...findAllRow);
+  //     const findMaxRow = Math.max(...findAllRow);
+  //     console.log(findMaxRow);
+  //     const findMinCol = Math.min(...findAllCol);
+  //     const findMaxCol = Math.max(...findAllCol);
+  //     const resHeader = refactorheader.slice(findMinCol, findMaxCol + 1);
+  //     const result = refactorData.slice(findMinRow, findMaxRow + 1);
+  //     const final = result.map((el: any, index: number) =>
+  //       resHeader.map((item: any) => {
+  //         return {
+  //           item: el[item.keyField],
+  //           rowId: findMinRow + index,
+  //         };
+  //       })
+  //     );
+  //     console.log(final);
+  //   }
+  // }, [isMouseDown]);
 
   const mouseUpHandler = () => {
     setisMouseDown(false);
@@ -110,6 +112,7 @@ const Sheet = () => {
                   setisMouseDown={setisMouseDown}
                   selectedList={selectedList}
                   setselectedList={setselectedList}
+                  firstCell={firstCell}
                 />
               ))}
             </tbody>

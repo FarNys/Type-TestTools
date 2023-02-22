@@ -10,6 +10,7 @@ const SingleTr = ({
   setisMouseDown,
   selectedList,
   setselectedList,
+  firstCell,
 }: any) => {
   return (
     <tr>
@@ -22,6 +23,7 @@ const SingleTr = ({
           setisMouseDown={setisMouseDown}
           selectedList={selectedList}
           setselectedList={setselectedList}
+          firstCell={firstCell}
         />
       ))}
     </tr>
