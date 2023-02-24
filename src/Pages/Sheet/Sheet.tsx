@@ -38,7 +38,6 @@ const Sheet = () => {
 
   useEffect(() => {
     if (selectedList.length > 1 && isMouseDown) {
-      console.log("RENDER");
       const findAllRow = selectedList.map((el: any) => el.data.row);
       const findAllCol = selectedList.map((el: any) => el.header.col);
       const findMinRow = Math.min(...findAllRow);
@@ -49,8 +48,13 @@ const Sheet = () => {
       rectRef.current.style.left = `${findMinCol * 150}px`;
       rectRef.current.style.width = `${(findMaxCol - findMinCol + 1) * 150}px`;
       rectRef.current.style.height = `${40 + (findMaxRow - findMinRow) * 40}px`;
+    } else {
+      if (isMouseDown) {
+        rectRef.current.style.width = 0;
+        rectRef.current.style.height = 0;
+      }
     }
-  }, [selectedList.length, isMouseDown]);
+  }, [selectedList, isMouseDown]);
 
   // useEffect(() => {
   //   if (!isMouseDown) {
@@ -75,18 +79,17 @@ const Sheet = () => {
   //   }
   // }, [isMouseDown]);
 
-  const mouseUpHandler = () => {
-    setisMouseDown(false);
-  };
-
+  // const mouseUpHandler = () => {
+  //   setisMouseDown(false);
+  // };
+  // console.log(selectedList);
   return (
     <div className="w-full border mt-4">
       <div className="w-full relative">
         <div
           id="selection-rect "
-          className="absolute border border-sky-700  bg-sky-400 opacity-60 -z-10"
+          className="absolute border-2 border-sky-600  bg-sky-400 opacity-40 pointer-events-none duration-100"
           ref={rectRef}
-          onMouseUp={mouseUpHandler}
         ></div>
         {refactorData && refactorheader && (
           <table className="border" ref={tableRef}>

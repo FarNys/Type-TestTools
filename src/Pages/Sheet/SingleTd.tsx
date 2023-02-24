@@ -10,6 +10,7 @@ const SingleTd = ({
   firstCell,
 }: any) => {
   const mouseDownHandler = () => {
+    setselectedList([]);
     setisMouseDown(true);
     firstCell.current = {
       header: item,
@@ -21,51 +22,31 @@ const SingleTd = ({
         data: el,
       },
     ]);
-    // console.log("RUN MOUSE DOWN");
   };
-  const mouseOverHandler = () => {
+
+  const mouseEnterHandler = () => {
     if (isMouseDown) {
       setselectedList([
-        ...selectedList,
+        selectedList[0],
         {
           header: item,
           data: el,
         },
       ]);
-      // console.log("MOUSE OVER Z");
     }
   };
 
   const mouseUpHandler = () => {
     setisMouseDown(false);
+    console.log(selectedList);
   };
 
-  const mouseLeaveHandler = () => {
-    if (isMouseDown) {
-      if (
-        el.row === selectedList[0].data.row &&
-        item.col === selectedList[0].header.col
-      ) {
-        console.log("FIRST CELL");
-        return;
-      }
-      console.log("NOT FIRST CELL");
-      console.log(el, item);
-      // setselectedList([
-      //   ...selectedList.filter(
-      //     (list: any) =>
-      //       list.header.col === item.col && list.data.row === el.row
-      //   ),
-      // ]);
-    }
-  };
   return (
     <td
       className="p-1 border select-none"
       onMouseDown={mouseDownHandler}
-      onMouseOver={mouseOverHandler}
       onMouseUp={mouseUpHandler}
-      onMouseLeave={mouseLeaveHandler}
+      onMouseEnter={mouseEnterHandler}
       style={{
         maxWidth: item.width,
         width: item.width,
