@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import headerData from "../../data/db.json";
+import { useOnClickOutside } from "../../Hooks/useOnClickOutside";
 import SingleTr from "./SingleTr";
 import { TableTd, TableTh } from "./types";
 
 const Sheet = () => {
   const [isMouseDown, setisMouseDown] = useState<Boolean>(false);
+  const [displayRect, setdisplayRect] = useState<Boolean>(false);
   const firstCell = useRef<any>(null);
   const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
@@ -44,6 +46,8 @@ const Sheet = () => {
       const findMaxRow = Math.max(...findAllRow);
       const findMinCol = Math.min(...findAllCol);
       const findMaxCol = Math.max(...findAllCol);
+      setdisplayRect(true);
+
       rectRef.current.style.top = `${(findMinRow + 1) * 40}px`;
       rectRef.current.style.left = `${findMinCol * 150}px`;
       rectRef.current.style.width = `${(findMaxCol - findMinCol + 1) * 150}px`;
@@ -52,6 +56,7 @@ const Sheet = () => {
       if (isMouseDown) {
         rectRef.current.style.width = 0;
         rectRef.current.style.height = 0;
+        setdisplayRect(false);
       }
     }
   }, [selectedList, isMouseDown]);
@@ -83,13 +88,15 @@ const Sheet = () => {
   //   setisMouseDown(false);
   // };
   // console.log(selectedList);
+  useOnClickOutside(tableRef, () => setdisplayRect(false));
   return (
     <div className="w-full border mt-4">
       <div className="w-full relative">
         <div
           id="selection-rect "
-          className="absolute border-2 border-sky-600  bg-sky-400 opacity-40 pointer-events-none duration-100"
+          className="absolute outline outline-1 outline-sky-500  bg-sky-300 opacity-30 pointer-events-none duration-100"
           ref={rectRef}
+          style={{ display: displayRect ? "block" : "none" }}
         ></div>
         {refactorData && refactorheader && (
           <table className="border" ref={tableRef}>

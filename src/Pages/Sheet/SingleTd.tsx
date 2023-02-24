@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const SingleTd = ({
   el,
@@ -9,9 +9,12 @@ const SingleTd = ({
   setselectedList,
   firstCell,
 }: any) => {
+  const [selectedCell, setselectedCell] = useState<Boolean>(false);
+
   const mouseDownHandler = () => {
     setselectedList([]);
     setisMouseDown(true);
+    setselectedCell(true);
     firstCell.current = {
       header: item,
       data: el,
@@ -43,7 +46,9 @@ const SingleTd = ({
 
   return (
     <td
-      className="p-1 border select-none"
+      className={`p-1 border select-none ${
+        selectedCell ? "outline outline-1 outline-sky-500" : ""
+      }`}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
       onMouseEnter={mouseEnterHandler}
