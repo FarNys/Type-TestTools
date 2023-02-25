@@ -10,6 +10,9 @@ type SliceParameterTypes = {
   isDisplayRect: Boolean;
   isMouseDown: Boolean;
   selectedList: SelectedCell[];
+  refactorheader: any[];
+  refactorData: SelectedCell[];
+  selectedRectData: any[];
 };
 
 // TYPE END
@@ -18,6 +21,9 @@ const initialState: SliceParameterTypes = {
   isDisplayRect: false,
   isMouseDown: false,
   selectedList: [],
+  refactorheader: [],
+  refactorData: [],
+  selectedRectData: [],
 };
 
 const sheetSlice = createSlice({
@@ -28,8 +34,30 @@ const sheetSlice = createSlice({
   // An object of "case reducers".
   // Key names will be used to generate actions:
   reducers: {
+    refactorHeaderHandler: (state, action) => {
+      state.refactorheader = [
+        ...action.payload.header.map((el: any, index: number) => {
+          return {
+            col: index,
+            width: "150px",
+            ...el,
+          };
+        }),
+      ];
+    },
+    refactorDataHandler: (state, action) => {
+      state.refactorData = [
+        ...action.payload.data.map((el: any, index: number) => {
+          return {
+            row: index,
+            ...el,
+          };
+        }),
+      ];
+    },
     activeMouseDown: (state) => {
       state.isMouseDown = true;
+      state.selectedRectData = [];
     },
     deActiveMouseDown: (state) => {
       state.isMouseDown = false;
@@ -120,10 +148,39 @@ const sheetSlice = createSlice({
         }
       }
     },
+    calcSelectedRectData: (state) => {
+      const list = state.selectedList;
+      if (list.length === 1) {
+        const row = list[0].data.row;
+        const col = list[0].header.col;
+        const rowInList = state.refactorData.slice(row, row + 1);
+        const itemInRow = rowInList.map((el: any) => {
+          return {
+            col,
+            row,
+            data: el[list[0].header.keyField],
+          };
+        });
+        // state.selectedRectData = [
+        //   {
+        //     row,
+        //     col,
+        //     data: itemInRow,
+        //   },
+        // ];
+        state.selectedRectData = [...itemInRow];
+      } else {
+        state.selectedRectData = [{ game: "GIT" }];
+      }
+
+      // state.selectedRectData = list;
+    },
   },
 });
 
 export const {
+  refactorHeaderHandler,
+  refactorDataHandler,
   activeMouseDown,
   deActiveMouseDown,
   showDisplayRect,
@@ -135,5 +192,6 @@ export const {
   goNextRow,
   changeActiveCEllByArrow,
   createRect,
+  calcSelectedRectData,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;

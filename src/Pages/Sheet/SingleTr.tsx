@@ -1,8 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
 import SingleTd from "./SingleTd";
-import { TableTh, TableTd } from "./types";
 import { useDispatch } from "react-redux";
-import { createRect, showDisplayRect } from "./redux/sheetSlice";
+import {
+  createRect,
+  removeActiveCell,
+  showDisplayRect,
+} from "./redux/sheetSlice";
 //
 
 const SingleTr = ({ refactorheader, el, firstCell, index, rectRef }: any) => {
@@ -18,6 +20,7 @@ const SingleTr = ({ refactorheader, el, firstCell, index, rectRef }: any) => {
       })
     );
     dispatch(showDisplayRect());
+    dispatch(removeActiveCell());
   };
   return (
     <tr>

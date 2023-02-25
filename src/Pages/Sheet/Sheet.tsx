@@ -5,16 +5,29 @@ import SingleTr from "./SingleTr";
 import { TableTd, TableTh } from "./types";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  calcSelectedRectData,
   changeActiveCEllByArrow,
   createRect,
   goNextRow,
   hideDisplayRect,
+  refactorDataHandler,
+  refactorHeaderHandler,
   removeActiveCell,
   showDisplayRect,
 } from "./redux/sheetSlice";
 
 const Sheet = () => {
   const dispatch = useDispatch();
+  const selectedRectData = useSelector(
+    (state: any) => state.sheetSlice.selectedRectData
+  );
+  console.log(selectedRectData);
+  const refactorheader = useSelector(
+    (state: any) => state.sheetSlice.refactorheader
+  );
+  const refactorData = useSelector(
+    (state: any) => state.sheetSlice.refactorData
+  );
   const isDisplayRect = useSelector(
     (state: any) => state.sheetSlice.isDisplayRect
   );
@@ -27,32 +40,15 @@ const Sheet = () => {
   const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
   // const [selectedList, setselectedList] = useState([]);
-  const [refactorData, setrefactorData] = useState<any>([]);
-  const [refactorheader, setrefactorheader] = useState<any>([]);
   const tableHeader: TableTh[] = headerData.header;
   const tableData: TableTd[] = headerData.tableData;
   useEffect(() => {
-    setrefactorheader([
-      ...tableHeader.map((el, index) => {
-        return {
-          col: index,
-          width: "150px",
-          ...el,
-        };
-      }),
-    ]);
-  }, [tableHeader]);
+    dispatch(refactorHeaderHandler({ header: tableHeader }));
+  }, [tableHeader, dispatch]);
 
   useEffect(() => {
-    setrefactorData([
-      ...tableData.map((el, index) => {
-        return {
-          row: index,
-          ...el,
-        };
-      }),
-    ]);
-  }, [tableData]);
+    dispatch(refactorDataHandler({ data: tableData }));
+  }, [tableData, dispatch]);
 
   useEffect(() => {
     if (selectedList.length > 1 && isMouseDown) {
@@ -86,6 +82,7 @@ const Sheet = () => {
       }
     }
   }, [selectedList, isMouseDown, dispatch]);
+
   const keyboardEventHandler = useCallback(
     (e: KeyboardEvent) => {
       dispatch(hideDisplayRect({ ref: rectRef }));
@@ -110,6 +107,12 @@ const Sheet = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (!isMouseDown && selectedList.length > 0) {
+      dispatch(calcSelectedRectData());
+    }
+  }, [selectedList, isMouseDown, dispatch]);
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => keyboardEventHandler(e));
