@@ -10,6 +10,7 @@ import Posts from "../Pages/Posts/Posts";
 import Sheet from "../Pages/Sheet/Sheet";
 import TodoPage from "../Pages/TodoPage/TodoPage";
 import TodoRTKQ from "../Pages/TodoRTKQ/TodoRTKQ";
+import SheetProvider from "../Pages/Sheet/SheetProvider";
 
 const routerList = createBrowserRouter([
   {
@@ -89,7 +90,7 @@ const routerList = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <Sheet />
+        <SheetProvider />
       </>
     ),
   },

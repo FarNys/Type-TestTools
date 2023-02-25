@@ -1,54 +1,98 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  activeCellSelectHandler,
+  activeMouseDown,
+  deActiveMouseDown,
+  selectRectDataHandler,
+  selectRectInitialHandler,
+} from "./redux/sheetSlice";
 
-const SingleTd = ({
-  el,
-  item,
-  isMouseDown,
-  setisMouseDown,
-  selectedList,
-  setselectedList,
-  firstCell,
-}: any) => {
-  const [selectedCell, setselectedCell] = useState<Boolean>(false);
+const SingleTd = ({ el, item, firstCell }: any) => {
+  const dispatch = useDispatch();
+  const activeCell = useSelector((state: any) => state.sheetSlice.activeCell);
+  const isMouseDown = useSelector((state: any) => state.sheetSlice.isMouseDown);
+  const selectedList = useSelector(
+    (state: any) => state.sheetSlice.selectedList
+  );
+  const [isCellActive, setisCellActive] = useState(false);
 
   const mouseDownHandler = () => {
-    setselectedList([]);
-    setisMouseDown(true);
-    setselectedCell(true);
+    dispatch(
+      activeCellSelectHandler({
+        data: {
+          el,
+          item,
+        },
+      })
+    );
+
+    // setselectedList([]);
+    // setisMouseDown(true);
+    dispatch(activeMouseDown());
     firstCell.current = {
       header: item,
       data: el,
     };
-    setselectedList([
-      {
-        header: item,
-        data: el,
-      },
-    ]);
+    dispatch(
+      selectRectDataHandler({
+        data: {
+          header: item,
+          data: el,
+        },
+      })
+    );
   };
 
   const mouseEnterHandler = () => {
     if (isMouseDown) {
-      setselectedList([
-        selectedList[0],
-        {
-          header: item,
-          data: el,
-        },
-      ]);
+      dispatch(
+        selectRectInitialHandler({
+          initialValue: selectedList[0],
+          data: {
+            header: item,
+            data: el,
+          },
+        })
+      );
+      // setselectedList([
+      //   selectedList[0],
+      //   {
+      //     header: item,
+      //     data: el,
+      //   },
+      // ]);
     }
   };
 
+  const isCellSelected = useCallback(() => {
+    if (activeCell?.el.row === +el.row && activeCell.item.col === +item.col) {
+      return "outline outline-1 outline-sky-500";
+    }
+    return "";
+  }, [activeCell]);
+
   const mouseUpHandler = () => {
-    setisMouseDown(false);
-    console.log(selectedList);
+    dispatch(deActiveMouseDown());
+
+    // if(firstCell.current.header.col!==)
   };
+
+  const doubleClickHandler = () => {
+    setisCellActive(true);
+    // console.log("Active");
+  };
+  if (isCellActive)
+    return (
+      <td>
+        <input className="p-1 w-full h-full" />
+      </td>
+    );
 
   return (
     <td
-      className={`p-1 border select-none ${
-        selectedCell ? "outline outline-1 outline-sky-500" : ""
-      }`}
+      className={`p-1 border select-none outline-1 ${isCellSelected()}`}
+      onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
       onMouseEnter={mouseEnterHandler}
