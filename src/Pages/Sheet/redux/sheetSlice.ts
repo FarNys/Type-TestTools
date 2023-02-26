@@ -22,6 +22,7 @@ interface SliceParameterTypes {
   refactorData: TableTdRefactored[];
   selectedRectData: RectDataType | null | any;
   isMouseDownEdge: Boolean;
+  cellInEditMode: any;
 }
 
 // TYPE END
@@ -35,6 +36,7 @@ const initialState: SliceParameterTypes = {
   refactorData: [],
   selectedRectData: null,
   isMouseDownEdge: false,
+  cellInEditMode: null,
 };
 
 const sheetSlice = createSlice({
@@ -125,6 +127,7 @@ const sheetSlice = createSlice({
 
     selectRectDataHandler: (state, action) => {
       state.selectedList = [action.payload.data];
+      state.cellInEditMode = null;
     },
     selectRectInitialHandler: (state, action) => {
       state.selectedList = [action.payload.initialValue, action.payload.data];
@@ -310,6 +313,9 @@ const sheetSlice = createSlice({
         };
       });
     },
+    setEditModeCell: (state) => {
+      state.cellInEditMode = state.activeCell;
+    },
   },
 });
 
@@ -330,5 +336,6 @@ export const {
   calcSelectedRectData,
   changeColPosHandler,
   changeReverseColPosHandler,
+  setEditModeCell,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;

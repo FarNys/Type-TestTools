@@ -41,6 +41,7 @@ const Sheet = () => {
   const selectedList = useSelector(
     (state: RootState) => state.sheetSlice.selectedList
   );
+
   const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
 

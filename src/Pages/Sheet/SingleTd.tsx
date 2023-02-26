@@ -6,6 +6,7 @@ import {
   deActiveMouseDown,
   selectRectDataHandler,
   selectRectInitialHandler,
+  setEditModeCell,
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
 import { TableTdRefactored, TableThRefactored } from "./types";
@@ -26,28 +27,37 @@ const SingleTd = ({ el, item }: SingleTdType) => {
   const selectedList = useSelector(
     (state: RootState) => state.sheetSlice.selectedList
   );
+  const cellInEditMode = useSelector(
+    (state: RootState) => state.sheetSlice.cellInEditMode
+  );
   const [isCellActive, setisCellActive] = useState(false);
 
   const mouseDownHandler = () => {
-    dispatch(
-      activeCellSelectHandler({
-        data: {
-          el,
-          item,
-        },
-      })
-    );
-
-    dispatch(activeMouseDown());
-
-    dispatch(
-      selectRectDataHandler({
-        data: {
-          header: item,
-          data: el,
-        },
-      })
-    );
+    if (
+      activeCell &&
+      activeCell.el.row === el.row &&
+      activeCell.item.col === item.col
+    ) {
+      dispatch(setEditModeCell());
+    } else {
+      dispatch(
+        activeCellSelectHandler({
+          data: {
+            el,
+            item,
+          },
+        })
+      );
+      dispatch(activeMouseDown());
+      dispatch(
+        selectRectDataHandler({
+          data: {
+            header: item,
+            data: el,
+          },
+        })
+      );
+    }
   };
 
   const mouseEnterHandler = () => {
@@ -88,24 +98,30 @@ const SingleTd = ({ el, item }: SingleTdType) => {
     setisCellActive(true);
     // console.log("Active");
   };
-  if (isCellActive)
+
+  if (
+    cellInEditMode &&
+    cellInEditMode.el.row === el.row &&
+    cellInEditMode.item.col === item.col
+  ) {
     return (
-      <td>
-        <input className="p-1 w-full h-full" />
-      </td>
+      <input
+        // placeholder="PlaceHolder"
+        className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
+      />
     );
+  }
 
   return (
     <td
-      className={`p-1 border select-none  ${isCellSelected()}`}
-      onDoubleClick={doubleClickHandler}
+      className={`p-1 border select-none h-10 ${isCellSelected()}`}
+      // onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
       onMouseEnter={mouseEnterHandler}
       style={{
         maxWidth: item.width,
         width: item.width,
-        height: "40px",
       }}
     >
       {el[item.keyField as keyof TableTdRefactored]}
