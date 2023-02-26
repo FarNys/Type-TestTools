@@ -7,13 +7,24 @@ import {
   selectRectDataHandler,
   selectRectInitialHandler,
 } from "./redux/sheetSlice";
+import { RootState } from "./redux/sheetStore";
+import { TableTdRefactored, TableThRefactored } from "./types";
 
-const SingleTd = ({ el, item, firstCell }: any) => {
+interface SingleTdType {
+  el: TableTdRefactored;
+  item: TableThRefactored;
+}
+
+const SingleTd = ({ el, item }: SingleTdType) => {
   const dispatch = useDispatch();
-  const activeCell = useSelector((state: any) => state.sheetSlice.activeCell);
-  const isMouseDown = useSelector((state: any) => state.sheetSlice.isMouseDown);
+  const activeCell = useSelector(
+    (state: RootState) => state.sheetSlice.activeCell
+  );
+  const isMouseDown = useSelector(
+    (state: RootState) => state.sheetSlice.isMouseDown
+  );
   const selectedList = useSelector(
-    (state: any) => state.sheetSlice.selectedList
+    (state: RootState) => state.sheetSlice.selectedList
   );
   const [isCellActive, setisCellActive] = useState(false);
 
@@ -27,13 +38,8 @@ const SingleTd = ({ el, item, firstCell }: any) => {
       })
     );
 
-    // setselectedList([]);
-    // setisMouseDown(true);
     dispatch(activeMouseDown());
-    firstCell.current = {
-      header: item,
-      data: el,
-    };
+
     dispatch(
       selectRectDataHandler({
         data: {
@@ -91,7 +97,7 @@ const SingleTd = ({ el, item, firstCell }: any) => {
 
   return (
     <td
-      className={`p-1 border select-none outline-1 ${isCellSelected()}`}
+      className={`p-1 border select-none  ${isCellSelected()}`}
       onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
@@ -102,7 +108,7 @@ const SingleTd = ({ el, item, firstCell }: any) => {
         height: "40px",
       }}
     >
-      {el[item.keyField]}
+      {el[item.keyField as keyof TableTdRefactored]}
     </td>
   );
 };

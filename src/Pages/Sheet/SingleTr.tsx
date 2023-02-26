@@ -5,11 +5,18 @@ import {
   removeActiveCell,
   showDisplayRect,
 } from "./redux/sheetSlice";
+import { TableTdRefactored, TableThRefactored } from "./types";
 //
+interface SingleTrType {
+  refactorheader: TableThRefactored[];
+  el: TableTdRefactored;
+  index: number;
+  rectRef: HTMLDivElement | any;
+}
 
-const SingleTr = ({ refactorheader, el, firstCell, index, rectRef }: any) => {
+const SingleTr = ({ refactorheader, el, index, rectRef }: SingleTrType) => {
   const dispatch = useDispatch();
-  const mouseDownHandler = () => {
+  const mouseDownHeaderHandler = () => {
     dispatch(
       createRect({
         ref: rectRef,
@@ -22,21 +29,17 @@ const SingleTr = ({ refactorheader, el, firstCell, index, rectRef }: any) => {
     dispatch(showDisplayRect());
     dispatch(removeActiveCell());
   };
+
   return (
     <tr>
       <td
-        className="p-1 border select-none outline-1"
-        onMouseDown={mouseDownHandler}
+        className="p-1 border select-none outline-1 hover:cursor-pointer"
+        onMouseDown={mouseDownHeaderHandler}
       >
         {index + 1}
       </td>
-      {refactorheader.map((item: any, id: number) => (
-        <SingleTd
-          key={`td-${item}-${id}`}
-          el={el}
-          item={item}
-          firstCell={firstCell}
-        />
+      {refactorheader.map((item: TableThRefactored, id: number) => (
+        <SingleTd key={`td-${item}-${id}`} el={el} item={item} />
       ))}
     </tr>
   );

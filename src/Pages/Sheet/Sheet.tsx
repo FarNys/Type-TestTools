@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   calcSelectedRectData,
   changeActiveCEllByArrow,
+  changeColPosHandler,
+  changeReverseColPosHandler,
   createRect,
   goNextRow,
   hideDisplayRect,
@@ -15,30 +17,34 @@ import {
   removeActiveCell,
   showDisplayRect,
 } from "./redux/sheetSlice";
+import { RootState } from "./redux/sheetStore";
 
 const Sheet = () => {
   const dispatch = useDispatch();
   const selectedRectData = useSelector(
-    (state: any) => state.sheetSlice.selectedRectData
+    (state: RootState) => state.sheetSlice.selectedRectData
   );
-  console.log(selectedRectData);
+  const dragStartRef = useRef<TableTh | any>(null);
+  const dragEndRef = useRef<TableTh | any>(null);
   const refactorheader = useSelector(
-    (state: any) => state.sheetSlice.refactorheader
+    (state: RootState) => state.sheetSlice.refactorheader
   );
   const refactorData = useSelector(
-    (state: any) => state.sheetSlice.refactorData
+    (state: RootState) => state.sheetSlice.refactorData
   );
   const isDisplayRect = useSelector(
-    (state: any) => state.sheetSlice.isDisplayRect
+    (state: RootState) => state.sheetSlice.isDisplayRect
   );
-  const isMouseDown = useSelector((state: any) => state.sheetSlice.isMouseDown);
+  const isMouseDown = useSelector(
+    (state: RootState) => state.sheetSlice.isMouseDown
+  );
   const selectedList = useSelector(
-    (state: any) => state.sheetSlice.selectedList
+    (state: RootState) => state.sheetSlice.selectedList
   );
-  // const [isMouseDown, setisMouseDown] = useState<Boolean>(false);
-  const firstCell = useRef<any>(null);
   const tableRef = useRef<any>(null);
   const rectRef = useRef<any>(null);
+
+  const [dragEnterItem, setdragEnterItem] = useState<any | TableTh>(null);
   // const [selectedList, setselectedList] = useState([]);
   const tableHeader: TableTh[] = headerData.header;
   const tableData: TableTd[] = headerData.tableData;
@@ -94,7 +100,7 @@ const Sheet = () => {
     [dispatch]
   );
 
-  const mouseDownHeaderHandler = (element: any) => {
+  const mouseUpHeaderHandler = (element: any) => {
     dispatch(showDisplayRect());
     dispatch(removeActiveCell());
     dispatch(
@@ -125,6 +131,48 @@ const Sheet = () => {
     dispatch(removeActiveCell());
   });
 
+  const dragStartHandler = (element: TableTh) => {
+    dragStartRef.current = element;
+    dispatch(hideDisplayRect({ ref: rectRef }));
+    dispatch(removeActiveCell());
+  };
+  const dragEnterHandler = (element: TableTh) => {
+    setdragEnterItem(element);
+    dragEndRef.current = element;
+  };
+  const dragEndHandler = () => {
+    const startDragCol = dragStartRef.current;
+    const endDragCol = dragEndRef.current;
+    if (startDragCol.col === endDragCol.col) {
+      dragStartRef.current = null;
+      setdragEnterItem(null);
+      return;
+    }
+    if (endDragCol.col > startDragCol.col) {
+      dispatch(
+        changeColPosHandler({
+          start: startDragCol.col,
+          end: endDragCol.col,
+        })
+      );
+    } else {
+      dispatch(
+        changeReverseColPosHandler({
+          start: startDragCol.col,
+          end: endDragCol.col,
+        })
+      );
+    }
+    dragStartRef.current = null;
+    setdragEnterItem(null);
+  };
+
+  useEffect(() => {
+    if (selectedRectData) {
+      console.log(selectedRectData);
+    }
+  }, [selectedRectData]);
+
   return (
     <div className="w-full border mt-4">
       <div className="w-full relative">
@@ -138,14 +186,37 @@ const Sheet = () => {
           <table className="border" ref={tableRef}>
             <thead>
               <tr>
-                <td className="px-1 border bg-slate-100 h-10">row</td>
+                <td className="px-1 border bg-slate-100 h-10 ">row</td>
                 {refactorheader.map((el: any) => (
                   <td
-                    className="px-1 border bg-slate-100 h-10"
+                    className=" border bg-slate-100 h-10 "
                     key={`thead-${el.keyField}`}
-                    onMouseDown={() => mouseDownHeaderHandler(el)}
                   >
-                    {el.title}
+                    <div className="flex h-full w-full ">
+                      <div
+                        className={` w-full p-1 flex items-center cursor-grab ${
+                          dragStartRef.current?.col === el.col
+                            ? "bg-blue-200"
+                            : "bg-slate-100"
+                        } ${
+                          dragEnterItem?.col === el.col
+                            ? "bg-green-200"
+                            : "bg-slate-100"
+                        }`}
+                        onMouseUp={() => mouseUpHeaderHandler(el)}
+                        onDragStart={() => dragStartHandler(el)}
+                        onDragEnter={() => dragEnterHandler(el)}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDragEnd={dragEndHandler}
+                        draggable
+                      >
+                        {el.title}
+                      </div>
+                      {/* <div
+                        className={`w-1 h-full hover:bg-slate-200 hover:cursor-w-resize`}
+                        onMouseDown={mouseDownResizeHandler}
+                      ></div> */}
+                    </div>
                   </td>
                 ))}
               </tr>
@@ -156,7 +227,6 @@ const Sheet = () => {
                   key={`tbody-${index}`}
                   refactorheader={refactorheader}
                   el={el}
-                  firstCell={firstCell}
                   index={index}
                   rectRef={rectRef}
                 />

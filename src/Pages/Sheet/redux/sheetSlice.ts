@@ -1,29 +1,40 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  RectDataType,
+  SelectedCell,
+  TableTd,
+  TableTdExtra,
+  TableTdRefactored,
+  TableTh,
+  TableThExtra,
+  TableThRefactored,
+} from "../types";
 
 //ALL TYPE DEFINITION
-type SelectedCell = {
-  header: any;
-  data: any;
-};
-type SliceParameterTypes = {
+
+interface SliceParameterTypes {
+  test: any;
   activeCell: any;
   isDisplayRect: Boolean;
   isMouseDown: Boolean;
   selectedList: SelectedCell[];
-  refactorheader: any[];
-  refactorData: SelectedCell[];
-  selectedRectData: any[];
-};
+  refactorheader: TableThRefactored[];
+  refactorData: TableTdRefactored[];
+  selectedRectData: RectDataType | null | any;
+  isMouseDownEdge: Boolean;
+}
 
 // TYPE END
 const initialState: SliceParameterTypes = {
+  test: [],
   activeCell: null,
   isDisplayRect: false,
   isMouseDown: false,
   selectedList: [],
   refactorheader: [],
   refactorData: [],
-  selectedRectData: [],
+  selectedRectData: null,
+  isMouseDownEdge: false,
 };
 
 const sheetSlice = createSlice({
@@ -36,7 +47,7 @@ const sheetSlice = createSlice({
   reducers: {
     refactorHeaderHandler: (state, action) => {
       state.refactorheader = [
-        ...action.payload.header.map((el: any, index: number) => {
+        ...action.payload.header.map((el: TableTh, index: number) => {
           return {
             col: index,
             width: "150px",
@@ -47,9 +58,10 @@ const sheetSlice = createSlice({
     },
     refactorDataHandler: (state, action) => {
       state.refactorData = [
-        ...action.payload.data.map((el: any, index: number) => {
+        ...action.payload.data.map((el: TableTd, index: number) => {
           return {
             row: index,
+
             ...el,
           };
         }),
@@ -57,7 +69,7 @@ const sheetSlice = createSlice({
     },
     activeMouseDown: (state) => {
       state.isMouseDown = true;
-      state.selectedRectData = [];
+      state.selectedRectData = null;
     },
     deActiveMouseDown: (state) => {
       state.isMouseDown = false;
@@ -69,6 +81,7 @@ const sheetSlice = createSlice({
       action.payload.ref.current.style.width = 0;
       action.payload.ref.current.style.height = 0;
       state.isDisplayRect = false;
+      state.selectedRectData = null;
     },
     createRect: (state, action) => {
       action.payload.ref.current.style.top = `${
@@ -83,6 +96,31 @@ const sheetSlice = createSlice({
       action.payload.ref.current.style.height = `${
         40 + (action.payload.maxRow - action.payload.minRow - 1) * 40
       }px`;
+
+      //SAME CODE IN calcSelectedRectData with a little Difference (>= --->  > & <= ---> <)
+      const filteredHeader = state.refactorheader.filter(
+        (el: any) =>
+          el.col >= action.payload.minCol && el.col < action.payload.maxCol
+      );
+      const filteredData = state.refactorData.slice(
+        action.payload.minRow,
+        action.payload.maxRow
+      );
+      const finalData = filteredData.map((el: any) =>
+        filteredHeader.map((item: any) => {
+          return {
+            col: item.col,
+            row: el.row,
+            data: el[item.keyField],
+            keyField: item.keyField,
+          };
+        })
+      );
+      state.selectedRectData = {
+        data: finalData,
+        flatData: finalData.flat(),
+      };
+      return;
     },
 
     selectRectDataHandler: (state, action) => {
@@ -153,27 +191,124 @@ const sheetSlice = createSlice({
       if (list.length === 1) {
         const row = list[0].data.row;
         const col = list[0].header.col;
-        const rowInList = state.refactorData.slice(row, row + 1);
-        const itemInRow = rowInList.map((el: any) => {
+        const rowInList: TableTdRefactored[] = state.refactorData.slice(
+          row,
+          row + 1
+        );
+        const itemInRow = rowInList.map((el: TableTdRefactored) => {
           return {
-            col,
-            row,
-            data: el[list[0].header.keyField],
+            data: el[list[0].header.keyField as keyof TableTdRefactored],
           };
         });
-        // state.selectedRectData = [
-        //   {
-        //     row,
-        //     col,
-        //     data: itemInRow,
+
+        state.selectedRectData = {
+          row,
+          col,
+          data: itemInRow[0].data,
+          keyField: list[0].header.keyField,
+        };
+
+        // state.selectedRectData = {
+        //   data: {
+        //     col: itemInRow[0].col,
+        //     row: itemInRow[0].row,
+        //     data: itemInRow[0].data,
         //   },
-        // ];
-        state.selectedRectData = [...itemInRow];
-      } else {
-        state.selectedRectData = [{ game: "GIT" }];
+        // };
+      }
+      if (list.length === 2) {
+        let minRow: number;
+        let maxRow: number;
+        let minCol: number;
+        let maxCol: number;
+        const firstRow = list[0].data.row;
+        const lastRow = list[1].data.row;
+        const firstCol = list[0].header.col;
+        const lastCol = list[1].header.col;
+        if (firstRow > lastRow) {
+          maxRow = firstRow;
+          minRow = lastRow;
+        } else {
+          maxRow = lastRow;
+          minRow = firstRow;
+        }
+        if (firstCol > lastCol) {
+          maxCol = firstCol;
+          minCol = lastCol;
+        } else {
+          maxCol = lastCol;
+          minCol = firstCol;
+        }
+        const filteredHeader = state.refactorheader.filter(
+          (el: TableThRefactored) => el.col >= minCol && el.col <= maxCol
+        );
+        const filteredData = state.refactorData.slice(minRow, maxRow + 1);
+        const finalData = filteredData.map((el: TableTdRefactored) =>
+          filteredHeader.map((item: TableThRefactored) => {
+            return {
+              col: item.col,
+              row: el.row,
+              data: el[item.keyField as keyof TableTdRefactored],
+              keyField: item.keyField,
+            };
+          })
+        );
+        state.selectedRectData = {
+          data: finalData,
+          flatData: finalData.flat(),
+        };
+        return;
       }
 
       // state.selectedRectData = list;
+    },
+    changeColPosHandler: (state, action) => {
+      const firstList = state.refactorheader.slice(0, action.payload.start);
+      const betweenList = state.refactorheader.slice(
+        action.payload.start + 1,
+        action.payload.end + 1
+      );
+      const selectedColPosition = state.refactorheader[action.payload.start];
+      const endList = state.refactorheader.slice(
+        action.payload.end + 1,
+        state.refactorheader.length
+      );
+      // state.refactorheader = [...firstList, selectedColPosition, ...endList];
+      state.refactorheader = [
+        ...firstList,
+        ...betweenList,
+        selectedColPosition,
+        ...endList,
+      ].map((el, index) => {
+        return {
+          ...el,
+          col: index,
+        };
+      });
+    },
+    changeReverseColPosHandler: (state, action) => {
+      const firstList = state.refactorheader.slice(0, action.payload.end);
+      const betweenList = state.refactorheader.slice(
+        action.payload.end,
+        action.payload.start
+      );
+      const selectedColPosition = state.refactorheader[action.payload.start];
+      const endList = state.refactorheader.slice(
+        action.payload.start + 1,
+        state.refactorheader.length
+      );
+      state.refactorheader = [
+        ...firstList,
+        selectedColPosition,
+        ...betweenList,
+        ...endList,
+      ].map((el: TableThRefactored, index: number) => {
+        return {
+          ...el,
+
+          col: index,
+        };
+      });
     },
   },
 });
@@ -193,5 +328,7 @@ export const {
   changeActiveCEllByArrow,
   createRect,
   calcSelectedRectData,
+  changeColPosHandler,
+  changeReverseColPosHandler,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;
