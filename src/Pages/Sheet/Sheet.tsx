@@ -11,6 +11,7 @@ import {
   changeReverseColPosHandler,
   createRect,
   deActiveCellEditMode,
+  deleteCellHandler,
   enterKeyHandler,
   hideDisplayRect,
   refactorDataHandler,
@@ -21,16 +22,24 @@ import {
   updateSheetData,
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
+import { ARROW_KEYS } from "./constant";
 
 const Sheet = () => {
   const dispatch = useDispatch();
-  const selectedRectData = useSelector(
-    (state: RootState) => state.sheetSlice.selectedRectData
-  );
-  const updatedData = useSelector(
-    (state: RootState) => state.sheetSlice.updatedData
-  );
-  // console.log(updatedData);
+  // const selectedRectData = useSelector(
+  //   (state: RootState) => state.sheetSlice.selectedRectData
+  // );
+  // const activeCell = useSelector(
+  //   (state: RootState) => state.sheetSlice.activeCell
+  // );
+
+  // const cellInEditMode = useSelector(
+  //   (state: RootState) => state.sheetSlice.cellInEditMode
+  // );
+  // const afterUpdateData = useSelector(
+  //   (state: RootState) => state.sheetSlice.afterUpdateData
+  // );
+
   const dragStartRef = useRef<TableTh | any>(null);
   const dragEndRef = useRef<TableTh | any>(null);
   const refactorheader = useSelector(
@@ -61,7 +70,18 @@ const Sheet = () => {
   }, [tableHeader, dispatch]);
 
   useEffect(() => {
-    dispatch(refactorDataHandler({ data: tableData }));
+    let emptyList = [];
+    for (let i = 0; i < 1000; i++) {
+      const x = {
+        name: "Element",
+        lastname: "Tera",
+        number: i,
+        email: "Golden@example.com",
+        content: "Content",
+      };
+      emptyList.push(x);
+    }
+    dispatch(refactorDataHandler({ data: emptyList }));
   }, [tableData, dispatch]);
 
   useEffect(() => {
@@ -119,6 +139,9 @@ const Sheet = () => {
 
   const keyboardEventHandler = useCallback(
     (e: KeyboardEvent) => {
+      if (e.keyCode === 46) {
+        return dispatch(deleteCellHandler());
+      }
       if (!e.ctrlKey && !e.altKey) {
         dispatch(hideDisplayRect({ ref: rectRef }));
         if (e.keyCode === 13) {
@@ -126,9 +149,12 @@ const Sheet = () => {
           dispatch(updateSheetData({}));
           return dispatch(setEditModeCell());
         }
-        dispatch(changeActiveCEllByArrow({ code: e.keyCode }));
-        return dispatch(updateSheetData({}));
+        if (ARROW_KEYS.includes(e.keyCode)) {
+          dispatch(changeActiveCEllByArrow({ code: e.keyCode }));
+          return dispatch(updateSheetData({}));
+        }
       }
+      return;
     },
     [dispatch]
   );
@@ -175,11 +201,11 @@ const Sheet = () => {
     setdragEnterItem(null);
   };
 
-  useEffect(() => {
-    if (selectedRectData) {
-      console.log(selectedRectData);
-    }
-  }, [selectedRectData]);
+  // useEffect(() => {
+  //   if (selectedRectData) {
+  //     console.log(selectedRectData);
+  //   }
+  // }, [selectedRectData]);
 
   useOnClickOutside(tableRef, () => {
     dispatch(hideDisplayRect({ ref: rectRef }));
@@ -188,17 +214,12 @@ const Sheet = () => {
     dispatch(updateSheetData({}));
   });
 
-  const cellInEditMode = useSelector(
-    (state: RootState) => state.sheetSlice.cellInEditMode
-  );
-  const afterUpdateData = useSelector(
-    (state: RootState) => state.sheetSlice.afterUpdateData
-  );
-  useEffect(() => {
-    if (afterUpdateData) {
-      console.log(afterUpdateData);
-    }
-  }, [afterUpdateData]);
+  // useEffect(() => {
+  //   if (afterUpdateData) {
+  //     console.log(afterUpdateData);
+  //   }
+  // }, [afterUpdateData]);
+  console.count("Render");
 
   return (
     <div className="w-full border mt-4">

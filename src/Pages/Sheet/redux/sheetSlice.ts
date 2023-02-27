@@ -358,6 +358,28 @@ const sheetSlice = createSlice({
         state.updatedData = [];
       }
     },
+    deleteCellHandler: (state) => {
+      const updatedObject = state.activeCell;
+      if (state.selectedRectData) {
+        state.refactorData = [
+          ...state.refactorData.map((el: TableTdRefactored) => {
+            if (el.row === updatedObject.el.row) {
+              return {
+                ...el,
+                [updatedObject.item.keyField]: "",
+              };
+            } else {
+              return el;
+            }
+          }),
+        ];
+        state.afterUpdateData = state.updatedData;
+        state.activeCell = {
+          item: state.activeCell.item,
+          el: { ...state.activeCell.el, row: state.activeCell + 1 },
+        };
+      }
+    },
   },
 });
 
@@ -382,5 +404,6 @@ export const {
   deActiveCellEditMode,
   changeSheetData,
   updateSheetData,
+  deleteCellHandler,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;

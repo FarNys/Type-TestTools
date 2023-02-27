@@ -8,6 +8,7 @@ import {
   selectRectDataHandler,
   selectRectInitialHandler,
   setEditModeCell,
+  updateSheetData,
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
 import { TableTdRefactored, TableThRefactored } from "./types";
@@ -114,6 +115,19 @@ const SingleTd = ({ el, item }: SingleTdType) => {
     );
   };
 
+  const changeSelectHandler = (e: any) => {
+    dispatch(
+      changeSheetData({
+        data: {
+          row: el.row,
+          col: item.col,
+          keyField: item.keyField,
+          data: e.target.value,
+        },
+      })
+    );
+  };
+
   useEffect(() => {
     let interval: any;
     if (
@@ -134,6 +148,28 @@ const SingleTd = ({ el, item }: SingleTdType) => {
     cellInEditMode.item.col === item.col
   ) {
     return (
+      // <td className="select-none flex justify-center items-center h-9">
+      //   <input
+      //     ref={inputRef}
+      //     autoFocus={true}
+      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
+      //     onChange={inputValueHandler}
+      //     type="checkbox"
+      //     // placeholder="PlaceHolder"
+      //     className=" w-5 p-1 border outline outline-2 outline-blue-500 h-5"
+      //   />
+      // </td>
+      // <td className="select-none relative">
+      //   <input
+      //     ref={inputRef}
+      //     autoFocus={true}
+      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
+      //     onChange={inputValueHandler}
+      //     type="date"
+      //     // placeholder="PlaceHolder"
+      //     className="absolute top-0 left-0 w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
+      //   />
+      // </td>
       <td className="select-none">
         <input
           ref={inputRef}
@@ -144,12 +180,23 @@ const SingleTd = ({ el, item }: SingleTdType) => {
           className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
         />
       </td>
+      // <td>
+      //   <select
+      //     onChange={changeSelectHandler}
+      //     className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
+      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
+      //   >
+      //     <option value="lego">Lego</option>
+      //     <option value="Vite">Vite</option>
+      //     <option value="Sedr">Sedr</option>
+      //   </select>
+      // </td>
     );
   }
 
   return (
     <td
-      className={`p-1 border cursor-cell select-none h-10 ${isCellSelected()}`}
+      className={`p-1 border cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden`}
       // onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
