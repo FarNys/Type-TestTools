@@ -10,12 +10,15 @@ import {
   changeColPosHandler,
   changeReverseColPosHandler,
   createRect,
-  goNextRow,
+  deActiveCellEditMode,
+  enterKeyHandler,
   hideDisplayRect,
   refactorDataHandler,
   refactorHeaderHandler,
   removeActiveCell,
+  setEditModeCell,
   showDisplayRect,
+  updateSheetData,
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
 
@@ -24,6 +27,10 @@ const Sheet = () => {
   const selectedRectData = useSelector(
     (state: RootState) => state.sheetSlice.selectedRectData
   );
+  const updatedData = useSelector(
+    (state: RootState) => state.sheetSlice.updatedData
+  );
+  // console.log(updatedData);
   const dragStartRef = useRef<TableTh | any>(null);
   const dragEndRef = useRef<TableTh | any>(null);
   const refactorheader = useSelector(
@@ -90,17 +97,6 @@ const Sheet = () => {
     }
   }, [selectedList, isMouseDown, dispatch]);
 
-  const keyboardEventHandler = useCallback(
-    (e: KeyboardEvent) => {
-      dispatch(hideDisplayRect({ ref: rectRef }));
-      if (e.keyCode === 13) {
-        return dispatch(goNextRow());
-      }
-      return dispatch(changeActiveCEllByArrow({ code: e.keyCode }));
-    },
-    [dispatch]
-  );
-
   const mouseUpHeaderHandler = (element: any) => {
     dispatch(showDisplayRect());
     dispatch(removeActiveCell());
@@ -121,16 +117,27 @@ const Sheet = () => {
     }
   }, [selectedList, isMouseDown, dispatch]);
 
+  const keyboardEventHandler = useCallback(
+    (e: KeyboardEvent) => {
+      if (!e.ctrlKey && !e.altKey) {
+        dispatch(hideDisplayRect({ ref: rectRef }));
+        if (e.keyCode === 13) {
+          dispatch(enterKeyHandler());
+          dispatch(updateSheetData({}));
+          return dispatch(setEditModeCell());
+        }
+        dispatch(changeActiveCEllByArrow({ code: e.keyCode }));
+        return dispatch(updateSheetData({}));
+      }
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     document.addEventListener("keydown", (e) => keyboardEventHandler(e));
     return () =>
       document.removeEventListener("keydown", (e) => keyboardEventHandler(e));
   }, [keyboardEventHandler]);
-
-  useOnClickOutside(tableRef, () => {
-    dispatch(hideDisplayRect({ ref: rectRef }));
-    dispatch(removeActiveCell());
-  });
 
   const dragStartHandler = (element: TableTh) => {
     dragStartRef.current = element;
@@ -173,6 +180,25 @@ const Sheet = () => {
       console.log(selectedRectData);
     }
   }, [selectedRectData]);
+
+  useOnClickOutside(tableRef, () => {
+    dispatch(hideDisplayRect({ ref: rectRef }));
+    dispatch(removeActiveCell());
+    dispatch(deActiveCellEditMode());
+    dispatch(updateSheetData({}));
+  });
+
+  const cellInEditMode = useSelector(
+    (state: RootState) => state.sheetSlice.cellInEditMode
+  );
+  const afterUpdateData = useSelector(
+    (state: RootState) => state.sheetSlice.afterUpdateData
+  );
+  useEffect(() => {
+    if (afterUpdateData) {
+      console.log(afterUpdateData);
+    }
+  }, [afterUpdateData]);
 
   return (
     <div className="w-full border mt-4">
@@ -225,7 +251,7 @@ const Sheet = () => {
             <tbody>
               {refactorData.map((el: any, index: number) => (
                 <SingleTr
-                  key={`tbody-${index}`}
+                  key={`trow-${index}`}
                   refactorheader={refactorheader}
                   el={el}
                   index={index}

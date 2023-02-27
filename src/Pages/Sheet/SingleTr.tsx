@@ -39,7 +39,7 @@ const SingleTr = ({ refactorheader, el, index, rectRef }: SingleTrType) => {
         {index + 1}
       </td>
       {refactorheader.map((item: TableThRefactored, id: number) => (
-        <SingleTd key={`td-${item}-${id}`} el={el} item={item} />
+        <SingleTd key={`td-${item.col}-${el.row}-${id}`} el={el} item={item} />
       ))}
     </tr>
   );

@@ -23,6 +23,8 @@ interface SliceParameterTypes {
   selectedRectData: RectDataType | null | any;
   isMouseDownEdge: Boolean;
   cellInEditMode: any;
+  updatedData: any[];
+  afterUpdateData: any[];
 }
 
 // TYPE END
@@ -37,6 +39,8 @@ const initialState: SliceParameterTypes = {
   selectedRectData: null,
   isMouseDownEdge: false,
   cellInEditMode: null,
+  updatedData: [],
+  afterUpdateData: [],
 };
 
 const sheetSlice = createSlice({
@@ -139,13 +143,18 @@ const sheetSlice = createSlice({
     removeActiveCell: (state) => {
       state.activeCell = null;
     },
-    goNextRow: (state) => {
+    enterKeyHandler: (state) => {
       const findRow = state.activeCell?.el.row;
       if (findRow || findRow === 0) {
-        state.activeCell = {
-          item: state.activeCell.item,
-          el: { ...state.activeCell.el, row: findRow + 1 },
-        };
+        if (!state.cellInEditMode) {
+          state.cellInEditMode = state.activeCell;
+        } else {
+          state.activeCell = {
+            item: state.activeCell.item,
+            el: { ...state.activeCell.el, row: findRow + 1 },
+          };
+          state.cellInEditMode = null;
+        }
       }
     },
     changeActiveCEllByArrow: (state, action) => {
@@ -155,36 +164,44 @@ const sheetSlice = createSlice({
       if (findRow || findRow === 0) {
         if (findCol || findCol === 0) {
           //LEFT ARROW
-          if (findArrow === 37) {
+          if (findArrow === 37 && !state.cellInEditMode) {
             state.activeCell = {
               item: { ...state.activeCell.item, col: findCol - 1 },
               el: { ...state.activeCell.el },
             };
-            return;
           }
           //RIGHT ARROW
-          if (findArrow === 39) {
+          if (findArrow === 39 && !state.cellInEditMode) {
             state.activeCell = {
               item: { ...state.activeCell.item, col: findCol + 1 },
               el: { ...state.activeCell.el },
             };
-            return;
           }
           //UP ARROW
           if (findArrow === 38) {
+            // state.cellInEditMode = null;
             state.activeCell = {
               item: state.activeCell.item,
               el: { ...state.activeCell.el, row: findRow - 1 },
             };
-            return;
+            if (state.cellInEditMode) {
+              state.cellInEditMode = state.activeCell;
+            } else {
+              state.cellInEditMode = null;
+            }
           }
           //DOWN ARROW
           if (findArrow === 40) {
+            // state.cellInEditMode = null;
             state.activeCell = {
               item: state.activeCell.item,
               el: { ...state.activeCell.el, row: findRow + 1 },
             };
-            return;
+            if (state.cellInEditMode) {
+              state.cellInEditMode = state.activeCell;
+            } else {
+              state.cellInEditMode = null;
+            }
           }
         }
       }
@@ -316,6 +333,31 @@ const sheetSlice = createSlice({
     setEditModeCell: (state) => {
       state.cellInEditMode = state.activeCell;
     },
+    deActiveCellEditMode: (state) => {
+      state.cellInEditMode = null;
+    },
+    changeSheetData: (state, action) => {
+      state.updatedData = [action.payload.data];
+    },
+    updateSheetData: (state, action) => {
+      if (state.updatedData.length > 0) {
+        const updatedObject = state.updatedData[0];
+        state.refactorData = [
+          ...state.refactorData.map((el: TableTdRefactored) => {
+            if (el.row === updatedObject.row) {
+              return {
+                ...el,
+                [updatedObject.keyField]: updatedObject.data,
+              };
+            } else {
+              return el;
+            }
+          }),
+        ];
+        state.afterUpdateData = state.updatedData;
+        state.updatedData = [];
+      }
+    },
   },
 });
 
@@ -330,12 +372,15 @@ export const {
   selectRectInitialHandler,
   activeCellSelectHandler,
   removeActiveCell,
-  goNextRow,
+  enterKeyHandler,
   changeActiveCEllByArrow,
   createRect,
   calcSelectedRectData,
   changeColPosHandler,
   changeReverseColPosHandler,
   setEditModeCell,
+  deActiveCellEditMode,
+  changeSheetData,
+  updateSheetData,
 } = sheetSlice.actions;
 export default sheetSlice.reducer;

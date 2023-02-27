@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   activeCellSelectHandler,
   activeMouseDown,
+  changeSheetData,
   deActiveMouseDown,
   selectRectDataHandler,
   selectRectInitialHandler,
@@ -31,6 +32,7 @@ const SingleTd = ({ el, item }: SingleTdType) => {
     (state: RootState) => state.sheetSlice.cellInEditMode
   );
   const [isCellActive, setisCellActive] = useState(false);
+  const inputRef = useRef<any>(null);
 
   const mouseDownHandler = () => {
     if (
@@ -99,22 +101,55 @@ const SingleTd = ({ el, item }: SingleTdType) => {
     // console.log("Active");
   };
 
+  const inputValueHandler = (e: any) => {
+    dispatch(
+      changeSheetData({
+        data: {
+          row: el.row,
+          col: item.col,
+          keyField: item.keyField,
+          data: e.target.value,
+        },
+      })
+    );
+  };
+
+  useEffect(() => {
+    let interval: any;
+    if (
+      cellInEditMode &&
+      cellInEditMode.el.row === el.row &&
+      cellInEditMode.item.col === item.col
+    ) {
+      interval = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+    }
+    return () => clearInterval(interval);
+  }, [cellInEditMode]);
+
   if (
     cellInEditMode &&
     cellInEditMode.el.row === el.row &&
     cellInEditMode.item.col === item.col
   ) {
     return (
-      <input
-        // placeholder="PlaceHolder"
-        className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
-      />
+      <td className="select-none">
+        <input
+          ref={inputRef}
+          autoFocus={true}
+          defaultValue={el[item.keyField as keyof TableTdRefactored]}
+          onChange={inputValueHandler}
+          // placeholder="PlaceHolder"
+          className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
+        />
+      </td>
     );
   }
 
   return (
     <td
-      className={`p-1 border select-none h-10 ${isCellSelected()}`}
+      className={`p-1 border cursor-cell select-none h-10 ${isCellSelected()}`}
       // onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}
