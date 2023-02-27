@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+<!-- CELL BEHAVIOUR START -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-PRESSING ANY KEY ENTER CELL ACTIVE MODE TO CELL EDIT MODE
+-PRESSING ENTER UPDATE DATA AND SEND NEXT LANE CELL (BUT KEEP IT JUST ACTIVE AND NOT EDITED)
+-ADD RELATIVE POSITION TO TD AND ABSOLUTE TO ITS CHILD COMPONENT FOR BETTER UI
+-ADD STYLE FOR BGCOLOR OF TD IN VIEW MODE(RED-ORANGE-GREEN-DEFAULT)
+-DISABLE CELL (FROM BEING UPDATE AND GO TO EDIT MODE)
+-COPY AND PASTE SINGLE CELL
+-COPY AND PASTE BULK CELLS
+-UPDATE BULK CELLS
+-DELETE BULK CELLS
+-SEPRATE DATA RECT WHICH COME FROM CREATE RECT(WHICH MAKE CHANGE CELL WITH ARROW WONT MAKE LIKE CLICK)
 
-## Available Scripts
+<!-- CELL BEHAVIOUR END -->
 
-In the project directory, you can run:
+<!-- CELL(COL) TYPES START -->
 
-### `npm start`
+-CREATE COMPONENT FOR DIFFERENT COLUMN TYPE
+-TEXT
+-NUMBER
+-TIME
+-DATE
+-SELECT
+-CHECKBOX
+-SLIDER(PERCENT)--CAN BE COLORFULL BACKGROUND BASED ON PERCENT
+-PRICE?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- <!-- CELL TYPES END -->
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<!-- EDGE CASES START -->
 
-### `npm test`
+-PREVENT SELECTION REC TO GO OUT OF TABLE AREA(ARROW KEY)
+-PREVENT PASTE ON DISABLE CELL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<!-- EDGE CASES END -->
 
-### `npm run build`
+<!-- SHEET BEHAVIOUR & PROPERTIES START -->
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-ADD NEW ROW(NEED TO CREATE OBJECT BASED ON ACCESSIBLE HEADER KEYFIELD AND PUT THEIR VALUE TO EMPTY)
+-ADD NEW COLUMNS(HOVERING ON TABLE SHOW A PLUS BUTTON AT EDGE OF SHEET WHICH CAN CREATE NEW COLUMN,PREVENT ACTION DURATION NEW COL CREATION)
+-STICKY HEADER AND ROW
+-DELETE FULL ROW FROM TABLE(ROW DATA,ROW FULL WITH ID FROM DATABASE)
+-LOCK ROCK(JUST FOR HIS ACCESS,FULL LOCK ROCK)
+-HEADER CONTEXT MENU(FILTER,BG-COLOR,HIDE COLUMN,WIDTH)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<!-- SHEET BEHAVIOUR & PROPERTIES END -->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!-- COMPLEX START -->
 
-### `npm run eject`
+-GLOBAL SEARCH(FIND VALUE THROUGH ALL DATA WHICH USER HAS ACCESS AND FIND THEIR POSITION,THEN CLICK ON RESULT DIVE INTO SELECTED CELL OR ROW!)
+-SHEET CONTEXT MENU(COPY CELL(S),PASTE CELL(S),ADD ROW AT BOTTOM,ADD COL,DELETE VALUE(S))
+-REACT VIRTUALIZE FOR PERFORMANCE
+-ADD WIDTH RESIZER TO HEADER
+-RTL
+-CTRL+Z(UNDO)
+-CTRL+Y(REDO)
+-OPTIMIZING WITH MEMO AND CALLBACK
+-WRITE TEST
+-useMemoizedIndexCallback
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- COMPLEX END -->
