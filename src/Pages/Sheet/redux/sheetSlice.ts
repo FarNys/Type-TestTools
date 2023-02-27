@@ -374,10 +374,10 @@ const sheetSlice = createSlice({
           }),
         ];
         state.afterUpdateData = state.updatedData;
-        state.activeCell = {
-          item: state.activeCell.item,
-          el: { ...state.activeCell.el, row: state.activeCell + 1 },
-        };
+        // state.activeCell = {
+        //   item: state.activeCell.item,
+        //   el: { ...state.activeCell.el, row: state.activeCell + 1 },
+        // };
       }
     },
   },

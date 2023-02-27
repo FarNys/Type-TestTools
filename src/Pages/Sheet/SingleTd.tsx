@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   activeCellSelectHandler,
@@ -18,7 +18,7 @@ interface SingleTdType {
   item: TableThRefactored;
 }
 
-const SingleTd = ({ el, item }: SingleTdType) => {
+const SingleTd = memo(({ el, item }: SingleTdType) => {
   const dispatch = useDispatch();
   const activeCell = useSelector(
     (state: RootState) => state.sheetSlice.activeCell
@@ -209,6 +209,6 @@ const SingleTd = ({ el, item }: SingleTdType) => {
       {el[item.keyField as keyof TableTdRefactored]}
     </td>
   );
-};
+});
 
 export default SingleTd;

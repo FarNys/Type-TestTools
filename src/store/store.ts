@@ -12,7 +12,9 @@ const store = configureStore({
   reducer: rootReducer,
   // highlight-start
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(TodoRtkApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(TodoRtkApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
