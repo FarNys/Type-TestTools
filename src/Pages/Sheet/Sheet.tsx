@@ -71,7 +71,7 @@ const Sheet = () => {
 
   useEffect(() => {
     let emptyList = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 100; i++) {
       const x = {
         name: "Element",
         lastname: "Tera",

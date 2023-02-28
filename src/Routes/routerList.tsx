@@ -11,6 +11,7 @@ import Sheet from "../Pages/Sheet/Sheet";
 import TodoPage from "../Pages/TodoPage/TodoPage";
 import TodoRTKQ from "../Pages/TodoRTKQ/TodoRTKQ";
 import SheetProvider from "../Pages/Sheet/SheetProvider";
+import Virtualize from "../Pages/Virtualize/Virtualize";
 
 const routerList = createBrowserRouter([
   {
@@ -91,6 +92,15 @@ const routerList = createBrowserRouter([
       <>
         <Navbar />
         <SheetProvider />
+      </>
+    ),
+  },
+  {
+    path: "/virtual",
+    element: (
+      <>
+        <Navbar />
+        <Virtualize />
       </>
     ),
   },

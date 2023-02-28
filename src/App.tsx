@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "./Components/Actions/Input";
 
 function App() {
+  const [value, setvalue] = useState("");
+  const def = "amir";
+  const inputRef = useRef<any>(null);
+  console.log(inputRef.current);
+
+  const sendHandler = () => {
+    console.log(inputRef.current.value);
+  };
+
+  const blurHandler = () => {
+    console.log(inputRef.current.value);
+  };
+
   return (
     <div className="App" data-testid="app">
       <h1>h1 ALL</h1>
@@ -15,6 +28,17 @@ function App() {
           </div>
           <div className="dd_container">DropDown</div>
           <div className="filler"></div>
+          <input
+            className="border"
+            // onChange={(e) => setvalue(e.target.value)}
+            // value={value}
+            // defaultValue={def}
+            ref={inputRef}
+            onBlur={blurHandler}
+          />
+          <button className="border" onClick={sendHandler}>
+            Send
+          </button>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ const Navbar: React.FC<any> = () => {
       <LinkStyle to="/dnd">Dran n Drop</LinkStyle>
       <LinkStyle to="/todo-rtkq">Todo RTKQ</LinkStyle>
       <LinkStyle to="/sheet">Sheet</LinkStyle>
+      <LinkStyle to="/virtual">Virtual</LinkStyle>
     </div>
   );
 };
