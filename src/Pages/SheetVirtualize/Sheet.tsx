@@ -23,6 +23,7 @@ import {
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
 import { ARROW_KEYS } from "./constant";
+import SheetVirPart from "./SheetVirPart";
 
 const Sheet = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const Sheet = () => {
 
   useEffect(() => {
     let emptyList = [];
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 10000; i++) {
       const x = {
         name: "Element",
         lastname: "Tera",
@@ -220,9 +221,14 @@ const Sheet = () => {
   //   }
   // }, [afterUpdateData]);
   console.count("Render");
+  const selectedRectData = useSelector(
+    (state: RootState) => state.sheetSlice.selectedRectData
+  );
+  // console.log(selectedRectData);
 
   return (
     <div className="w-full border mt-4">
+      <h1>Sheet Virtualize</h1>
       <div className="w-full relative">
         <div
           id="selection-rect "
@@ -231,45 +237,47 @@ const Sheet = () => {
           style={{ display: isDisplayRect ? "block" : "none" }}
         ></div>
         {refactorData && refactorheader && (
-          <table className="border" ref={tableRef}>
-            <thead>
-              <tr>
-                <td className="px-1 border bg-slate-100 h-10 ">row</td>
-                {refactorheader.map((el: any) => (
-                  <td
-                    className=" border bg-slate-100 h-10 "
-                    key={`thead-${el.keyField}`}
-                  >
-                    <div className="flex h-full w-full ">
-                      <div
-                        className={` w-full p-1 flex items-center cursor-grab ${
-                          dragStartRef.current?.col === el.col
-                            ? "bg-blue-200"
-                            : "bg-slate-100"
-                        } ${
-                          dragEnterItem?.col === el.col
-                            ? "bg-green-200"
-                            : "bg-slate-100"
-                        }`}
-                        onMouseUp={() => mouseUpHeaderHandler(el)}
-                        onDragStart={() => dragStartHandler(el)}
-                        onDragEnter={() => dragEnterHandler(el)}
-                        onDragOver={(e) => e.preventDefault()}
-                        onDragEnd={dragEndHandler}
-                        draggable
-                      >
-                        {el.title}
-                      </div>
-                      {/* <div
+          <React.Fragment>
+            <table className="border" ref={tableRef}>
+              <thead>
+                <tr>
+                  <td className="px-1 border bg-slate-100 h-10 ">row</td>
+                  {refactorheader.map((el: any) => (
+                    <td
+                      className=" border bg-slate-100 h-10 "
+                      key={`thead-${el.keyField}`}
+                    >
+                      <div className="flex h-full w-full ">
+                        <div
+                          className={` w-full p-1 flex items-center cursor-grab ${
+                            dragStartRef.current?.col === el.col
+                              ? "bg-blue-200"
+                              : "bg-slate-100"
+                          } ${
+                            dragEnterItem?.col === el.col
+                              ? "bg-green-200"
+                              : "bg-slate-100"
+                          }`}
+                          onMouseUp={() => mouseUpHeaderHandler(el)}
+                          onDragStart={() => dragStartHandler(el)}
+                          onDragEnter={() => dragEnterHandler(el)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDragEnd={dragEndHandler}
+                          draggable
+                        >
+                          {el.title}
+                        </div>
+                        {/* <div
                         className={`w-1 h-full hover:bg-slate-200 hover:cursor-w-resize`}
                         onMouseDown={mouseDownResizeHandler}
                       ></div> */}
-                    </div>
-                  </td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              </thead>
+
+              {/* <tbody>
               {refactorData.map((el: any, index: number) => (
                 <SingleTr
                   key={`trow-${index}`}
@@ -279,8 +287,13 @@ const Sheet = () => {
                   rectRef={rectRef}
                 />
               ))}
-            </tbody>
-          </table>
+            </tbody> */}
+            </table>
+            <SheetVirPart
+              refactorData={refactorData}
+              refactorheader={refactorheader}
+            />
+          </React.Fragment>
         )}
       </div>
     </div>
