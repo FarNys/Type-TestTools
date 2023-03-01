@@ -94,7 +94,7 @@ const sheetSlice = createSlice({
         (action.payload.minRow + 1) * 40
       }px`;
       action.payload.ref.current.style.left = `${
-        action.payload.minCol * 150 + 40 - 3
+        action.payload.minCol * 150
       }px`;
       action.payload.ref.current.style.width = `${
         (action.payload.maxCol - action.payload.minCol) * 150

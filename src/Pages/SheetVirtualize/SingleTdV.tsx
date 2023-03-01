@@ -90,7 +90,7 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       return "outline outline-1 outline-sky-500";
     }
     return "";
-  }, [activeCell]);
+  }, [activeCell, el.row, item.col]);
 
   const mouseUpHandler = () => {
     dispatch(deActiveMouseDown());
