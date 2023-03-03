@@ -90,9 +90,7 @@ const sheetSlice = createSlice({
       state.selectedRectData = null;
     },
     createRect: (state, action) => {
-      action.payload.ref.current.style.top = `${
-        (action.payload.minRow + 1) * 40
-      }px`;
+      action.payload.ref.current.style.top = `${action.payload.minRow * 40}px`;
       action.payload.ref.current.style.left = `${
         action.payload.minCol * 150
       }px`;

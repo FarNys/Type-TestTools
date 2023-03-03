@@ -49,9 +49,9 @@ const Sheet = () => {
   const refactorData = useSelector(
     (state: RootState) => state.sheetSlice.refactorData
   );
-  const isDisplayRect = useSelector(
-    (state: RootState) => state.sheetSlice.isDisplayRect
-  );
+  // const isDisplayRect = useSelector(
+  //   (state: RootState) => state.sheetSlice.isDisplayRect
+  // );
   const isMouseDown = useSelector(
     (state: RootState) => state.sheetSlice.isMouseDown
   );
@@ -224,18 +224,19 @@ const Sheet = () => {
   const selectedRectData = useSelector(
     (state: RootState) => state.sheetSlice.selectedRectData
   );
-  // console.log(selectedRectData);
+
+  console.log(selectedRectData);
 
   return (
     <div className="w-full border mt-4">
       <h1>Sheet Virtualize</h1>
       <div className="w-full relative">
-        <div
+        {/* <div
           id="selection-rect "
-          className="absolute outline outline-2 outline-sky-500  bg-sky-500/10 pointer-events-none duration-100"
+          className="absolute outline outline-2 outline-sky-500  bg-sky-500/10 pointer-events-none duration-100 z-10"
           ref={rectRef}
           style={{ display: isDisplayRect ? "block" : "none" }}
-        ></div>
+        ></div> */}
         {refactorData && refactorheader && (
           <React.Fragment>
             <table className="border" ref={tableRef}>
@@ -292,6 +293,7 @@ const Sheet = () => {
             <SheetVirPart
               refactorData={refactorData}
               refactorheader={refactorheader}
+              rectRef={rectRef}
             />
           </React.Fragment>
         )}

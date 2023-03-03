@@ -1,10 +1,15 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/sheetStore";
 import SingleTd from "./SingleTdV";
 import SingleTdV from "./SingleTdV";
 
-const SheetVirPart = ({ refactorData, refactorheader }: any) => {
+const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
   const parentRef = React.useRef<HTMLDivElement | any>(null);
+  const isDisplayRect = useSelector(
+    (state: RootState) => state.sheetSlice.isDisplayRect
+  );
   const rowVirtualizer = useVirtualizer({
     count: refactorData.length,
     getScrollElement: () => parentRef.current,
@@ -27,7 +32,7 @@ const SheetVirPart = ({ refactorData, refactorheader }: any) => {
       className="List"
       style={{
         height: `400px`,
-        width: `500px`,
+        width: `800px`,
         overflow: "auto",
       }}
     >
@@ -38,6 +43,12 @@ const SheetVirPart = ({ refactorData, refactorheader }: any) => {
           position: "relative",
         }}
       >
+        <div
+          id="selection-rect "
+          className="absolute outline outline-2 outline-sky-500  bg-sky-500/10 pointer-events-none duration-100 z-10"
+          ref={rectRef}
+          style={{ display: isDisplayRect ? "block" : "none" }}
+        ></div>
         {rowVirtualizer.getVirtualItems().map((virtualRow) => {
           return (
             <React.Fragment key={virtualRow.index}>

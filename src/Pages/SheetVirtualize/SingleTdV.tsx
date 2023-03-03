@@ -24,6 +24,7 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   const activeCell = useSelector(
     (state: RootState) => state.sheetSlice.activeCell
   );
+  const [isActive, setisActive] = useState(false);
   const isMouseDown = useSelector(
     (state: RootState) => state.sheetSlice.isMouseDown
   );
@@ -33,7 +34,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   const cellInEditMode = useSelector(
     (state: RootState) => state.sheetSlice.cellInEditMode
   );
-  const [isCellActive, setisCellActive] = useState(false);
   const inputRef = useRef<any>(null);
 
   const mouseDownHandler = () => {
@@ -63,7 +63,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       );
     }
   };
-
   const mouseEnterHandler = () => {
     if (isMouseDown) {
       dispatch(
@@ -86,11 +85,14 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   };
 
   const isCellSelected = useCallback(() => {
-    if (activeCell?.el.row === +el.row && activeCell.item.col === +item.col) {
+    if (
+      selectedList[0]?.data.row === el.row &&
+      selectedList[0].header.col === item.col
+    ) {
       return "outline outline-1 outline-sky-500";
     }
     return "";
-  }, [activeCell, el.row, item.col]);
+  }, [selectedList, el.row, item.col]);
 
   const mouseUpHandler = () => {
     dispatch(deActiveMouseDown());
@@ -99,7 +101,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   };
 
   const doubleClickHandler = () => {
-    setisCellActive(true);
     // console.log("Active");
   };
 
