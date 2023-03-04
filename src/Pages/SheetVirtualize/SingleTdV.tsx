@@ -24,7 +24,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   const activeCell = useSelector(
     (state: RootState) => state.sheetSlice.activeCell
   );
-  const [isActive, setisActive] = useState(false);
   const isMouseDown = useSelector(
     (state: RootState) => state.sheetSlice.isMouseDown
   );
@@ -85,14 +84,11 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   };
 
   const isCellSelected = useCallback(() => {
-    if (
-      selectedList[0]?.data.row === el.row &&
-      selectedList[0].header.col === item.col
-    ) {
-      return "outline outline-1 outline-sky-500";
+    if (activeCell?.el.row === el.row && activeCell.item.col === item.col) {
+      return "outline outline-1 outline-sky-500 z-10";
     }
     return "";
-  }, [selectedList, el.row, item.col]);
+  }, [activeCell, el.row, item.col]);
 
   const mouseUpHandler = () => {
     dispatch(deActiveMouseDown());
@@ -150,7 +146,10 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
     cellInEditMode.item.col === item.col
   ) {
     return (
-      // <td className="select-none flex justify-center items-center h-9">
+      // <div
+      //   className="select-none flex justify-center items-center h-9"
+      //   style={style}
+      // >
       //   <input
       //     ref={inputRef}
       //     autoFocus={true}
@@ -160,8 +159,8 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       //     // placeholder="PlaceHolder"
       //     className=" w-5 p-1 border outline outline-2 outline-blue-500 h-5"
       //   />
-      // </td>
-      // <td className="select-none relative">
+      // </div>
+      // <div className="select-none " style={style}>
       //   <input
       //     ref={inputRef}
       //     autoFocus={true}
@@ -169,10 +168,10 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       //     onChange={inputValueHandler}
       //     type="date"
       //     // placeholder="PlaceHolder"
-      //     className="absolute top-0 left-0 w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
+      //     className="absolute top-0 left-0 w-full p-1 outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
       //   />
-      // </td>
-      <td className="select-none">
+      // </div>
+      <div className="select-none" style={style}>
         <input
           ref={inputRef}
           autoFocus={true}
@@ -181,8 +180,8 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
           // placeholder="PlaceHolder"
           className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
         />
-      </td>
-      // <td>
+      </div>
+      // <div style={style}>
       //   <select
       //     onChange={changeSelectHandler}
       //     className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
@@ -192,7 +191,7 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       //     <option value="Vite">Vite</option>
       //     <option value="Sedr">Sedr</option>
       //   </select>
-      // </td>
+      // </div>
     );
   }
 

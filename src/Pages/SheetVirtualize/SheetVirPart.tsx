@@ -1,11 +1,19 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/sheetStore";
 import SingleTd from "./SingleTdV";
 import SingleTdV from "./SingleTdV";
+import {
+  deActiveCellEditMode,
+  hideDisplayRect,
+  removeActiveCell,
+  updateSheetData,
+} from "./redux/sheetSlice";
+import { useOnClickOutside } from "../../Hooks/useOnClickOutside";
 
 const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
+  const dispatch = useDispatch();
   const parentRef = React.useRef<HTMLDivElement | any>(null);
   const isDisplayRect = useSelector(
     (state: RootState) => state.sheetSlice.isDisplayRect
@@ -26,6 +34,14 @@ const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
     // paddingStart: 200,
     // paddingEnd: 200,
   });
+
+  useOnClickOutside(parentRef, () => {
+    dispatch(hideDisplayRect({ ref: rectRef }));
+    dispatch(removeActiveCell());
+    dispatch(deActiveCellEditMode());
+    dispatch(updateSheetData({}));
+  });
+
   return (
     <div
       ref={parentRef}

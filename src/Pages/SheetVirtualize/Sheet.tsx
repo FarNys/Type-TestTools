@@ -208,12 +208,12 @@ const Sheet = () => {
   //   }
   // }, [selectedRectData]);
 
-  useOnClickOutside(tableRef, () => {
-    dispatch(hideDisplayRect({ ref: rectRef }));
-    dispatch(removeActiveCell());
-    dispatch(deActiveCellEditMode());
-    dispatch(updateSheetData({}));
-  });
+  // useOnClickOutside(tableRef, () => {
+  //   dispatch(hideDisplayRect({ ref: rectRef }));
+  //   dispatch(removeActiveCell());
+  //   dispatch(deActiveCellEditMode());
+  //   dispatch(updateSheetData({}));
+  // });
 
   // useEffect(() => {
   //   if (afterUpdateData) {
@@ -221,12 +221,10 @@ const Sheet = () => {
   //   }
   // }, [afterUpdateData]);
   console.count("Render");
-  const selectedRectData = useSelector(
-    (state: RootState) => state.sheetSlice.selectedRectData
+  const activeCell = useSelector(
+    (state: RootState) => state.sheetSlice.activeCell
   );
-
-  console.log(selectedRectData);
-
+  console.log(activeCell);
   return (
     <div className="w-full border mt-4">
       <h1>Sheet Virtualize</h1>
