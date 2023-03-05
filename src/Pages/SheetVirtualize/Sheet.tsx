@@ -145,12 +145,14 @@ const Sheet = () => {
 
   const keyboardEventHandler = useCallback(
     async (e: KeyboardEvent) => {
-      console.log(e.keyCode);
       // console.log(activeCell);
       // if (!activeCell) return;
       // if (ALPHABET_KEYS.includes(e.keyCode) && activeCell) {
       //   return console.log("KEY PRESS");
       // }
+      if (!activeCell) return;
+      console.log(e.keyCode);
+
       if (e.keyCode === 46) {
         return dispatch(deleteCellHandler());
       }
@@ -182,9 +184,8 @@ const Sheet = () => {
   );
   console.log(activeCell);
   useEffect(() => {
-    document.addEventListener("keydown", (e) => keyboardEventHandler(e));
-    return () =>
-      document.removeEventListener("keydown", (e) => keyboardEventHandler(e));
+    document.addEventListener("keydown", keyboardEventHandler);
+    return () => document.removeEventListener("keydown", keyboardEventHandler);
   }, [keyboardEventHandler]);
 
   const dragStartHandler = (element: TableTh) => {
