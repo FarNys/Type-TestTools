@@ -12,6 +12,8 @@ import {
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
 import { TableTdRefactored, TableThRefactored } from "./types";
+import SelectCell from "./Cells/SelectCell";
+import BaseCell from "./Cells/BaseCell";
 
 interface SingleTdVType {
   el: TableTdRefactored;
@@ -33,8 +35,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
   const cellInEditMode = useSelector(
     (state: RootState) => state.sheetSlice.cellInEditMode
   );
-  const inputRef = useRef<any>(null);
-
   const mouseDownHandler = () => {
     if (
       activeCell &&
@@ -73,13 +73,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
           },
         })
       );
-      // setselectedList([
-      //   selectedList[0],
-      //   {
-      //     header: item,
-      //     data: el,
-      //   },
-      // ]);
     }
   };
 
@@ -87,9 +80,8 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
     if (activeCell?.el.row === el.row && activeCell.item.col === item.col) {
       return "outline outline-1 outline-sky-500 z-10";
     }
-    return "";
+    return "outline outline-1 outline-slate-200";
   }, [activeCell, el.row, item.col]);
-
   const mouseUpHandler = () => {
     dispatch(deActiveMouseDown());
 
@@ -98,19 +90,6 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
 
   const doubleClickHandler = () => {
     // console.log("Active");
-  };
-
-  const inputValueHandler = (e: any) => {
-    dispatch(
-      changeSheetData({
-        data: {
-          row: el.row,
-          col: item.col,
-          keyField: item.keyField,
-          data: e.target.value,
-        },
-      })
-    );
   };
 
   const changeSelectHandler = (e: any) => {
@@ -126,19 +105,13 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
     );
   };
 
-  useEffect(() => {
-    let interval: any;
-    if (
-      cellInEditMode &&
-      cellInEditMode.el.row === el.row &&
-      cellInEditMode.item.col === item.col
-    ) {
-      interval = setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
-    }
-    return () => clearInterval(interval);
-  }, [cellInEditMode]);
+  const bgColorPicker = (value: any) => {
+    const findNumber = value.split("%");
+    if (findNumber.length === 0) return "";
+    if (findNumber[0] > 50) return "bg-green-500/40";
+    if (+findNumber[0] < 50) return "bg-red-500/40";
+    return "bg-red-500/10";
+  };
 
   if (
     cellInEditMode &&
@@ -146,58 +119,29 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
     cellInEditMode.item.col === item.col
   ) {
     return (
-      // <div
-      //   className="select-none flex justify-center items-center h-9"
-      //   style={style}
-      // >
-      //   <input
-      //     ref={inputRef}
-      //     autoFocus={true}
-      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
-      //     onChange={inputValueHandler}
-      //     type="checkbox"
-      //     // placeholder="PlaceHolder"
-      //     className=" w-5 p-1 border outline outline-2 outline-blue-500 h-5"
-      //   />
-      // </div>
-      // <div className="select-none " style={style}>
-      //   <input
-      //     ref={inputRef}
-      //     autoFocus={true}
-      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
-      //     onChange={inputValueHandler}
-      //     type="date"
-      //     // placeholder="PlaceHolder"
-      //     className="absolute top-0 left-0 w-full p-1 outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
-      //   />
-      // </div>
-      <div className="select-none" style={style}>
-        <input
-          ref={inputRef}
-          autoFocus={true}
-          defaultValue={el[item.keyField as keyof TableTdRefactored]}
-          onChange={inputValueHandler}
-          // placeholder="PlaceHolder"
-          className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
-        />
+      <div className="select-none z-10 shadow-lg" style={style}>
+        <BaseCell item={item} el={el} />
       </div>
-      // <div style={style}>
-      //   <select
-      //     onChange={changeSelectHandler}
-      //     className="w-full p-1 border outline outline-2 outline-blue-500 h-[calc(40px-1px)]"
-      //     defaultValue={el[item.keyField as keyof TableTdRefactored]}
-      //   >
-      //     <option value="lego">Lego</option>
-      //     <option value="Vite">Vite</option>
-      //     <option value="Sedr">Sedr</option>
-      //   </select>
-      // </div>
     );
   }
+  if (item.type === 6)
+    return (
+      <div
+        className={`p-1 flex items-center cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden ${bgColorPicker(
+          el[item.keyField as keyof TableTdRefactored]
+        )}`}
+        onMouseDown={mouseDownHandler}
+        onMouseUp={mouseUpHandler}
+        onMouseEnter={mouseEnterHandler}
+        style={style}
+      >
+        {el[item.keyField as keyof TableTdRefactored]}
+      </div>
+    );
 
   return (
     <div
-      className={`p-1 border cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden`}
+      className={`p-1 flex items-center cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden`}
       // onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}

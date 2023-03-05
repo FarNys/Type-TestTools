@@ -18,6 +18,7 @@ export interface TableTh {
 export interface TableThExtra {
   width: string;
   col: number;
+  type: number;
 }
 
 export type TableThRefactored = TableThExtra & TableTh;

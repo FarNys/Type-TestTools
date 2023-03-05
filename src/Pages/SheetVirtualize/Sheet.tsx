@@ -22,11 +22,14 @@ import {
   updateSheetData,
 } from "./redux/sheetSlice";
 import { RootState } from "./redux/sheetStore";
-import { ARROW_KEYS } from "./constant";
+import { ALPHABET_KEYS, ARROW_KEYS } from "./constant";
 import SheetVirPart from "./SheetVirPart";
 
 const Sheet = () => {
   const dispatch = useDispatch();
+  const activeCell = useSelector(
+    (state: RootState) => state.sheetSlice.activeCell
+  );
   // const selectedRectData = useSelector(
   //   (state: RootState) => state.sheetSlice.selectedRectData
   // );
@@ -37,9 +40,9 @@ const Sheet = () => {
   // const cellInEditMode = useSelector(
   //   (state: RootState) => state.sheetSlice.cellInEditMode
   // );
-  // const afterUpdateData = useSelector(
-  //   (state: RootState) => state.sheetSlice.afterUpdateData
-  // );
+  const afterUpdateData = useSelector(
+    (state: RootState) => state.sheetSlice.afterUpdateData
+  );
 
   const dragStartRef = useRef<TableTh | any>(null);
   const dragEndRef = useRef<TableTh | any>(null);
@@ -74,11 +77,13 @@ const Sheet = () => {
     let emptyList = [];
     for (let i = 0; i < 10000; i++) {
       const x = {
+        row: i,
         name: "Element",
         lastname: "Tera",
         number: i,
         email: "Golden@example.com",
         content: "Content",
+        property: "property" + i,
       };
       emptyList.push(x);
     }
@@ -140,6 +145,11 @@ const Sheet = () => {
 
   const keyboardEventHandler = useCallback(
     (e: KeyboardEvent) => {
+      // console.log(activeCell);
+      // if (!activeCell) return;
+      // if (ALPHABET_KEYS.includes(e.keyCode) && activeCell) {
+      //   return console.log("KEY PRESS");
+      // }
       if (e.keyCode === 46) {
         return dispatch(deleteCellHandler());
       }
@@ -147,8 +157,8 @@ const Sheet = () => {
         dispatch(hideDisplayRect({ ref: rectRef }));
         if (e.keyCode === 13) {
           dispatch(enterKeyHandler());
-          dispatch(updateSheetData({}));
-          return dispatch(setEditModeCell());
+          return dispatch(updateSheetData({}));
+          // return dispatch(setEditModeCell());
         }
         if (ARROW_KEYS.includes(e.keyCode)) {
           dispatch(changeActiveCEllByArrow({ code: e.keyCode }));
@@ -215,35 +225,27 @@ const Sheet = () => {
   //   dispatch(updateSheetData({}));
   // });
 
-  // useEffect(() => {
-  //   if (afterUpdateData) {
-  //     console.log(afterUpdateData);
-  //   }
-  // }, [afterUpdateData]);
+  useEffect(() => {
+    if (afterUpdateData) {
+      console.log(afterUpdateData);
+    }
+  }, [afterUpdateData]);
   console.count("Render");
-  const activeCell = useSelector(
-    (state: RootState) => state.sheetSlice.activeCell
-  );
-  console.log(activeCell);
+
   return (
     <div className="w-full border mt-4">
       <h1>Sheet Virtualize</h1>
       <div className="w-full relative">
-        {/* <div
-          id="selection-rect "
-          className="absolute outline outline-2 outline-sky-500  bg-sky-500/10 pointer-events-none duration-100 z-10"
-          ref={rectRef}
-          style={{ display: isDisplayRect ? "block" : "none" }}
-        ></div> */}
         {refactorData && refactorheader && (
           <React.Fragment>
             <table className="border" ref={tableRef}>
               <thead>
                 <tr>
-                  <td className="px-1 border bg-slate-100 h-10 ">row</td>
+                  {/* <td className="px-1 border bg-slate-100 h-10 ">row</td> */}
                   {refactorheader.map((el: any) => (
                     <td
                       className=" border bg-slate-100 h-10 "
+                      style={{ width: el.width, minWidth: el.width }}
                       key={`thead-${el.keyField}`}
                     >
                       <div className="flex h-full w-full ">
@@ -288,11 +290,7 @@ const Sheet = () => {
               ))}
             </tbody> */}
             </table>
-            <SheetVirPart
-              refactorData={refactorData}
-              refactorheader={refactorheader}
-              rectRef={rectRef}
-            />
+            <SheetVirPart rectRef={rectRef} />
           </React.Fragment>
         )}
       </div>

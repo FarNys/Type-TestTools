@@ -57,6 +57,7 @@ const sheetSlice = createSlice({
           return {
             col: index,
             width: "150px",
+            type: index + 1,
             ...el,
           };
         }),
@@ -182,11 +183,11 @@ const sheetSlice = createSlice({
               item: state.activeCell.item,
               el: { ...state.activeCell.el, row: findRow - 1 },
             };
-            if (state.cellInEditMode) {
-              state.cellInEditMode = state.activeCell;
-            } else {
-              state.cellInEditMode = null;
-            }
+            // if (state.cellInEditMode) {
+            //   state.cellInEditMode = state.activeCell;
+            // } else {
+            state.cellInEditMode = null;
+            // }
           }
           //DOWN ARROW
           if (findArrow === 40) {
@@ -195,11 +196,11 @@ const sheetSlice = createSlice({
               item: state.activeCell.item,
               el: { ...state.activeCell.el, row: findRow + 1 },
             };
-            if (state.cellInEditMode) {
-              state.cellInEditMode = state.activeCell;
-            } else {
-              state.cellInEditMode = null;
-            }
+            // if (state.cellInEditMode) {
+            //   state.cellInEditMode = state.activeCell;
+            // } else {
+            state.cellInEditMode = null;
+            // }
           }
         }
       }

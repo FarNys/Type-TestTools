@@ -12,11 +12,17 @@ import {
 } from "./redux/sheetSlice";
 import { useOnClickOutside } from "../../Hooks/useOnClickOutside";
 
-const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
+const SheetVirPart = ({ rectRef }: any) => {
   const dispatch = useDispatch();
   const parentRef = React.useRef<HTMLDivElement | any>(null);
   const isDisplayRect = useSelector(
     (state: RootState) => state.sheetSlice.isDisplayRect
+  );
+  const refactorheader = useSelector(
+    (state: RootState) => state.sheetSlice.refactorheader
+  );
+  const refactorData = useSelector(
+    (state: RootState) => state.sheetSlice.refactorData
   );
   const rowVirtualizer = useVirtualizer({
     count: refactorData.length,
@@ -30,16 +36,20 @@ const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
     horizontal: true,
     count: refactorheader.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 150,
+    estimateSize: (index: any) => {
+      const width = +refactorheader[index].width.split("px")[0];
+      return width;
+    },
+
     // paddingStart: 200,
     // paddingEnd: 200,
   });
 
   useOnClickOutside(parentRef, () => {
     dispatch(hideDisplayRect({ ref: rectRef }));
-    dispatch(removeActiveCell());
     dispatch(deActiveCellEditMode());
     dispatch(updateSheetData({}));
+    dispatch(removeActiveCell());
   });
 
   return (
@@ -47,8 +57,8 @@ const SheetVirPart = ({ refactorData, refactorheader, rectRef }: any) => {
       ref={parentRef}
       className="List"
       style={{
-        height: `400px`,
-        width: `800px`,
+        height: "400px",
+        width: refactorheader.length * 154 + "px",
         overflow: "auto",
       }}
     >
