@@ -144,7 +144,8 @@ const Sheet = () => {
   }, [selectedList, isMouseDown, dispatch]);
 
   const keyboardEventHandler = useCallback(
-    (e: KeyboardEvent) => {
+    async (e: KeyboardEvent) => {
+      console.log(e.keyCode);
       // console.log(activeCell);
       // if (!activeCell) return;
       // if (ALPHABET_KEYS.includes(e.keyCode) && activeCell) {
@@ -152,6 +153,16 @@ const Sheet = () => {
       // }
       if (e.keyCode === 46) {
         return dispatch(deleteCellHandler());
+      }
+      //FOR COPY SINGLE CELL
+      if (e.ctrlKey && e.keyCode === 67 && activeCell) {
+        try {
+          await navigator.clipboard.writeText(
+            activeCell.el[activeCell.item.keyField]
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
       if (!e.ctrlKey && !e.altKey) {
         dispatch(hideDisplayRect({ ref: rectRef }));
@@ -167,9 +178,9 @@ const Sheet = () => {
       }
       return;
     },
-    [dispatch]
+    [dispatch, activeCell]
   );
-
+  console.log(activeCell);
   useEffect(() => {
     document.addEventListener("keydown", (e) => keyboardEventHandler(e));
     return () =>

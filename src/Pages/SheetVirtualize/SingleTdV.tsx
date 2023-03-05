@@ -5,6 +5,8 @@ import {
   activeMouseDown,
   changeSheetData,
   deActiveMouseDown,
+  hideDisplayRect,
+  hideRect,
   selectRectDataHandler,
   selectRectInitialHandler,
   setEditModeCell,
@@ -42,6 +44,7 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       activeCell.item.col === item.col
     ) {
       dispatch(setEditModeCell());
+      dispatch(hideRect());
     } else {
       dispatch(
         activeCellSelectHandler({
@@ -75,12 +78,11 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
       );
     }
   };
-
   const isCellSelected = useCallback(() => {
     if (activeCell?.el.row === el.row && activeCell.item.col === item.col) {
       return "outline outline-1 outline-sky-500 z-10";
     }
-    return "outline outline-1 outline-slate-200";
+    return "border border-slate-200";
   }, [activeCell, el.row, item.col]);
   const mouseUpHandler = () => {
     dispatch(deActiveMouseDown());
@@ -141,7 +143,7 @@ const SingleTdV = memo(({ el, item, style }: SingleTdVType) => {
 
   return (
     <div
-      className={`p-1 flex items-center cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden`}
+      className={`p-1 box-border  flex items-center cursor-cell select-none h-10 ${isCellSelected()} overflow-hidden`}
       // onDoubleClick={doubleClickHandler}
       onMouseDown={mouseDownHandler}
       onMouseUp={mouseUpHandler}

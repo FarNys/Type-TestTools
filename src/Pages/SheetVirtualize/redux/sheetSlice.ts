@@ -90,6 +90,12 @@ const sheetSlice = createSlice({
       state.isDisplayRect = false;
       state.selectedRectData = null;
     },
+    hideRect: (state) => {
+      // action.payload.ref.current.style.width = 0;
+      // action.payload.ref.current.style.height = 0;
+      state.isDisplayRect = false;
+      state.selectedRectData = null;
+    },
     createRect: (state, action) => {
       action.payload.ref.current.style.top = `${action.payload.minRow * 40}px`;
       action.payload.ref.current.style.left = `${
@@ -389,6 +395,7 @@ export const {
   deActiveMouseDown,
   showDisplayRect,
   hideDisplayRect,
+  hideRect,
   selectRectDataHandler,
   selectRectInitialHandler,
   activeCellSelectHandler,
